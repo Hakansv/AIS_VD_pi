@@ -1,109 +1,183 @@
-##---------------------------------------------------------------------------
-## Author:      Dave Register
-##***************************************************************************
-## *   Copyright (C) 2010 by David S. Register                               *
-## *   This program is free software; you can redistribute it and/or modify  *
-## *   it under the terms of the GNU General Public License as published by  *
-## *   the Free Software Foundation; either version 2 of the License, or     *
-## *   (at your option) any later version.                                   *
-## *                                                                         *
-## *   This program is distributed in the hope that it will be useful,       *
-## *   but WITHOUT ANY WARRANTY; without even the implied warranty of        *
-## *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the         *
-## *   GNU General Public License for more details.                          *
-## *                                                                         *
-## *   You should have received a copy of the GNU General Public License     *
-## *   along with this program; if not, write to the                         *
-## *   Free Software Foundation, Inc.,                                       *
-## *   51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,  USA.             *
-## ***************************************************************************
- 
-
-# define minimum cmake version
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6.2)
-# This should be 2.8.0 to have FindGTK2 module
-IF (COMMAND cmake_policy)
-  CMAKE_POLICY(SET CMP0003 OLD)
-  CMAKE_POLICY(SET CMP0005 OLD)
-  CMAKE_POLICY(SET CMP0011 OLD)
-ENDIF (COMMAND cmake_policy)
-
-PROJECT(AIS_VD_pi)
-
-SET(PACKAGE_NAME AIS_VD_pi)
-SET(PLUGIN_SOURCE_DIR ..)
-MESSAGE (STATUS "*** Building ${PACKAGE_NAME} ***")
-
-#SET(CMAKE_BUILD_TYPE Debug)
-
-IF (PREFIX)
-	SET(CMAKE_INSTALL_PREFIX ${PREFIX})
-ENDIF (PREFIX)
-
-SET(PARENT opencpn)
-SET(PREFIX_BIN bin)
-SET(PREFIX_INCLUDE include)
-SET(PREFIX_DATA share)
-SET(PREFIX_PARENTDATA ${PREFIX_DATA}/${PARENT})
-
-INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/include ${CMAKE_SOURCE_DIR}/src)
-
-# require proper c++
-#ADD_DEFINITIONS( "-Wall -ansi -pedantic -Wno-variadic-macros" )
-#TODO: Should we use  -fno-stack-protector
-#  IF NOT DEBUGGING CFLAGS="-O2 -march=native"
-IF(NOT WIN32)
- ADD_DEFINITIONS( "-Wall -g -fexceptions -fvisibility=hidden" )
-
- IF(NOT APPLE)
-  SET(CMAKE_SHARED_LINKER_FLAGS "-Wl,-Bsymbolic")
- ELSE(NOT APPLE)
-  SET(CMAKE_SHARED_LINKER_FLAGS "-Wl")
- ENDIF(NOT APPLE)
-
-ENDIF(NOT WIN32)
-
-# Add some definitions to satisfy MS
-IF(WIN32)
-    ADD_DEFINITIONS(-D__MSVC__)
-    ADD_DEFINITIONS(-D_CRT_NONSTDC_NO_DEPRECATE -D_CRT_SECURE_NO_DEPRECATE)
-ENDIF(WIN32)
+# ~~~
+# Author:      Rasbats aka. Mike Rossiter
+# Copyright:
+# License:     wxWidgets License
+# ~~~
 
 
-SET(wxWidgets_USE_LIBS base core net xml html adv)
-SET(BUILD_SHARED_LIBS TRUE)
-FIND_PACKAGE(wxWidgets REQUIRED)
+# -------- Cmake setup ---------
+#
+cmake_minimum_required(VERSION 3.12.0)
 
-INCLUDE(${wxWidgets_USE_FILE})
+cmake_policy(SET CMP0042 NEW)
 
-FIND_PACKAGE(Gettext REQUIRED)
+if (POLICY CMP0072)
+  cmake_policy(SET CMP0072 NEW)
+endif ()
 
-# For convenience we define the sources as a variable. You can add 
-# header files and cpp/c files and CMake will sort them out
+if (POLICY CMP0077)
+  cmake_policy(SET CMP0077 NEW)
+endif ()
+
+# Locations where cmake looks for cmake modules.
+set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/build ${CMAKE_SOURCE_DIR}/cmake)
+
+if (WIN32)
+  list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/buildwin)
+endif ()
+message(STATUS "Cmake version: ${CMAKE_VERSION}.")
 
 
-SET(SRC_AIS_VD
-        src/AIS_VD_pi.h
- 		src/AIS_VD_pi.cpp
- 		src/SpesTextCtrl.h
- 		src/SpesTextCtrl.cpp
- 	)
+# -------- Build setup (mostly in PluginCompiler) --------
+#
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_AIS_VD}  )
+set(CMAKE_POSITION_INDEPENDENT_CODE ON)
+message(STATUS "Building: ${BUILD_TYPE}")
 
-IF(WIN32)
-  SET(OPENCPN_IMPORT_LIB "../../../${CMAKE_CFG_INTDIR}/${PARENT}")
-  TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${OPENCPN_IMPORT_LIB} )
-  ADD_DEPENDENCIES(${PACKAGE_NAME} ${PARENT})
-ENDIF(WIN32)
+# -------- Options ----------
 
-TARGET_LINK_LIBRARIES( ${PACKAGE_NAME} ${wxWidgets_LIBRARIES} )
+set(OCPN_TEST_REPO
+    "opencpn/AIS_VD-alpha"
+    CACHE STRING "Default repository for untagged builds"
+)
+set(OCPN_BETA_REPO
+    "opencpn/AIS_VD-beta"
+    CACHE STRING 
+    "Default repository for tagged builds matching 'beta'"
+)
+set(OCPN_RELEASE_REPO
+    "opencpn/AIS_VD-prod"
+    CACHE STRING 
+    "Default repository for tagged builds not matching 'beta'"
+)
+option(AIS_VD_USE_SVG "Use SVG graphics" OFF)
 
-IF(UNIX)
-INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME LIBRARY DESTINATION ${PREFIX_PARENTDATA}/plugins)
-ENDIF(UNIX)
+set(OCPN_TARGET_TUPLE "" CACHE STRING
+  "Target spec: \"platform;version;arch\""
+)
 
-IF(WIN32)
-INSTALL(TARGETS ${PACKAGE_NAME} RUNTIME DESTINATION "plugins")
-ENDIF(WIN32)
- 	  	 
+string(TOLOWER "${OCPN_TARGET_TUPLE}" _lc_target)
+if ("${_lc_target}" MATCHES "android*")
+  set(QT_ANDROID ON)
+  # Until we have a proper toolchain file:
+  set(CMAKE_CROSSCOMPILING ON)
+else ()
+  set(QT_ANDROID OFF)
+  add_definitions(-D__OCPN_USE_CURL__)
+endif ()
+#
+#
+# -------  Plugin setup --------
+#
+project(AIS_VD_pi VERSION 1.1.1.0)
+set(PKG_PRERELEASE "")  # Empty, or a tag like 'beta'
+
+set(DISPLAY_NAME AIS_VD)    # Dialogs, installer artifacts, ...
+set(PLUGIN_API_NAME AIS_VD) # As of GetCommonName() in plugin API
+set(CPACK_PACKAGE_CONTACT "Hakan S Dirk R")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Update AIS voyage data")
+set(CPACK_PACKAGE_DESCRIPTION [=[
+Update AIS class A voyage data as 
+Destination 
+Time/Date of arrival 
+and Navigational status
+]=])
+
+set(PKG_AUTHOR "Dirk R & Hakan S")
+set(PKG_IS_OPEN_SOURCE "yes")
+set(CPACK_PACKAGE_HOMEPAGE_URL https://github.com/Hakansv/AIS_VD_pi)
+set(PKG_INFO_URL https://github.com/Hakansv/AIS_VD_pi)
+
+set(SRC
+    src/AIS_VD_pi.h
+ 	src/AIS_VD_pi.cpp
+ 	src/SpesTextCtrl.h
+ 	src/SpesTextCtrl.cpp
+)
+
+# -------- Setup completed, build the plugin --------
+#
+add_library(${CMAKE_PROJECT_NAME} SHARED ${SRC})
+include_directories(BEFORE ${CMAKE_BINARY_DIR}/include)
+
+add_subdirectory("libs/api-16")
+target_link_libraries(${CMAKE_PROJECT_NAME} ocpn::api)
+
+set(VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
+set(VERSION_MINOR ${PROJECT_VERSION_MINOR})
+set(VERSION_PATCH ${PROJECT_VERSION_PATCH})
+
+set(PACKAGE_NAME ${CMAKE_PROJECT_NAME})
+
+# Create the minimim ocpn version id string like ov50
+string(REGEX REPLACE "\([0-9]\)\.\([0-9]\).*" "ov\\1\\2"
+       OCPN_MIN_VERSION ${API_OCPN_MIN_VERSION})
+
+if (AIS_VD_USE_SVG)
+  add_definitions(-DSHIPDRIVER_USE_SVG)
+endif ()
+
+# Set up targets. Targets sets up a recursive call with BUILD_TYPE set to
+# 'flatpak', 'pkg' or 'tarball'. The initial call without BUILD_TYPE ends
+# here.
+#
+include(Targets)
+create_targets(
+  ${PROJECT_SOURCE_DIR}/flatpak/org.opencpn.OpenCPN.Plugin.AIS_VD.yaml
+)
+if ("${BUILD_TYPE}" STREQUAL "")
+  return ()
+endif ()
+
+if (NOT ${BUILD_TYPE} STREQUAL "flatpak")
+  # Build package as required (flatpak already dealt with).
+  #
+  include(PluginCompiler)
+  include(PluginInstall)
+  include(PluginPackage)
+  if (QT_ANDROID)
+    include(AndroidLibs)
+  else ()
+    include(PluginLibs)
+  endif ()
+  include(PluginLocalization)
+
+  include_directories(BEFORE ${CMAKE_BINARY_DIR}/include)
+
+  add_subdirectory("libs/jsoncpp")
+  target_link_libraries(${PACKAGE_NAME} ocpn::jsoncpp)
+  
+  add_subdirectory("libs/tinyxml")
+  target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
+  
+  add_subdirectory("libs/wxJSON")
+  target_link_libraries(${PACKAGE_NAME} ocpn::wxjson)
+endif ()
+
+configure_file(
+  ${CMAKE_SOURCE_DIR}/config.h.in ${CMAKE_BINARY_DIR}/include//config.h
+  @ONLY
+)
+
+configure_file(
+  # The cloudsmith upload script
+  ${CMAKE_SOURCE_DIR}/ci/upload.sh.in ${CMAKE_BINARY_DIR}/upload.sh
+  @ONLY
+)
+configure_file(
+  # The cloudsmith upload script, windows bat file.
+  ${CMAKE_SOURCE_DIR}/ci/upload.bat.in ${CMAKE_BINARY_DIR}/upload.bat
+  @ONLY
+)
+
+
+set(checksum "@checksum@")
+configure_file(
+  # The XML metadata file
+  ${CMAKE_SOURCE_DIR}/plugin.xml.in
+  ${CMAKE_BINARY_DIR}/${pkg_displayname}.xml.in
+  @ONLY
+)
