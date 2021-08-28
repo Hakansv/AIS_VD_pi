@@ -59,7 +59,7 @@
 #define ID_BUTTON wxID_ANY
 #define ID_BUTTON1 wxID_ANY
 #define SYMBOL_T_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
-#define SYMBOL_T_TITLE _("t")
+#define SYMBOL_T_TITLE _T("t")
 #define SYMBOL_T_IDNAME ID_T
 #define SYMBOL_T_SIZE wxSize(500, 500)
 #define SYMBOL_T_POSITION wxDefaultPosition

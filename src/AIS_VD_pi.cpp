@@ -110,17 +110,17 @@ wxBitmap *aisvd_pi::GetPlugInBitmap()
 
 wxString aisvd_pi::GetCommonName()
 {
-      return _("AIS_VD");
+      return _T("AIS_VD");
 }
 
 wxString aisvd_pi::GetShortDescription()
 {
-      return _("AIS Voyage Data");
+      return _T("AIS Voyage Data");
 }
 
 wxString aisvd_pi::GetLongDescription()
 {
-      return _("Set the static voyage data in the AIS class A tranceiver");
+      return _T("Set the static voyage data in the AIS class A tranceiver");
 }
 
 void aisvd_pi::SetNMEASentence(wxString &sentence)
@@ -191,7 +191,7 @@ void aisvd_pi::OnSetupOptions(){
     StatusChoiceStrings.Add(_("Engaged in Fishing"));
     StatusChoiceStrings.Add(_("Under way sailing"));
     StatusChoice = new wxChoice( m_AIS_VoyDataWin, ID_CHOICE, wxDefaultPosition, wxDefaultSize, StatusChoiceStrings, 0 );
-    StatusChoice->SetStringSelection(_("1"));
+    StatusChoice->SetStringSelection(_T("1"));
     itemFlexGridSizer4->Add(StatusChoice, 0, wxALIGN_LEFT|wxALIGN_CENTER_VERTICAL|wxALL, 5);
 
     wxStaticText* itemStaticText7 = new wxStaticText( m_AIS_VoyDataWin, wxID_STATIC, _("Destination"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -229,7 +229,7 @@ void aisvd_pi::OnSetupOptions(){
     wxBoxSizer* itemBoxSizer17 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer3->Add(itemBoxSizer17, 0, wxGROW|wxALL, 5);
 /*
-    wxButton* itemButton18 = new wxButton( m_AIS_VoyDataWin, ID_BUTTON, _("Read from AIS"), wxDefaultPosition, wxDefaultSize, 0 );
+    wxButton* itemButton18 = new wxButton( m_AIS_VoyDataWin, ID_BUTTON, _T("Read from AIS"), wxDefaultPosition, wxDefaultSize, 0 );
     itemBoxSizer17->Add(itemButton18, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
 */
     wxButton* SendBtn = new wxButton( m_AIS_VoyDataWin, ID_BUTTON1, _("Send to AIS"), wxDefaultPosition, wxDefaultSize, 0 );
@@ -322,21 +322,21 @@ void aisvd_pi::UpdateEta()
 void aisvd_pi::SendSentence()
 {
     wxString S;
-    S= _("$ECVSD,"); // EC for Electronic Chart
+    S= _T("$ECVSD,"); // EC for Electronic Chart
 
-    //S.Append( wxString::Format(_("%d,"), 37)); //TODO Type of ship and cargo category
+    //S.Append( wxString::Format(_T("%d,"), 37)); //TODO Type of ship and cargo category
     //We dont send ship type. It will be set by AIS static data and can be password protected by some devices
-    S.Append( _(",") );
-    S.Append( m_Draught ); S.Append( _(",") );
-    S.Append( m_Persons ); S.Append( _(",") );
-    S.Append( m_Destination ); S.Append( _(",") );
-    S.Append( wxString::Format(_("%02d%02d,"), m_EtaDateTime.GetHour(), m_EtaDateTime.GetMinute() )); //eta time HHmm
-    S.Append( wxString::Format(_("%d,"), m_EtaDateTime.GetDay() )); // eta Day
-    S.Append( wxString::Format(_("%d,"), m_EtaDateTime.GetMonth()+1 )); // eta Month
-    S.Append( wxString::Format(_("%d,"), StatusChoice->GetSelection() )); //Navigation status
-    S.Append( wxString::Format(_("%d"), 0 )); // TODO Regional application flags, 0 to 15
-    S.Append( _("*")); // End data
-    S.Append( wxString::Format(_("%02X"), ComputeChecksum(S) ));
+    S.Append( _T(",") );
+    S.Append( m_Draught ); S.Append( _T(",") );
+    S.Append( m_Persons ); S.Append( _T(",") );
+    S.Append( m_Destination ); S.Append( _T(",") );
+    S.Append( wxString::Format(_T("%02d%02d,"), m_EtaDateTime.GetHour(), m_EtaDateTime.GetMinute() )); //eta time HHmm
+    S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetDay() )); // eta Day
+    S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetMonth()+1 )); // eta Month
+    S.Append( wxString::Format(_T("%d,"), StatusChoice->GetSelection() )); //Navigation status
+    S.Append( wxString::Format(_T("%d"), 0 )); // TODO Regional application flags, 0 to 15
+    S.Append( _T("*")); // End data
+    S.Append( wxString::Format(_T("%02X"), ComputeChecksum(S) ));
     S += _T("\r\n");
     wxPuts(S);
     PushNMEABuffer(S); //finaly send NMEA string
@@ -687,7 +687,7 @@ static const wxCoord MARGIN = 2;
 //     if(!value.empty())
 //      m_text->ChangeValue(value);
 //     else
-//      m_text->ChangeValue(wxString::Format(_("%02d:%02d"),GetHour(),GetMinute()));
+//      m_text->ChangeValue(wxString::Format(_T("%02d:%02d"),GetHour(),GetMinute()));
 //
 //  // have to disable this window to avoid interfering it with message
 //     // processing to the text and the button... but pretend it is enabled to
@@ -742,7 +742,7 @@ static const wxCoord MARGIN = 2;
 //      }
 //          break;
 //     }
-//  m_text->SetValue(wxString::Format(_("%02d:%02d"),GetHour(),GetMinute()));
+//  m_text->SetValue(wxString::Format(_T("%02d:%02d"),GetHour(),GetMinute()));
 //  switch(m_timeField)
 //  {
 //  case TIME_FIELD_HOUR:
@@ -767,7 +767,7 @@ static const wxCoord MARGIN = 2;
 //      m_btn->SetValue(m_time.GetMinute());
 //      break;
 //     }
-//  m_text->SetValue(wxString::Format(_("%02d:%02d"),GetHour(),GetMinute()));
+//  m_text->SetValue(wxString::Format(_T("%02d:%02d"),GetHour(),GetMinute()));
 //  switch(m_timeField)
 //  {
 //  case TIME_FIELD_HOUR:
