@@ -72,7 +72,7 @@ endif ()
 #
 # -------  Plugin setup --------
 #
-project(AIS_VD_pi VERSION 1.1.4)
+project(AIS_VD_pi VERSION 1.1.9)
 set(PKG_PRERELEASE "Beta")  # Empty, or a tag like 'beta'
 
 set(DISPLAY_NAME AIS_VD)    # Dialogs, installer artifacts, ...
