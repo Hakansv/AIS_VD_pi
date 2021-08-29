@@ -173,7 +173,8 @@ void aisvd_pi::OnSetupOptions(){
     //DraughtTextCtrl->SetValidator( DraughtVal );
 
         const wxString AllowPersons[] = {
-            wxT("0"), wxT("1"), wxT("2"), wxT("3"), wxT("4"), wxT("5"), wxT("6"), wxT("7"), wxT("8"), wxT("9")};
+            wxT("0"), wxT("1"), wxT("2"), wxT("3"), wxT("4"), 
+            wxT("5"), wxT("6"), wxT("7"), wxT("8"), wxT("9")};
         wxArrayString* ArrayAllowPersons = new wxArrayString(10, AllowPersons);
         wxTextValidator PersonsVal( wxFILTER_INCLUDE_CHAR_LIST, & m_Persons);
         PersonsVal.SetIncludes(*ArrayAllowPersons);
@@ -181,14 +182,16 @@ void aisvd_pi::OnSetupOptions(){
 
     //  Create the AISVD Options panel, and load it
     m_AIS_VoyDataWin = AddOptionsPage( PI_OPTIONS_PARENT_SHIPS, _("AIS static") );
-    wxStaticBox* itemStaticBoxSizer3Static = new wxStaticBox(m_AIS_VoyDataWin, wxID_ANY, _("Set static voyage data to AIS"));
+    wxStaticBox* itemStaticBoxSizer3Static = new wxStaticBox(m_AIS_VoyDataWin, 
+                                             wxID_ANY, _("Set static voyage data to AIS"));
     wxStaticBoxSizer* itemStaticBoxSizer3 = new wxStaticBoxSizer(itemStaticBoxSizer3Static, wxVERTICAL);
     m_AIS_VoyDataWin->SetSizer(itemStaticBoxSizer3);
 
     wxFlexGridSizer* itemFlexGridSizer4 = new wxFlexGridSizer(0, 2, 10, 5);
     itemStaticBoxSizer3->Add(itemFlexGridSizer4, 0, wxGROW | wxALL, 20);
 
-    wxStaticText* itemStaticText5 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Navigational status"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText5 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
+                                    _("Navigational status"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     wxArrayString StatusChoiceStrings;
@@ -206,33 +209,42 @@ void aisvd_pi::OnSetupOptions(){
     StatusChoice->SetStringSelection(_T("1"));
     itemFlexGridSizer4->Add(StatusChoice, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-    wxStaticText* itemStaticText7 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Destination"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText7 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
+                                    _("Destination"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText7, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-    m_DestTextCtrl = new wxTextCtrl(m_AIS_VoyDataWin, ID_TEXTCTRL, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, DestVal);
+    m_DestTextCtrl = new wxTextCtrl(m_AIS_VoyDataWin, ID_TEXTCTRL, wxEmptyString, 
+                                    wxDefaultPosition, wxDefaultSize, 0, DestVal);
     m_DestTextCtrl->SetMaxLength(20);
     itemFlexGridSizer4->Add(m_DestTextCtrl, 0, wxGROW | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
 
-    wxStaticText* itemStaticText9 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Draught (m)"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText9 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
+                                    _("Draught (m)"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText9, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-    DraughtTextCtrl = new wxTextCtrl(m_AIS_VoyDataWin, ID_TEXTCTRL1, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, DraughtVal);
+    DraughtTextCtrl = new wxTextCtrl(m_AIS_VoyDataWin, ID_TEXTCTRL1, wxEmptyString, 
+                                     wxDefaultPosition, wxDefaultSize, 0, DraughtVal);
     itemFlexGridSizer4->Add(DraughtTextCtrl, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-    wxStaticText* itemStaticText11 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("No. of Persons onboard"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText11 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
+                                     _("No. of Persons onboard"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText11, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-    PersonsTextCtrl = new wxTextCtrl(m_AIS_VoyDataWin, ID_TEXTCTRL2, wxEmptyString, wxDefaultPosition, wxDefaultSize, 0, PersonsVal);
+    PersonsTextCtrl = new wxTextCtrl(m_AIS_VoyDataWin, ID_TEXTCTRL2, wxEmptyString, 
+                                     wxDefaultPosition, wxDefaultSize, 0, PersonsVal);
     itemFlexGridSizer4->Add(PersonsTextCtrl, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-    wxStaticText* itemStaticText13 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("eta date"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText13 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
+                                     _("ETA date"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText13, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-    DatePicker = new wxDatePickerCtrl(m_AIS_VoyDataWin, ID_DATECTRL, wxDateTime(), wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT);
+    DatePicker = new wxDatePickerCtrl(m_AIS_VoyDataWin, ID_DATECTRL, wxDateTime(), 
+                                      wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT);
     itemFlexGridSizer4->Add(DatePicker, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-    wxStaticText* itemStaticText15 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("eta Time"), wxDefaultPosition, wxDefaultSize, 0);
+    wxStaticText* itemStaticText15 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
+                                     _("ETA Time"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText15, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     TimePickCtrl = new wxTimePickerCtrl(m_AIS_VoyDataWin, ID_TIMECTR, wxDateTime(), wxDefaultPosition, wxDefaultSize, 0);
@@ -241,10 +253,12 @@ void aisvd_pi::OnSetupOptions(){
     wxBoxSizer* itemBoxSizer17 = new wxBoxSizer(wxHORIZONTAL);
     itemStaticBoxSizer3->Add(itemBoxSizer17, 0, wxGROW | wxALL, 5);
     /*
-        wxButton* itemButton18 = new wxButton( m_AIS_VoyDataWin, ID_BUTTON, _T("Read from AIS"), wxDefaultPosition, wxDefaultSize, 0 );
+        wxButton* itemButton18 = new wxButton( m_AIS_VoyDataWin, ID_BUTTON, 
+                                _T("Read from AIS"), wxDefaultPosition, wxDefaultSize, 0 );
         itemBoxSizer17->Add(itemButton18, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);
     */
-    wxButton* SendBtn = new wxButton(m_AIS_VoyDataWin, ID_BUTTON1, _("Send to AIS"), wxDefaultPosition, wxDefaultSize, 0);
+    wxButton* SendBtn = new wxButton(m_AIS_VoyDataWin, ID_BUTTON1, 
+                                     _("Send to AIS"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer17->Add(SendBtn, 1, wxALIGN_CENTER_VERTICAL | wxALL, 5);
     //  Connect to Events
     SendBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
@@ -257,6 +271,9 @@ void aisvd_pi::OnSetupOptions(){
     m_DestTextCtrl->SetValue(m_Destination);
     DraughtTextCtrl->SetValue(m_Draught);
     PersonsTextCtrl->SetValue(m_Persons);
+    wxDateTime now = wxDateTime::Now();
+    if (now.IsLaterThan(m_EtaDateTime))
+        m_EtaDateTime = now;
     DatePicker->SetValue(m_EtaDateTime);
     TimePickCtrl->SetValue(m_EtaDateTime);
 }
@@ -272,7 +289,7 @@ bool aisvd_pi::LoadConfig( void )
         pConf->Read( _T("Draught"), &m_Draught );
         pConf->Read( _T("Persons"), &m_Persons);
         pConf->Read( _T("Eta"), &temp);
-        m_EtaDateTime.ParseDateTime(temp);
+        m_EtaDateTime.ParseDateTime(temp);        
     }
 
     return true;
@@ -339,7 +356,8 @@ void aisvd_pi::SendSentence()
     S.Append( m_Draught ); S.Append( _T(",") );
     S.Append( m_Persons ); S.Append( _T(",") );
     S.Append( m_Destination ); S.Append( _T(",") );
-    S.Append( wxString::Format(_T("%02d%02d,"), m_EtaDateTime.GetHour(), m_EtaDateTime.GetMinute() )); //eta time HHmm
+    S.Append( wxString::Format(_T("%02d%02d,"), m_EtaDateTime.GetHour(), 
+                               m_EtaDateTime.GetMinute() )); //eta time HHmm
     S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetDay() )); // eta Day
     S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetMonth()+1 )); // eta Month
     S.Append( wxString::Format(_T("%d,"), StatusChoice->GetSelection() )); //Navigation status
@@ -362,7 +380,8 @@ unsigned char aisvd_pi::ComputeChecksum( wxString sentence ) const
 
 
 //The preference dialog
-PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& title, const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
+PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& title, 
+                             const wxPoint& pos, const wxSize& size, long style ) : wxDialog( parent, id, title, pos, size, style )
 {
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
