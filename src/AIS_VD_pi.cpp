@@ -48,33 +48,38 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
     delete p;
 }
 
-
 //---------------------------------------------------------------------------------------------------------
 //
 //          PlugIn initialization and de-init
 //
 //---------------------------------------------------------------------------------------------------------
 
-aisvd_pi::aisvd_pi(void *ppimgr):opencpn_plugin_19(ppimgr)
+aisvd_pi::aisvd_pi(void *ppimgr):opencpn_plugin_116(ppimgr)
 {
       // Create the PlugIn icons
-      m_pplugin_icon = new wxBitmap(default_pi);
+      m_panelBitmap = wxBitmap(default_pi);
+      m_pplugin_icon = &m_panelBitmap;
 
       m_event_handler = new aisvd_pi_event_handler(this);
+      //    Get a pointer to the opencpn configuration object
       m_pconfig = GetOCPNConfigObject();
+      //    And load the configuration items
       LoadConfig();
 }
 
 aisvd_pi::~aisvd_pi()
 {
       delete m_pplugin_icon;
+      delete m_event_handler;
 }
 
 int aisvd_pi::Init(void)
 {
-      AddLocaleCatalog( _T("opencpn-AIS_VD_pi") );
+      AddLocaleCatalog( _T("opencpn-AIS_VD_pi") );      
+
       prefDlg = NULL;
       return ( INSTALLS_TOOLBOX_PAGE | WANTS_PREFERENCES | WANTS_CONFIG );
+      //return ( WANTS_PREFERENCES | WANTS_PLUGIN_MESSAGING | WANTS_CONFIG );
 }
 
 bool aisvd_pi::DeInit(void)
@@ -134,7 +139,9 @@ void aisvd_pi::ShowPreferencesDialog( wxWindow* parent )
         prefDlg = new PreferenceDlg(parent);
     if ( prefDlg->ShowModal() == wxID_OK )
         AIS_type = prefDlg->m_choice2->GetString(prefDlg->m_choice2->GetSelection());
-    prefDlg->~PreferenceDlg();
+
+    delete prefDlg;
+    prefDlg = NULL;
 }
 
 void aisvd_pi::SetPluginMessage(wxString &message_id, wxString &message_body)

@@ -72,8 +72,8 @@ endif ()
 #
 # -------  Plugin setup --------
 #
-project(AIS_VD_pi VERSION 1.1.1.2)
-set(PKG_PRERELEASE "")  # Empty, or a tag like 'beta'
+project(AIS_VD_pi VERSION 1.1.4)
+set(PKG_PRERELEASE "Beta")  # Empty, or a tag like 'beta'
 
 set(DISPLAY_NAME AIS_VD)    # Dialogs, installer artifacts, ...
 set(PLUGIN_API_NAME AIS_VD) # As of GetCommonName() in plugin API

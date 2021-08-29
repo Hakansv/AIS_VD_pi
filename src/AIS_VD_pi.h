@@ -88,7 +88,7 @@ public:
 //----------------------------------------------------------------------------------------------------------
 
 
-class aisvd_pi : public opencpn_plugin_19
+class aisvd_pi : public opencpn_plugin_116
 {
 public:
       aisvd_pi(void *ppimgr);
@@ -174,6 +174,8 @@ private:
 
     /// Should we show tooltips?
     static bool ShowToolTips();
+
+    wxBitmap m_panelBitmap;
 	
 };
 ///////////////////////////////////////////////////////////////////////////////
