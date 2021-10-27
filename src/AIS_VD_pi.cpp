@@ -196,8 +196,8 @@ void aisvd_pi::OnSetupOptions(){
 
     wxArrayString StatusChoiceStrings;
 
-    StatusChoiceStrings.Add(_("At anchor"));
     StatusChoiceStrings.Add(_("Underway using engine"));
+    StatusChoiceStrings.Add(_("At anchor"));
     StatusChoiceStrings.Add(_("Not under command"));
     StatusChoiceStrings.Add(_("Restricted manoeuverability"));
     StatusChoiceStrings.Add(_("Constrained by draught"));
@@ -356,7 +356,7 @@ void aisvd_pi::SendSentence()
     S.Append( m_Draught ); S.Append( _T(",") );
     S.Append( m_Persons ); S.Append( _T(",") );
     S.Append( m_Destination ); S.Append( _T(",") );
-    S.Append( wxString::Format(_T("%02d%02d,"), m_EtaDateTime.GetHour(), 
+    S.Append( wxString::Format(_T("%02d%02d00,"), m_EtaDateTime.GetHour(), 
                                m_EtaDateTime.GetMinute() )); //eta time HHmm
     S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetDay() )); // eta Day
     S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetMonth()+1 )); // eta Month

@@ -72,7 +72,7 @@ endif ()
 #
 # -------  Plugin setup --------
 #
-project(AIS_VD_pi VERSION 1.1.9)
+project(AIS_VD_pi VERSION 1.1.13)
 set(PKG_PRERELEASE "Beta")  # Empty, or a tag like 'beta'
 
 set(DISPLAY_NAME AIS_VD)    # Dialogs, installer artifacts, ...
@@ -84,6 +84,7 @@ Update AIS class A voyage data as
 Destination 
 Time/Date of arrival 
 and Navigational status
+by NMEA0183 xxVSD.
 ]=])
 
 set(PKG_AUTHOR "Dirk R & Hakan S")
