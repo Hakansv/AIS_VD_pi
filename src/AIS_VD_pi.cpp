@@ -206,7 +206,6 @@ void aisvd_pi::OnSetupOptions(){
     StatusChoiceStrings.Add(_("Engaged in Fishing"));
     StatusChoiceStrings.Add(_("Under way sailing"));
     StatusChoice = new wxChoice(m_AIS_VoyDataWin, ID_CHOICE, wxDefaultPosition, wxDefaultSize, StatusChoiceStrings, 0);
-    StatusChoice->SetStringSelection(_T("1"));
     itemFlexGridSizer4->Add(StatusChoice, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     wxStaticText* itemStaticText7 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
@@ -268,6 +267,7 @@ void aisvd_pi::OnSetupOptions(){
 
     m_AIS_VoyDataWin->Layout();
     //Update values in Controls
+    StatusChoice->SetStringSelection(StatusChoiceStrings[0]);
     m_DestTextCtrl->SetValue(m_Destination);
     DraughtTextCtrl->SetValue(m_Draught);
     PersonsTextCtrl->SetValue(m_Persons);
@@ -365,8 +365,11 @@ void aisvd_pi::SendSentence()
     S.Append( _T("*")); // End data
     S.Append( wxString::Format(_T("%02X"), ComputeChecksum(S) ));
     S += _T("\r\n");
-    wxPuts(S);
+    //wxPuts(S);
     PushNMEABuffer(S); //finaly send NMEA string
+    wxYieldIfNeeded();  //wxYield();
+    wxMilliSleep(500);
+    PushNMEABuffer(S); // Send another to eliminate possible UDP loss
 }
 
 unsigned char aisvd_pi::ComputeChecksum( wxString sentence ) const
