@@ -367,9 +367,9 @@ void aisvd_pi::SendSentence()
     S += _T("\r\n");
     //wxPuts(S);
     PushNMEABuffer(S); //finaly send NMEA string
-    wxYieldIfNeeded();  //wxYield();
-    wxMilliSleep(500);
-    PushNMEABuffer(S); // Send another to eliminate possible UDP loss
+    wxString msg = "Voyage data sent to NMEA buffer: ";
+    msg.Append(S.Mid(0, S.Len() - 4));
+    wxLogMessage(msg);
 }
 
 unsigned char aisvd_pi::ComputeChecksum( wxString sentence ) const
