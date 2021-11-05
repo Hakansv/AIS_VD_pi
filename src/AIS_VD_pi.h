@@ -67,20 +67,21 @@
 class TimePickerCtrl;
 class aisvd_pi;
 class PreferenceDlg;
-// An Event handler class to catch events from S63 UI dialog
+// An Event handler class to catch events from UI dialog
 class aisvd_pi_event_handler : public wxEvtHandler
 {
 public:
 
-    aisvd_pi_event_handler(aisvd_pi *parent);
-    ~aisvd_pi_event_handler();
-	void OnSendBtnClick( wxCommandEvent &event );
-    /*void OnImportPermitClick( wxCommandEvent &event );
-    void OnRemovePermitClick( wxCommandEvent &event );
-    void OnImportCellsClick( wxCommandEvent &event );
-    void OnSelectPermit( wxListEvent& event );    
-    void OnNewUserpermitClick( wxCommandEvent& event ); */   
-    aisvd_pi  *m_parent;
+  aisvd_pi_event_handler(aisvd_pi *parent);
+  ~aisvd_pi_event_handler();
+  void OnSendBtnClick( wxCommandEvent &event );
+  void OnDestValSelChange(wxCommandEvent &event);
+  /*void OnImportPermitClick( wxCommandEvent &event );
+  void OnRemovePermitClick( wxCommandEvent &event );
+  void OnImportCellsClick( wxCommandEvent &event );
+  void OnSelectPermit( wxListEvent& event );    
+  void OnNewUserpermitClick( wxCommandEvent& event ); */   
+  aisvd_pi  *m_parent;
 };
 
 //----------------------------------------------------------------------------------------------------------
@@ -88,8 +89,9 @@ public:
 //----------------------------------------------------------------------------------------------------------
 
 
-class aisvd_pi : public opencpn_plugin_116
+class aisvd_pi : public opencpn_plugin_116 
 {
+  DECLARE_EVENT_TABLE()
 public:
       aisvd_pi(void *ppimgr);
 	~aisvd_pi();
@@ -140,6 +142,7 @@ private:
 
 	wxChoice* StatusChoice;
 	wxTextCtrl* m_DestTextCtrl;
+  wxComboBox* m_DestComboBox;
 	wxTextCtrl* DraughtTextCtrl;
 	wxTextCtrl* PersonsTextCtrl;
 	wxDatePickerCtrl* DatePicker;

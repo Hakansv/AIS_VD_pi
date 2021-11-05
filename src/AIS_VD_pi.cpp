@@ -69,8 +69,6 @@ aisvd_pi::aisvd_pi(void *ppimgr):opencpn_plugin_116(ppimgr)
 
 aisvd_pi::~aisvd_pi()
 {
-      delete m_pplugin_icon;
-      delete m_event_handler;
 }
 
 int aisvd_pi::Init(void)
@@ -78,14 +76,14 @@ int aisvd_pi::Init(void)
       AddLocaleCatalog( _T("opencpn-AIS_VD_pi") );      
 
       prefDlg = NULL;
-      return ( INSTALLS_TOOLBOX_PAGE | WANTS_PREFERENCES | WANTS_CONFIG );
-      //return ( WANTS_PREFERENCES | WANTS_PLUGIN_MESSAGING | WANTS_CONFIG );
+      return ( INSTALLS_TOOLBOX_PAGE | WANTS_NMEA_SENTENCES | WANTS_PREFERENCES | WANTS_CONFIG );
+      //return ( WANTS_PREFERENCES | WANTS_NMEA_SENTENCES | WANTS_PLUGIN_MESSAGING | WANTS_CONFIG );
 }
 
 bool aisvd_pi::DeInit(void)
 {
       SaveConfig();
-
+      delete m_event_handler;
       if( m_AIS_VoyDataWin )
       {
           if( DeleteOptionsPage( m_AIS_VoyDataWin ) )
@@ -137,6 +135,11 @@ wxString aisvd_pi::GetLongDescription()
 
 void aisvd_pi::SetNMEASentence(wxString &sentence)
 {
+  if (sentence.Mid(0, 1).IsSameAs("$") && sentence.Mid(3, 3).IsSameAs("VSD")) {
+    wxString msg = "Passed NMEA multiplexer: ";
+    msg.Append(sentence.Mid(0, sentence.Len()-2));
+    wxLogMessage(msg);
+  }
 }
 
 
@@ -187,7 +190,7 @@ void aisvd_pi::OnSetupOptions(){
     wxStaticBoxSizer* itemStaticBoxSizer3 = new wxStaticBoxSizer(itemStaticBoxSizer3Static, wxVERTICAL);
     m_AIS_VoyDataWin->SetSizer(itemStaticBoxSizer3);
 
-    wxFlexGridSizer* itemFlexGridSizer4 = new wxFlexGridSizer(0, 2, 10, 5);
+    wxFlexGridSizer* itemFlexGridSizer4 = new wxFlexGridSizer(0, 2, 0, 0); // 10, 5);
     itemStaticBoxSizer3->Add(itemFlexGridSizer4, 0, wxGROW | wxALL, 20);
 
     wxStaticText* itemStaticText5 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
@@ -205,18 +208,30 @@ void aisvd_pi::OnSetupOptions(){
     StatusChoiceStrings.Add(_("Aground"));
     StatusChoiceStrings.Add(_("Engaged in Fishing"));
     StatusChoiceStrings.Add(_("Under way sailing"));
-    StatusChoice = new wxChoice(m_AIS_VoyDataWin, ID_CHOICE, wxDefaultPosition, wxDefaultSize, StatusChoiceStrings, 0);
+    StatusChoice = new wxChoice(m_AIS_VoyDataWin, ID_CHOICE, wxDefaultPosition,
+                                wxDefaultSize, StatusChoiceStrings, 0);
     itemFlexGridSizer4->Add(StatusChoice, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     wxStaticText* itemStaticText7 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
-                                    _("Destination"), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer4->Add(itemStaticText7, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
+                                    _("Key Destination"),
+                                    wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer4->Add(itemStaticText7, 0, 
+                        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
+
+    wxStaticText* itemStaticText19 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
+                                     _("or select destination"), 
+                                     wxDefaultPosition, wxDefaultSize, 0);
+    itemFlexGridSizer4->Add(itemStaticText19, 0, 
+                        wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     m_DestTextCtrl = new wxTextCtrl(m_AIS_VoyDataWin, ID_TEXTCTRL, wxEmptyString, 
                                     wxDefaultPosition, wxDefaultSize, 0, DestVal);
     m_DestTextCtrl->SetMaxLength(20);
     itemFlexGridSizer4->Add(m_DestTextCtrl, 0, wxGROW | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
+    m_DestComboBox = new wxComboBox(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
+                                    wxDefaultPosition, wxDefaultSize, 0, NULL, 0);
+    itemFlexGridSizer4->Add(m_DestComboBox, 0, wxEXPAND | wxTOP, 5);
 
     wxStaticText* itemStaticText9 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
                                     _("Draught (m)"), wxDefaultPosition, wxDefaultSize, 0);
@@ -259,9 +274,16 @@ void aisvd_pi::OnSetupOptions(){
     wxButton* SendBtn = new wxButton(m_AIS_VoyDataWin, ID_BUTTON1, 
                                      _("Send to AIS"), wxDefaultPosition, wxDefaultSize, 0);
     itemBoxSizer17->Add(SendBtn, 1, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+
     //  Connect to Events
+
+    m_DestComboBox->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED,
+                         wxCommandEventHandler(aisvd_pi_event_handler::OnDestValSelChange),
+                           NULL, m_event_handler);
+
     SendBtn->Connect(wxEVT_COMMAND_BUTTON_CLICKED,
-                        wxCommandEventHandler(aisvd_pi_event_handler::OnSendBtnClick), NULL, m_event_handler);
+                        wxCommandEventHandler(aisvd_pi_event_handler::OnSendBtnClick),
+                           NULL, m_event_handler);
 
     ////@end t content construction
 
@@ -276,6 +298,9 @@ void aisvd_pi::OnSetupOptions(){
         m_EtaDateTime = now;
     DatePicker->SetValue(m_EtaDateTime);
     TimePickCtrl->SetValue(m_EtaDateTime);
+    m_DestComboBox->Append(">>");
+    m_DestComboBox->Append("SEGOT");
+    m_DestComboBox->Append("STUPAN");
 }
 
 bool aisvd_pi::LoadConfig( void )
@@ -315,9 +340,23 @@ void aisvd_pi::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)
 }
 void aisvd_pi::UpdateDestVal()
 {
+  if (m_DestComboBox->GetValue() != wxEmptyString &&
+      m_DestComboBox->GetValue() != ">>") {
+    m_Destination = m_DestComboBox->GetValue();
+    m_DestComboBox->Select(0);
+  }
+  else if(m_DestTextCtrl->GetValue() != wxEmptyString) {
     m_Destination = m_DestTextCtrl->GetValue();
-    m_Destination = m_Destination.MakeUpper();
-    m_DestTextCtrl->SetValue( m_Destination );
+  }
+  else return;
+  
+  m_Destination = m_Destination.MakeUpper();
+  m_DestTextCtrl->SetValue( m_Destination );
+  //Check if exist else add
+  if (wxNOT_FOUND == m_DestComboBox->FindString(m_Destination)) {
+    m_DestComboBox->Insert(m_Destination, 1);
+  }
+
 }
 void aisvd_pi::UpdateDraught()
 {
@@ -367,9 +406,9 @@ void aisvd_pi::SendSentence()
     S += _T("\r\n");
     //wxPuts(S);
     PushNMEABuffer(S); //finaly send NMEA string
-    wxString msg = "Voyage data sent to NMEA buffer: ";
-    msg.Append(S.Mid(0, S.Len() - 4));
-    wxLogMessage(msg);
+    //wxString msg = "Voyage data sent to NMEA buffer: ";
+    //msg.Append(S.Mid(0, S.Len() - 4));
+    //wxLogMessage(msg);
 }
 
 unsigned char aisvd_pi::ComputeChecksum( wxString sentence ) const
@@ -446,6 +485,10 @@ void aisvd_pi_event_handler::OnSendBtnClick( wxCommandEvent &event )
     m_parent->UpdateEta();
     m_parent->SaveConfig();
     m_parent->SendSentence();
+}
+
+void aisvd_pi_event_handler::OnDestValSelChange(wxCommandEvent &event) {
+  m_parent->UpdateDestVal();
 }
 
 // ----------------------------------------------------------------------------
