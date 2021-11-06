@@ -35,6 +35,7 @@
 #include "default_pi.xpm"
 #include "wx/spinbutt.h"
 #include "timepickerctrl.h"
+#include "wx/tokenzr.h"
 
 // the class factories, used to create and destroy instances of the PlugIn
 
@@ -82,7 +83,7 @@ int aisvd_pi::Init(void)
 
 bool aisvd_pi::DeInit(void)
 {
-      SaveConfig();
+      //SaveConfig();
       delete m_event_handler;
       if( m_AIS_VoyDataWin )
       {
@@ -213,13 +214,13 @@ void aisvd_pi::OnSetupOptions(){
     itemFlexGridSizer4->Add(StatusChoice, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     wxStaticText* itemStaticText7 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
-                                    _("Key Destination"),
+                                    _("Key a destination"),
                                     wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText7, 0, 
                         wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     wxStaticText* itemStaticText19 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
-                                     _("or select destination"), 
+                                     _("or select a destination"), 
                                      wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText19, 0, 
                         wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
@@ -276,7 +277,6 @@ void aisvd_pi::OnSetupOptions(){
     itemBoxSizer17->Add(SendBtn, 1, wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     //  Connect to Events
-
     m_DestComboBox->Connect(wxEVT_COMMAND_COMBOBOX_SELECTED,
                          wxCommandEventHandler(aisvd_pi_event_handler::OnDestValSelChange),
                            NULL, m_event_handler);
@@ -285,9 +285,9 @@ void aisvd_pi::OnSetupOptions(){
                         wxCommandEventHandler(aisvd_pi_event_handler::OnSendBtnClick),
                            NULL, m_event_handler);
 
-    ////@end t content construction
-
+    //content construction
     m_AIS_VoyDataWin->Layout();
+
     //Update values in Controls
     StatusChoice->SetStringSelection(StatusChoiceStrings[0]);
     m_DestTextCtrl->SetValue(m_Destination);
@@ -295,12 +295,15 @@ void aisvd_pi::OnSetupOptions(){
     PersonsTextCtrl->SetValue(m_Persons);
     wxDateTime now = wxDateTime::Now();
     if (now.IsLaterThan(m_EtaDateTime))
-        m_EtaDateTime = now;
+        m_EtaDateTime.Format("%H%M"),now;
     DatePicker->SetValue(m_EtaDateTime);
     TimePickCtrl->SetValue(m_EtaDateTime);
     m_DestComboBox->Append(">>");
-    m_DestComboBox->Append("SEGOT");
-    m_DestComboBox->Append("STUPAN");
+    wxStringTokenizer tkn(m_InitDest, ";");
+    while (tkn.HasMoreTokens()) {
+      m_DestComboBox->Append(tkn.GetNextToken());
+    }
+    m_DestComboBox->Select(0);
 }
 
 bool aisvd_pi::LoadConfig( void )
@@ -314,7 +317,8 @@ bool aisvd_pi::LoadConfig( void )
         pConf->Read( _T("Draught"), &m_Draught );
         pConf->Read( _T("Persons"), &m_Persons);
         pConf->Read( _T("Eta"), &temp);
-        m_EtaDateTime.ParseDateTime(temp);        
+        m_EtaDateTime.ParseDateTime(temp); 
+        pConf->Read(_T("DestSelections"), &m_InitDest);
     }
 
     return true;
@@ -330,14 +334,29 @@ bool aisvd_pi::SaveConfig( void )
         pConf->Write( _T("Draught"), m_Draught );
         pConf->Write( _T("Persons"), m_Persons );
         pConf->Write( _T("Eta"), m_EtaDateTime.Format() );
+        // Save max 15 dest-selections to config.
+        if (m_AIS_VoyDataWin) {
+          wxString destarr;
+          size_t size(0);
+          size = wxMin(15, m_DestComboBox->GetCount());
+          for (int i = 1; i < size; i++) {
+            m_DestComboBox->Select(i);
+            destarr << m_DestComboBox->GetValue();
+            if (i < size - 1) destarr << ";";
+          }
+          m_DestComboBox->Select(0);
+          if (size) pConf->Write(_T("DestSelections"), destarr);
+        }
     }
 
     return true;
 }
+
 void aisvd_pi::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)
 {
 
 }
+
 void aisvd_pi::UpdateDestVal()
 {
   if (m_DestComboBox->GetValue() != wxEmptyString &&

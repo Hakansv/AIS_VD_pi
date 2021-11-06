@@ -95,28 +95,28 @@ class aisvd_pi : public opencpn_plugin_116
 public:
       aisvd_pi(void *ppimgr);
 	~aisvd_pi();
-//    The required PlugIn Methods
-      int Init(void);
-      bool DeInit(void);
+//  The required PlugIn Methods
+    int Init(void);
+    bool DeInit(void);
 
-      int GetAPIVersionMajor();
-      int GetAPIVersionMinor();
-      int GetPlugInVersionMajor();
-      int GetPlugInVersionMinor();
+    int GetAPIVersionMajor();
+    int GetAPIVersionMinor();
+    int GetPlugInVersionMajor();
+    int GetPlugInVersionMinor();
 	  wxBitmap *GetPlugInBitmap();
-      wxString GetCommonName();
-      wxString GetShortDescription();
-      wxString GetLongDescription();
+    wxString GetCommonName();
+    wxString GetShortDescription();
+    wxString GetLongDescription();
 
-//    The optional method overrides
-      void SetNMEASentence(wxString &sentence);
+//  The optional method overrides
+    void SetNMEASentence(wxString &sentence);
 
-//    The override PlugIn Methods
-      void ShowPreferencesDialog( wxWindow* parent );
-      void SetPluginMessage(wxString &message_id, wxString &message_body);
+// The override PlugIn Methods
+  void ShowPreferencesDialog( wxWindow* parent );
+  void SetPluginMessage(wxString &message_id, wxString &message_body);
 	void OnSetupOptions();
-    void OnCloseToolboxPanel(int page_sel, int ok_apply_cancel);
-    bool SaveConfig( void );
+  void OnCloseToolboxPanel(int page_sel, int ok_apply_cancel);
+  bool SaveConfig( void );
 	void UpdateDestVal();
 	void UpdateDraught();
 	void UpdatePersons();
@@ -125,21 +125,21 @@ public:
 	PreferenceDlg *prefDlg;
 	wxString AIS_type;
 	wxString m_Destination;
-    wxString m_Draught;
-    wxString m_Persons;
-    wxString m_EtaDate; //MMDD
-    wxString m_EtaTime; //HHmm
+  wxString m_Draught;
+  wxString m_Persons;
+  wxString m_EtaDate; //MMDD
+  wxString m_EtaTime; //HHmm
 	wxDateTime m_EtaDateTime;
+  wxString m_InitDest;
 
 private:
-    bool LoadConfig( void );  
+  bool LoadConfig( void );  
 	wxWindow         *m_parent_window;
 	wxBitmap          *m_pplugin_icon;
-    wxScrolledWindow  *m_AIS_VoyDataWin;
+  wxScrolledWindow  *m_AIS_VoyDataWin;
 	aisvd_pi_event_handler *m_event_handler;
 	//wxString DestValid;
 	
-
 	wxChoice* StatusChoice;
 	wxTextCtrl* m_DestTextCtrl;
   wxComboBox* m_DestComboBox;
