@@ -293,9 +293,10 @@ void aisvd_pi::OnSetupOptions(){
     m_DestTextCtrl->SetValue(m_Destination);
     DraughtTextCtrl->SetValue(m_Draught);
     PersonsTextCtrl->SetValue(m_Persons);
-    wxDateTime now = wxDateTime::Now();
-    if (now.IsLaterThan(m_EtaDateTime))
-        m_EtaDateTime.Format("%H%M"),now;
+    wxDateTime now = wxDateTime::Now().MakeUTC();
+    if (now.IsLaterThan(m_EtaDateTime)) {
+      m_EtaDateTime= now.SetSecond(0);
+    }
     DatePicker->SetValue(m_EtaDateTime);
     TimePickCtrl->SetValue(m_EtaDateTime);
     m_DestComboBox->Append(">>");
@@ -339,7 +340,7 @@ bool aisvd_pi::SaveConfig( void )
           wxString destarr;
           size_t size(0);
           size = wxMin(15, m_DestComboBox->GetCount());
-          for (int i = 1; i < size; i++) {
+          for (size_t i = 1; i < size; i++) {
             m_DestComboBox->Select(i);
             destarr << m_DestComboBox->GetValue();
             if (i < size - 1) destarr << ";";
@@ -484,9 +485,6 @@ PreferenceDlg::~PreferenceDlg()
 {
 }
 
-// An Event handler class to catch events from S63 UI dialog
-//      Implementation
-
 aisvd_pi_event_handler::aisvd_pi_event_handler(aisvd_pi *parent)
 {
     m_parent = parent;
@@ -515,7 +513,7 @@ void aisvd_pi_event_handler::OnDestValSelChange(wxCommandEvent &event) {
 // ----------------------------------------------------------------------------
 
 // the margin between the text control and the spin
-static const wxCoord MARGIN = 2;
+//static const wxCoord MARGIN = 2;
 
 // // ----------------------------------------------------------------------------
 // // TimePickerCtrlText: text control used by spin control

@@ -32,7 +32,6 @@
 #include "wx/dateevt.h"
 #include <wx/fileconf.h>
 #include <wx/timectrl.h>
-
 #include "ocpn_plugin.h"
 
 
@@ -47,7 +46,7 @@
 #define     MY_API_VERSION_MINOR    9
 
 //#include "nmea0183/nmea0183.h"
-////@begin control identifiers
+//@begin control identifiers
 #define ID_T wxID_ANY
 #define ID_PANEL wxID_ANY
 #define ID_CHOICE wxID_ANY
@@ -328,7 +327,7 @@ class PreferenceDlg : public wxDialog
 // 	DECLARE_EVENT_TYPE(ptb3EVT_TIMEPICKEREVENT,1)
 // END_DECLARE_EVENT_TYPES()
 // 
-// #define EVT_TIMEPICKER(func)                              \
+// define EVT_TIMEPICKER(func)                              \
 // 	DECLARE_EVENT_TABLE_ENTRY( ptb3EVT_TIMEPICKEREVENT,      \
 // 		-1,                                    \
 // 		-1,                                    \
