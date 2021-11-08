@@ -37,6 +37,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 message(STATUS "Building: ${BUILD_TYPE}")
 
+if (CMAKE_CXX_COMPILER_ID MATCHES "Clang")
+  add_compile_options(
+    -Wno-inconsistent-missing-override
+    -Wno-potentially-evaluated-expression
+  )
+endif ()
+
 # -------- Options ----------
 
 set(OCPN_TEST_REPO
@@ -62,6 +69,7 @@ set(OCPN_TARGET_TUPLE "" CACHE STRING
 string(TOLOWER "${OCPN_TARGET_TUPLE}" _lc_target)
 if ("${_lc_target}" MATCHES "android*")
   set(QT_ANDROID ON)
+  set(OCPN_USE_BUNDLED_WXCURL OFF)
   # Until we have a proper toolchain file:
   set(CMAKE_CROSSCOMPILING ON)
 else ()
@@ -84,7 +92,7 @@ Update AIS class A voyage data as
 Destination 
 Time/Date of arrival 
 and Navigational status
-by NMEA0183 xxVSD.
+by NMEA0183 ECVSD.
 ]=])
 
 set(PKG_AUTHOR "Dirk R & Hakan S")
@@ -95,8 +103,8 @@ set(PKG_INFO_URL https://github.com/Hakansv/AIS_VD_pi)
 set(SRC
     src/AIS_VD_pi.h
  	src/AIS_VD_pi.cpp
- 	src/SpesTextCtrl.h
- 	src/SpesTextCtrl.cpp
+ 	#src/SpesTextCtrl.h
+ 	#src/SpesTextCtrl.cpp
 )
 
 # -------- Setup completed, build the plugin --------
@@ -110,16 +118,15 @@ target_link_libraries(${CMAKE_PROJECT_NAME} ocpn::api)
 set(VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(VERSION_PATCH ${PROJECT_VERSION_PATCH})
-
 set(PACKAGE_NAME ${CMAKE_PROJECT_NAME})
 
 # Create the minimim ocpn version id string like ov50
 string(REGEX REPLACE "\([0-9]\)\.\([0-9]\).*" "ov\\1\\2"
        OCPN_MIN_VERSION ${API_OCPN_MIN_VERSION})
 
-if (AIS_VD_USE_SVG)
-  add_definitions(-DSHIPDRIVER_USE_SVG)
-endif ()
+# if (AIS_VD_USE_SVG)
+#   add_definitions(-DSHIPDRIVER_USE_SVG)
+# endif ()
 
 # Set up targets. Targets sets up a recursive call with BUILD_TYPE set to
 # 'flatpak', 'pkg' or 'tarball'. The initial call without BUILD_TYPE ends
@@ -137,25 +144,33 @@ if (NOT ${BUILD_TYPE} STREQUAL "flatpak")
   # Build package as required (flatpak already dealt with).
   #
   include(PluginCompiler)
+  include(PluginLocalization)
   include(PluginInstall)
   include(PluginPackage)
   if (QT_ANDROID)
-    include(AndroidLibs)
+    include(libs/AndroidLibs.cmake)
   else ()
     include(PluginLibs)
   endif ()
-  include(PluginLocalization)
 
   include_directories(BEFORE ${CMAKE_BINARY_DIR}/include)
+  include_directories(${CMAKE_SOURCE_DIR}/src)
+  include_directories(${CMAKE_SOURCE_DIR}/include)
+  #include_directories(${CMAKE_SOURCE_DIR}/libs/gdal/src)
 
-  add_subdirectory("libs/jsoncpp")
-  target_link_libraries(${PACKAGE_NAME} ocpn::jsoncpp)
+  add_subdirectory("libs/wxJSON")
+  target_link_libraries(${PACKAGE_NAME} ocpn::wxjson)
+  
+  #add_subdirectory("libs/jsoncpp")
+  #target_link_libraries(${PACKAGE_NAME} ocpn::jsoncpp)
   
   add_subdirectory("libs/tinyxml")
   target_link_libraries(${PACKAGE_NAME} ocpn::tinyxml)
   
-  add_subdirectory("libs/wxJSON")
-  target_link_libraries(${PACKAGE_NAME} ocpn::wxjson)
+  if (ARCH STREQUAL "armhf")
+   add_compile_definitions(OCPN_ARMHF)
+  endif ()  
+  
 endif ()
 
 configure_file(

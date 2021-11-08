@@ -6,7 +6,7 @@
 set -xe
 
 sudo apt -q update
-sudo apt install cmake git gettext
+sudo apt install cmake git
 
 # Install cloudsmith-cli (for upload) and cryptography (for git-push)
 sudo apt install python3-pip
