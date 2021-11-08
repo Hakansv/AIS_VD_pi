@@ -27,9 +27,9 @@ IF (COMMAND cmake_policy)
   CMAKE_POLICY(SET CMP0011 OLD)
 ENDIF (COMMAND cmake_policy)
 
-PROJECTAIS_VD_pi)
+PROJECTais-vd_pi)
 
-SET(PACKAGE_NAME AIS_VD_pi)
+SET(PACKAGE_NAME ais-vd_pi)
 SET(PLUGIN_SOURCE_DIR ..)
 MESSAGE (STATUS "*** Building ${PACKAGE_NAME} ***")
 
@@ -81,13 +81,13 @@ FIND_PACKAGE(Gettext REQUIRED)
 # header files and cpp/c files and CMake will sort them out
 
 
-SET(SRC_AIS_VD        
- 		AIS_VD_pi.h
- 		AIS_VD_pi.cpp
+SET(SRC_ais-vd        
+ 		ais-vd_pi.h
+ 		ais-vd_pi.cpp
  	)
 
 
-ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_AIS_VD} )
+ADD_LIBRARY(${PACKAGE_NAME} SHARED ${SRC_ais-vd} )
 
 IF(WIN32)
   SET(OPENCPN_IMPORT_LIB "../../../${CMAKE_CFG_INTDIR}/${PARENT}")

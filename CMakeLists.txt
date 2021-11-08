@@ -47,20 +47,20 @@ endif ()
 # -------- Options ----------
 
 set(OCPN_TEST_REPO
-    "opencpn/AIS_VD-alpha"
+    "opencpn/ais-vd-alpha"
     CACHE STRING "Default repository for untagged builds"
 )
 set(OCPN_BETA_REPO
-    "opencpn/AIS_VD-beta"
+    "opencpn/ais-vd-beta"
     CACHE STRING 
     "Default repository for tagged builds matching 'beta'"
 )
 set(OCPN_RELEASE_REPO
-    "opencpn/AIS_VD-prod"
+    "opencpn/ais-vd-prod"
     CACHE STRING 
     "Default repository for tagged builds not matching 'beta'"
 )
-option(AIS_VD_USE_SVG "Use SVG graphics" OFF)
+option(ais-vd_USE_SVG "Use SVG graphics" OFF)
 
 set(OCPN_TARGET_TUPLE "" CACHE STRING
   "Target spec: \"platform;version;arch\""
@@ -80,11 +80,11 @@ endif ()
 #
 # -------  Plugin setup --------
 #
-project(AIS_VD_pi VERSION 1.1.13)
+project(ais-vd_pi VERSION 1.1.13)
 set(PKG_PRERELEASE "Beta")  # Empty, or a tag like 'beta'
 
-set(DISPLAY_NAME AIS_VD)    # Dialogs, installer artifacts, ...
-set(PLUGIN_API_NAME AIS_VD) # As of GetCommonName() in plugin API
+set(DISPLAY_NAME ais-vd)    # Dialogs, installer artifacts, ...
+set(PLUGIN_API_NAME ais-vd) # As of GetCommonName() in plugin API
 set(CPACK_PACKAGE_CONTACT "Dirk R Hakan S")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Update AIS voyage data")
 set(CPACK_PACKAGE_DESCRIPTION [=[
@@ -97,12 +97,12 @@ by NMEA0183 ECVSD.
 
 set(PKG_AUTHOR "Dirk R & Hakan S")
 set(PKG_IS_OPEN_SOURCE "yes")
-set(CPACK_PACKAGE_HOMEPAGE_URL https://github.com/Hakansv/AIS_VD_pi)
-set(PKG_INFO_URL https://github.com/Hakansv/AIS_VD_pi)
+set(CPACK_PACKAGE_HOMEPAGE_URL https://github.com/Hakansv/ais-vd_pi)
+set(PKG_INFO_URL https://github.com/Hakansv/ais-vd_pi)
 
 set(SRC
-    src/AIS_VD_pi.h
- 	src/AIS_VD_pi.cpp
+    src/ais-vd_pi.h
+ 	src/ais-vd_pi.cpp
  	#src/SpesTextCtrl.h
  	#src/SpesTextCtrl.cpp
 )
@@ -124,7 +124,7 @@ set(PACKAGE_NAME ${CMAKE_PROJECT_NAME})
 string(REGEX REPLACE "\([0-9]\)\.\([0-9]\).*" "ov\\1\\2"
        OCPN_MIN_VERSION ${API_OCPN_MIN_VERSION})
 
-# if (AIS_VD_USE_SVG)
+# if (ais-vd_USE_SVG)
 #   add_definitions(-DSHIPDRIVER_USE_SVG)
 # endif ()
 
@@ -134,7 +134,7 @@ string(REGEX REPLACE "\([0-9]\)\.\([0-9]\).*" "ov\\1\\2"
 #
 include(Targets)
 create_targets(
-  ${PROJECT_SOURCE_DIR}/flatpak/org.opencpn.OpenCPN.Plugin.AIS_VD.yaml
+  ${PROJECT_SOURCE_DIR}/flatpak/org.opencpn.OpenCPN.Plugin.ais-vd.yaml
 )
 if ("${BUILD_TYPE}" STREQUAL "")
   return ()
