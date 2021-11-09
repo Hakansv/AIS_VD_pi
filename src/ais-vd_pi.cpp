@@ -33,8 +33,6 @@
 
 #include "ais-vd_pi.h"
 #include "default_pi.xpm"
-#include "wx/spinbutt.h"
-#include "timepickerctrl.h"
 #include "wx/tokenzr.h"
 
 // the class factories, used to create and destroy instances of the PlugIn

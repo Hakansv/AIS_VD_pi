@@ -1,7 +1,7 @@
 # ~~~
 # Author:      Rasbats aka. Mike Rossiter
 # Copyright:
-# License:     wxWidgets License
+# License:     GPLv2+
 # ~~~
 
 
