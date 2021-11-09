@@ -257,7 +257,7 @@ void aisvd_pi::OnSetupOptions(){
     itemFlexGridSizer4->Add(DatePicker, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     wxStaticText* itemStaticText15 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
-                                     _("ETA Time"), wxDefaultPosition, wxDefaultSize, 0);
+                                     _("ETA Time (UTC)"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText15, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     TimePickCtrl = new wxTimePickerCtrl(m_AIS_VoyDataWin, ID_TIMECTR, wxDateTime(), wxDefaultPosition, wxDefaultSize, 0);
