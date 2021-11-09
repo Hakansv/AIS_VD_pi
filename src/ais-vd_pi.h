@@ -136,6 +136,7 @@ private:
 	wxWindow         *m_parent_window;
 	wxBitmap          *m_pplugin_icon;
   wxScrolledWindow  *m_AIS_VoyDataWin;
+  wxString          g_PrivateDataDir;
 	aisvd_pi_event_handler *m_event_handler;
 	//wxString DestValid;
 	
@@ -177,7 +178,7 @@ private:
     /// Should we show tooltips?
     static bool ShowToolTips();
 
-    wxBitmap m_panelBitmap;
+    //wxBitmap m_panelBitmap;
 	
 };
 ///////////////////////////////////////////////////////////////////////////////

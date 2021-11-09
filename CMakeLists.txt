@@ -80,7 +80,7 @@ endif ()
 #
 # -------  Plugin setup --------
 #
-project(ais-vd_pi VERSION 1.1.14)
+project(ais-vd_pi VERSION 1.1.15)
 set(PKG_PRERELEASE "Beta")  # Empty, or a tag like 'beta'
 
 set(DISPLAY_NAME ais-vd)    # Dialogs, installer artifacts, ...

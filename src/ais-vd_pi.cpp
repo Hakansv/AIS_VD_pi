@@ -56,10 +56,20 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 aisvd_pi::aisvd_pi(void *ppimgr):opencpn_plugin_116(ppimgr)
 {
       // Create the PlugIn icons
-      m_panelBitmap = wxBitmap(default_pi);
-      m_pplugin_icon = &m_panelBitmap;
+      //m_panelBitmap = wxBitmap(default_pi);
+      //m_pplugin_icon = &m_panelBitmap;
+      m_pplugin_icon = new wxBitmap(default_pi);
 
       m_event_handler = new aisvd_pi_event_handler(this);
+
+      // Get and build if necessary a private data dir
+      /*g_PrivateDataDir = *GetpPrivateApplicationDataLocation();
+      g_PrivateDataDir += wxFileName::GetPathSeparator();
+      g_PrivateDataDir += _T("ais-vd_pi");
+      g_PrivateDataDir += wxFileName::GetPathSeparator();
+      if (!::wxDirExists(g_PrivateDataDir))
+        ::wxMkdir(g_PrivateDataDir);*/
+
       //    Get a pointer to the opencpn configuration object
       m_pconfig = GetOCPNConfigObject();
       //    And load the configuration items
@@ -68,6 +78,7 @@ aisvd_pi::aisvd_pi(void *ppimgr):opencpn_plugin_116(ppimgr)
 
 aisvd_pi::~aisvd_pi()
 {
+  delete m_pplugin_icon;
 }
 
 int aisvd_pi::Init(void)
