@@ -467,7 +467,7 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
     m_staticText2->Wrap( -1 );
     gSizer2->Add( m_staticText2, 0, wxALL, 5 );
 
-    wxString m_choice2Choices[] = { wxT("True Heading Carbon Pro") };
+    wxString m_choice2Choices[] = { wxT("Class A Transponder supporting NMEA0183 $ECVSD") };
     int m_choice2NChoices = sizeof( m_choice2Choices ) / sizeof( wxString );
     m_choice2 = new wxChoice( this, wxID_ANY, wxDefaultPosition, wxDefaultSize, m_choice2NChoices, m_choice2Choices, 0 );
     m_choice2->SetSelection( 0 );

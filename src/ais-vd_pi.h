@@ -171,14 +171,14 @@ private:
     void SetEtaTime(wxString value) { m_EtaTime = value ; }
 	unsigned char ComputeChecksum( wxString sentence ) const;
     /// Retrieves bitmap resources
-    wxBitmap GetBitmapResource( const wxString& name );
+    //wxBitmap GetBitmapResource( const wxString& name );
 
     /// Retrieves icon resources
-    wxIcon GetIconResource( const wxString& name );
+    //wxIcon GetIconResource( const wxString& name );
 ////@end t member function declarations
 
     /// Should we show tooltips?
-    static bool ShowToolTips();
+    //static bool ShowToolTips();
 
     //wxBitmap m_panelBitmap;
 	
