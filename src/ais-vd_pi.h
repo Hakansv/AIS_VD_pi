@@ -63,7 +63,8 @@
 #define SYMBOL_T_SIZE wxSize(500, 500)
 #define SYMBOL_T_POSITION wxDefaultPosition
 ////@end control identifiers
-class TimePickerCtrl;
+
+//class TimePickerCtrl;
 class aisvd_pi;
 class PreferenceDlg;
 // An Event handler class to catch events from UI dialog
@@ -91,9 +92,10 @@ public:
 class aisvd_pi : public opencpn_plugin_116 
 {
   DECLARE_EVENT_TABLE()
-public:
-      aisvd_pi(void *ppimgr);
-	~aisvd_pi();
+  public:
+    aisvd_pi(void *ppimgr);
+	  ~aisvd_pi();
+
 //  The required PlugIn Methods
     int Init(void);
     bool DeInit(void);
@@ -107,8 +109,8 @@ public:
     wxString GetShortDescription();
     wxString GetLongDescription();
 
-//  The optional method overrides
-    void SetNMEASentence(wxString &sentence);
+// The optional method overrides
+  void SetNMEASentence(wxString &sentence);
 
 // The override PlugIn Methods
   void ShowPreferencesDialog( wxWindow* parent );

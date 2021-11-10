@@ -101,7 +101,7 @@ set(CPACK_PACKAGE_HOMEPAGE_URL https://github.com/Hakansv/ais-vd_pi)
 set(PKG_INFO_URL https://github.com/Hakansv/ais-vd_pi)
 
 set(SRC
-    src/ais-vd_pi.h
+  src/ais-vd_pi.h
  	src/ais-vd_pi.cpp
  	#src/SpesTextCtrl.h
  	#src/SpesTextCtrl.cpp
