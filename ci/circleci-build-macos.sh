@@ -1,12 +1,19 @@
 #!/usr/bin/env bash
 
 
-#
 # Build the  MacOS artifacts
+
+
+# Copyright (c) 2021 Alec Leamas
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
 
 set -xe
 
-export MACOSX_DEPLOYMENT_TARGET=10.9
+export MACOSX_DEPLOYMENT_TARGET=10.10
 
 # Return latest version of $1, optiomally using option $2
 pkg_version() { brew list --versions $2 $1 | tail -1 | awk '{print $2}'; }
@@ -22,19 +29,7 @@ for pkg in $(sed '/#/d' < $here/../build-deps/macos-deps);  do
     brew link --overwrite $pkg || brew install $pkg
 done
 
-if brew list --cask --versions packages; then
-    version=$(pkg_version packages '--cask')
-    sudo installer \
-        -pkg /usr/local/Caskroom/packages/$version/packages/Packages.pkg \
-        -target /
-else
-    brew install --cask packages
-fi
-
 # Install the pre-built wxWidgets package
-#wget -q https://download.opencpn.org/s/rwoCNGzx6G34tbC/download \
-#    -O /tmp/wx312B_opencpn50_macos109.tar.xz
-#tar -C /tmp -xJf /tmp/wx312B_opencpn50_macos109.tar.xz
 
 wget -q https://download.opencpn.org/s/MCiRiq4fJcKD56r/download \
     -O /tmp/wx315_opencpn50_macos1010.tar.xz
@@ -47,7 +42,7 @@ cmake \
   -DwxWidgets_CONFIG_EXECUTABLE=/tmp/wx315_opencpn50_macos1010/bin/wx-config \
   -DwxWidgets_CONFIG_OPTIONS="--prefix=/tmp/wx315_opencpn50_macos1010" \
   -DCMAKE_INSTALL_PREFIX= \
-  -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9 \
+  -DCMAKE_OSX_DEPLOYMENT_TARGET=10.10 \
   ..
 
 if [ -z "$CLOUDSMITH_API_KEY" ]; then
@@ -57,8 +52,6 @@ if [ -z "$CLOUDSMITH_API_KEY" ]; then
 fi
 
 make -j $(sysctl -n hw.physicalcpu) VERBOSE=1 tarball
-
-#make create-pkg
 
 # Install cloudsmith needed by upload script
 python3 -m pip install --upgrade --user -q pip setuptools

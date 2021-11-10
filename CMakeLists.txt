@@ -102,9 +102,9 @@ set(PKG_INFO_URL https://github.com/Hakansv/ais-vd_pi)
 
 set(SRC
   src/ais-vd_pi.h
- 	src/ais-vd_pi.cpp
- 	#src/SpesTextCtrl.h
- 	#src/SpesTextCtrl.cpp
+  src/ais-vd_pi.cpp
+  #src/SpesTextCtrl.h
+  #src/SpesTextCtrl.cpp
 )
 
 # -------- Setup completed, build the plugin --------
