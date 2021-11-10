@@ -24,6 +24,14 @@ Options:
 EOT
 }
 
+# Exec on tmpfile to avoid file lock when updating script on Windows.
+# The directory /c exists on git bash on Windows, and hopefully only there.
+if [[ -d /c && "$0" =~ .*update-templates ]]; then
+    tmpfile=$(mktemp)
+    cp $0 $tmpfile
+    exec $tmpfile
+fi
+
 # Handle options and parameters
 usage="Usage: $0 [-t] [-T] [treeish]"
 merge_opt=""
@@ -40,6 +48,8 @@ while getopts "tTh" opt; do
     esac
 done
 shift $((OPTIND-1))
+
+test -z "$test_mode" || set -x
 source_treeish=${1:-"shipdriver/master"}
 
 
@@ -50,54 +60,59 @@ if [ -n "$clean" ]; then
     exit 1
 fi
 
-
-# Set up the shipdriver remote
-if git ls-remote --exit-code shipdriver &>/dev/null; then
-    git remote remove shipdriver
-    echo "Removing existing shipdriver remote."
-fi
-git remote add shipdriver https://github.com/Rasbats/shipdriver_pi.git
-git remote update shipdriver
-git fetch --tags shipdriver
-
-
-# If we need to update this script, do it and exit
 if [ -z "$test_mode" ]; then
-    if ! git diff --quiet HEAD $source_treeish -- update-templates; then
-        git checkout $source_treeish update-templates
-        cat << EOT
+    # Set up the shipdriver remote
+    if git ls-remote --exit-code shipdriver &>/dev/null; then
+        git remote remove shipdriver
+        echo "Removing existing shipdriver remote."
+    fi
+    echo "Adding new shipdriver remote"
+    git remote add shipdriver https://github.com/Rasbats/shipdriver_pi.git
+    git remote update shipdriver
+    git fetch --tags shipdriver
+
+    # Create a new update branch and work on that
+    hash=$(git rev-parse --short  $source_treeish)
+    new_branch="update.$hash"
+    if git rev-parse $new_branch &> /dev/null; then git branch -D $new_branch; fi
+    git branch $new_branch $source_treeish
+    echo "Created temporary work branch  $new_branch"
+
+    echo "Checking for updates of updates-templates script"
+    if [ -z "$test_mode" ]; then
+        if ! git diff --quiet HEAD $source_treeish -- update-templates; then
+            git checkout $source_treeish update-templates
+            cat << EOT
 update-templates script is updated to latest version. Please commit
 changes and re-run script.
 EOT
-        exit 0
+            exit 0
+        fi
     fi
 fi
 
 
-# Merge all changes in shipdriver remote with current branch
+echo "Merging shipdriver branch with local plugin"
 git merge --no-ff --no-commit --allow-unrelated-histories $merge_opt \
     $source_treeish
 
 
-# Restore all non-template files.
+echo "Restoring non-template files"
 for f in \
+    Plugin.cmake \
     CMakeLists.txt \
     build-deps \
-    buildosx \
-    buildwin \
     config.h.in \
     COPYING \
     data \
     flatpak \
-    libs \
     manual \
-    mingw \
     po \
     README.md \
     src
 do
     if test -e "$f"; then
-        git checkout HEAD $f
+        git checkout -q HEAD $f
         # Remove all added files in local directories
         for ff in $(git diff --diff-filter=AC --name-only --staged $f); do
             git rm --quiet -f $ff
@@ -105,8 +120,19 @@ do
     fi
 done
 
+echo "Restore private libraries in libs/"
+for d in libs/*; do
+    case "$d" in
+      api*|WindowsHeaders)
+          continue
+          ;;
+      *)  git checkout -q HEAD $d
+          ;;
+    esac
+done
 
-# Remove miscellaneous added files
+
+echo "Remove miscellaneous added files"
 for f in $(git diff --diff-filter=AC --name-only --staged \
            | grep -E "\.enc$|\.pub$|\.fbp$")
 do
@@ -114,15 +140,32 @@ do
 done
 
 
-# Revert changes in blacklisted files.
 if [ -e update-ignored ]; then
+    echo "Revert changes in blacklisted files."
     for f in $(cat update-ignored); do
         git checkout HEAD $f
     done
 fi
 
+echo "Add files which are simple additions"
+for f in $(git diff --staged --name-only --diff-filter=A); do
+    git add $f
+done
 
-# Create or update version file
+if [ -f cmake/TemplateVersion ]; then
+    our_manifest=$(echo flatpak/org.opencpn.OpenCPN.Plugin.*.yaml)
+    echo "Append shipdriver flatpak manifest's log of changes to $our_manifest"
+
+    git fetch --tags ${source_treeish%/*}
+    prev_commit=$(sed -n '/commit:/s/.*: *//p' cmake/TemplateVersion)
+    src_manifest=flatpak/org.opencpn.OpenCPN.Plugin.shipdriver.yaml
+    git checkout $source_treeish $src_manifest
+    git diff  $prev_commit $src_manifest | sed 's/^/# /' \
+        >> $our_manifest
+    git rm -f $src_manifest
+fi
+    
+echo "Create or update cmake/TemplateVersion"
 echo "# Created by update-templates" > cmake/TemplateVersion
 echo "date: $(date -u +'%Y-%m-%d %H:%M UTC')" >> cmake/TemplateVersion
 commit=$(git rev-parse --short $source_treeish)
@@ -131,12 +174,13 @@ tags=$(git tag --contains $commit)
 echo "tags: $tags" >> cmake/TemplateVersion
 git add cmake/TemplateVersion
 
-
 cat << EOF
-Shipdriver templates have been updated. To review pending changes:
+
+
+Shipdriver templates has been updated. To review pending changes:
 
     $ git status
-    $ git diff --staged
+    $ git diff --stat --staged
 
 See UPDATE_TEMPLATES.md for more.
 EOF
