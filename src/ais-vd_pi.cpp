@@ -373,6 +373,12 @@ void aisvd_pi::UpdateDestVal()
   if (m_DestComboBox->GetValue() != wxEmptyString &&
       m_DestComboBox->GetValue() != ">>") {
     m_Destination = m_DestComboBox->GetValue();
+    //Move last selection to top
+    int pos = m_DestComboBox->GetSelection();
+    if (pos > 2) {
+      m_DestComboBox->Delete(pos);
+      m_DestComboBox->Insert(m_Destination, 1);
+    }
     m_DestComboBox->Select(0);
   }
   else if(m_DestTextCtrl->GetValue() != wxEmptyString) {
