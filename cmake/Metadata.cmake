@@ -109,10 +109,7 @@ set(_pre_rel ${PKG_PRERELEASE})
 if (NOT "${_pre_rel}" STREQUAL "" AND _pre_rel MATCHES "^[^-]")
   string(PREPEND _pre_rel "-")
 endif ()
-#set(pkg_semver "${PROJECT_VERSION}${_pre_rel}+${_build_id}.${_gitversion}")
-
-set(pkg_semver "${PROJECT_VERSION}${_pre_rel}")
-message(STATUS "pkg_semver:  ${pkg_semver}")
+set(pkg_semver "${PROJECT_VERSION}${_pre_rel}+${_build_id}.${_gitversion}")
 
 # pkg_displayname: GUI name
 if (ARCH MATCHES "arm64|aarch64")

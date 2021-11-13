@@ -10,10 +10,10 @@ set wxWidgets_INCLUDE_DIRS=%WXWIN%\include
 set PATH=%PATH%;%WXWIN%;%wxWidgets_LIB_DIR%;%wxWidgets_INCLUDE_DIRS%;C:\Program Files (x86)\Poedit\Gettexttools\bin;
 set PATH=C:\Program Files\Cmake\bin;%PATH%
 
-REM Example Only. Change rasbats/shipdriver_pi.git to match the repo you want to clone.
-git clone  https://github.com/rasbats/shipdriver_pi.git
-REM Example Only. Change shipdriver_pi to match the repo being used.
-cd shipdriver_pi
+REM Example Only. Change rasbats/xx_pi.git to match the repo you want to clone.
+git clone  https://github.com/Hakansv/ais-vd_pi.git
+REM Example Only. Change xx_pi to match the repo being used.
+cd ais-vd_pi
 
 mkdir  build
 cd build

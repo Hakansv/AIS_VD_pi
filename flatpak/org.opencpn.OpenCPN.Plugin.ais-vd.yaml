@@ -21,18 +21,18 @@ finish-args:
 modules:
   - name: ais-vd
     no-autogen: true
-    build-options:
-      cflags: -fPIC
-      cxxflags: -fPIC -DFLATPAK
     buildsystem: cmake
-    config-opts:
-        - -DCMAKE_INSTALL_PREFIX=/app/extensions/ais-vd/
-        - -DCMAKE_BUILD_TYPE:STRING=Release
-        - -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
-        - -DBUILD_TYPE:STRING=tarball
-        - -Uplugin_target
-        
-    sources:
-        - type: git
-          url: ..
-          branch: master
+      config-opts:
+          - -DCMAKE_INSTALL_PREFIX=/app/extensions/shipdriver/
+          - -DCMAKE_BUILD_TYPE:STRING=Release
+          - -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON
+          - -DBUILD_TYPE:STRING=tarball
+          - -Uplugin_target
+      build-options:
+          cxxflags: -DFLATPAK -O3
+          cflags: -DFLATPAK -O3
+          # The flatpak-builder default CFLAGS adds -g
+      sources:
+          - type: git
+            url: ..
+            branch: master

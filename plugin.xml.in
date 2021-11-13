@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- @pkg_build_info@ -->
 <plugin version="1">
   <name> @PLUGIN_API_NAME@ </name>
   <version> @pkg_semver@ </version>
@@ -6,7 +7,7 @@
   <summary> @PKG_SUMMARY@ </summary>
 
   <api-version> @API_VERSION@ </api-version>
-  <open-source> no </open-source>
+  <open-source> @PKG_IS_OPEN_SOURCE@ </open-source>
   <author> @PKG_AUTHOR@ </author>
   <source> @PKG_HOMEPAGE@ </source>
   <info-url> @PKG_INFO_URL@ </info-url>

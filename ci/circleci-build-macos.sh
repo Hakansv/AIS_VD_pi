@@ -13,6 +13,11 @@
 
 set -xe
 
+# Load local environment if it exists i. e., this is a local build
+if [ -f ~/.config/local-build.rc ]; then source ~/.config/local-build.rc; fi
+
+if [ -n "$TRAVIS_BUILD_DIR" ]; then cd $TRAVIS_BUILD_DIR; fi
+
 export MACOSX_DEPLOYMENT_TARGET=10.10
 
 # Return latest version of $1, optiomally using option $2
@@ -45,23 +50,22 @@ cmake \
   -DCMAKE_OSX_DEPLOYMENT_TARGET=10.10 \
   ..
 
-if [ -z "$CLOUDSMITH_API_KEY" ]; then
-    echo 'No $CLOUDSMITH_API_KEY found, assuming local setup'
+if [[ -z "$CI" ]]; then
+    echo '$CI not found in environment, assuming local setup'
     echo "Complete build using 'cd build; make tarball' or so."
     exit 0
 fi
 
-make -j $(sysctl -n hw.physicalcpu) VERBOSE=1 tarball
+make VERBOSE=1 tarball
 
 # Install cloudsmith needed by upload script
-python3 -m pip install --upgrade --user -q pip setuptools
-python3 -m pip install --user cloudsmith-cli
+python3 -m pip install -q --user cloudsmith-cli
 
 # Required by git-push
-python3 -m pip install --user cryptography
+python3 -m pip install -q --user cryptography
 
 # python3 installs in odd place not on PATH, teach upload.sh to use it:
 pyvers=$(python3 --version | awk '{ print $2 }')
 pyvers=$(echo $pyvers | sed -E 's/[\.][0-9]+$//')    # drop last .z in x.y.z
-echo "export PATH=\$PATH:/Users/distiller/Library/Python/$pyvers/bin" \
-    >> ~/.uploadrc
+py_dir=$(ls -d  /Users/*/Library/Python/$pyvers/bin)
+echo "export PATH=\$PATH:$py_dir" >> ~/.uploadrc

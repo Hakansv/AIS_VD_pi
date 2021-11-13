@@ -12,6 +12,9 @@
 # the Free Software Foundation; either version 3 of the License, or
 # (at your option) any later version.
 
+
+
+
 if (TARGET tarball-build)
   return()
 endif ()
@@ -31,7 +34,9 @@ if (WIN32)
 endif ()
 
 # Set up _build_cmd
-set(_build_cmd cmake --build ${CMAKE_BINARY_DIR} --config $<CONFIG>)
+set(_build_cmd
+  cmake --build ${CMAKE_BINARY_DIR} --parallel ${OCPN_NPROC} --config $<CONFIG>
+)
 
 # Set up _build_target_cmd and _install_cmd
 if (CMAKE_VERSION VERSION_LESS 3.16)
@@ -39,7 +44,8 @@ if (CMAKE_VERSION VERSION_LESS 3.16)
   set(_install_cmd make install)
 else ()
   set(_build_target_cmd
-      cmake --build ${CMAKE_BINARY_DIR} --config $<CONFIG> --target
+      cmake --build ${CMAKE_BINARY_DIR} --parallel ${OCPN_NPROC}
+      --config $<CONFIG> --target
   )
   set(_install_cmd cmake --install ${CMAKE_BINARY_DIR} --config $<CONFIG>)
 endif ()
@@ -63,9 +69,10 @@ set(_cs_script "
   string(REGEX MATCH \"^[^ ]*\" checksum \${_SHA256} )
   configure_file(
     ${CMAKE_BINARY_DIR}/${pkg_displayname}.xml.in
-    ${CMAKE_BINARY_DIR}/${pkg_displayname}.xml
+    ${CMAKE_BINARY_DIR}/${pkg_xmlname}.xml
     @ONLY
-)")
+  )
+")
 file(WRITE "${CMAKE_BINARY_DIR}/checksum.cmake" ${_cs_script})
 
 function (create_finish_script)
@@ -85,7 +92,7 @@ function (create_finish_script)
     message(STATUS \"Creating tarball ${pkg_tarname}.tar.gz\")
 
     execute_process(COMMAND cmake -P ${CMAKE_BINARY_DIR}/checksum.cmake)
-    message(STATUS \"Computing checksum in ${pkg_displayname}.xml\")
+    message(STATUS \"Computing checksum in ${pkg_xmlname}.xml\")
   ")
   file(WRITE "${CMAKE_BINARY_DIR}/finish_tarball.cmake" "${_finish_script}")
 endfunction ()
@@ -175,12 +182,13 @@ function (flatpak_target manifest)
   set(_fp_script "
     execute_process(
       COMMAND
-        flatpak-builder --force-clean ${CMAKE_CURRENT_BINARY_DIR}/app
-          ${manifest}
+        flatpak-builder
+          --state-dir ${CMAKE_SOURCE_DIR}/cache/flatpak --force-clean
+          ${CMAKE_CURRENT_BINARY_DIR}/app ${manifest}
     )
     execute_process(
       COMMAND bash -c \"sed -e '/@checksum@/d' \
-          < ${pkg_displayname}.xml.in > app/files/metadata.xml\"
+          < ${pkg_xmlname}.xml.in > app/files/metadata.xml\"
     )
     if (${CMAKE_BUILD_TYPE} MATCHES Release|MinSizeRel)
       message(STATUS \"Stripping app/files/lib/opencpn/lib${PACKAGE_NAME}.so\")
@@ -202,7 +210,7 @@ function (flatpak_target manifest)
     execute_process(
       COMMAND cmake -P ${CMAKE_BINARY_DIR}/checksum.cmake
     )
-    message(STATUS \"Computing checksum in ${pkg_displayname}.xml\")
+    message(STATUS \"Computing checksum in ${pkg_xmlname}.xml\")
   ")
   file(WRITE "${CMAKE_BINARY_DIR}/build_flatpak.cmake" ${_fp_script})
   add_custom_target(flatpak)
