@@ -33,11 +33,12 @@ option(AIS-VD_USE_SVG "Use SVG graphics" OFF)
 #
 # -------  Plugin setup --------
 #
-set(PKG_VERSION  1.1.16)
+set(PKG_VERSION  1.1.17)
 set(PKG_PRERELEASE "beta")  # Empty, or a tag like 'beta'
 
 set(DISPLAY_NAME ais-vd)    # Dialogs, installer artifacts, ...
 set(PLUGIN_API_NAME ais-vd) # As of GetCommonName() in plugin API
+set(CPACK_PACKAGE_CONTACT "Hakan Svensson")
 set(PKG_SUMMARY "Update AIS class A voyage data")
 set(PKG_DESCRIPTION [=[
 Update AIS class A voyage static data as:

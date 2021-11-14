@@ -173,14 +173,26 @@ void aisvd_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 void aisvd_pi::OnSetupOptions(){
    // Set validators
         const wxString AllowDest[] = {
-            wxT("a"), wxT("b"), wxT("c"), wxT("d"), wxT("e"), wxT("f"), wxT("g"), wxT("h"), wxT("i"), wxT("j"), wxT("k"), wxT("l"), wxT("m"), wxT("n"), wxT("o"), wxT("p"), wxT("q"), wxT("r"), wxT("s"), wxT("t"), wxT("u"), wxT("v"), wxT("w"), wxT("x"), wxT("y"), wxT("z"), wxT("A"), wxT("B"), wxT("C"), wxT("D"), wxT("E"), wxT("F"), wxT("G"), wxT("H"), wxT("I"), wxT("J"), wxT("K"), wxT("L"), wxT("M"), wxT("N"), wxT("O"), wxT("P"), wxT("Q"), wxT("R"), wxT("S"), wxT("T"), wxT("U"), wxT("V"), wxT("W"), wxT("X"), wxT("Y"), wxT("Z"),wxT(" "), wxT("0"), wxT("1"), wxT("2"), wxT("3"), wxT("4"), wxT("5"), wxT("6"), wxT("7"), wxT("8"), wxT("9"), wxT(":"), wxT(";"), wxT("<"), wxT(">"), wxT("?"), wxT("@"), wxT("["), wxT("]"), wxT("!"), wxT(","), wxT("."), wxT("-"), wxT("="), wxT("*"), wxT("#")};
+          wxT("a"), wxT("b"), wxT("c"), wxT("d"), wxT("e"), wxT("f"), wxT("g"),
+          wxT("h"), wxT("i"), wxT("j"), wxT("k"), wxT("l"), wxT("m"), wxT("n"),
+          wxT("o"), wxT("p"), wxT("q"), wxT("r"), wxT("s"), wxT("t"), wxT("u"),
+          wxT("v"), wxT("w"), wxT("x"), wxT("y"), wxT("z"), wxT("A"), wxT("B"),
+          wxT("C"), wxT("D"), wxT("E"), wxT("F"), wxT("G"), wxT("H"), wxT("I"),
+          wxT("J"), wxT("K"), wxT("L"), wxT("M"), wxT("N"), wxT("O"), wxT("P"),
+          wxT("Q"), wxT("R"), wxT("S"), wxT("T"), wxT("U"), wxT("V"), wxT("W"),
+          wxT("X"), wxT("Y"), wxT("Z"),wxT(" "), wxT("0"), wxT("1"), wxT("2"),
+          wxT("3"), wxT("4"), wxT("5"), wxT("6"), wxT("7"), wxT("8"), wxT("9"),
+          wxT(":"), wxT(";"), wxT("<"), wxT(">"), wxT("?"), wxT("@"), wxT("["),
+          wxT("]"), wxT("!"), wxT(","), wxT("."), wxT("-"), wxT("="), wxT("*"),
+          wxT("#")};
         wxArrayString* ArrayAllowDest = new wxArrayString(78, AllowDest);
         wxTextValidator DestVal( wxFILTER_INCLUDE_CHAR_LIST, & m_Destination);
         DestVal.SetIncludes(*ArrayAllowDest);
     //m_DestTextCtrl->SetValidator( DestVal);
 
         const wxString AllowDraught[] = {
-            wxT("0"), wxT("1"), wxT("2"), wxT("3"), wxT("4"), wxT("5"), wxT("6"), wxT("7"), wxT("8"), wxT("9"), wxT(".")};
+            wxT("0"), wxT("1"), wxT("2"), wxT("3"), wxT("4"), wxT("5"), wxT("6"),
+            wxT("7"), wxT("8"), wxT("9"), wxT(".")};
         wxArrayString* ArrayAllowDraught = new wxArrayString(11, AllowDraught);
         wxTextValidator DraughtVal( wxFILTER_INCLUDE_CHAR_LIST, & m_Draught);
         DraughtVal.SetIncludes(*ArrayAllowDraught);

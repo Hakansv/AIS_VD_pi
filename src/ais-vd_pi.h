@@ -91,7 +91,6 @@ public:
 
 class aisvd_pi : public opencpn_plugin_116 
 {
-  DECLARE_EVENT_TABLE()
   public:
     aisvd_pi(void *ppimgr);
 	  ~aisvd_pi();
