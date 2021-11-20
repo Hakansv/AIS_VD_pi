@@ -54,6 +54,7 @@
 #define ID_TEXTCTRL1 wxID_ANY
 #define ID_TEXTCTRL2 wxID_ANY
 #define ID_DATECTRL wxID_ANY
+#define ID_NMEACTRL wxID_ANY
 #define ID_TIMECTR wxID_ANY
 #define ID_BUTTON wxID_ANY
 #define ID_BUTTON1 wxID_ANY
@@ -76,6 +77,7 @@ public:
   ~aisvd_pi_event_handler();
   void OnSendBtnClick( wxCommandEvent &event );
   void OnDestValSelChange(wxCommandEvent &event);
+  void OnAnyValueChange(wxCommandEvent &event);
   /*void OnImportPermitClick( wxCommandEvent &event );
   void OnRemovePermitClick( wxCommandEvent &event );
   void OnImportCellsClick( wxCommandEvent &event );
@@ -122,6 +124,7 @@ class aisvd_pi : public opencpn_plugin_116
 	void UpdatePersons();
 	void UpdateEta();
 	void SendSentence();
+  void SetSendBtnLabel();
 	PreferenceDlg *prefDlg;
 	wxString AIS_type;
 	wxString m_Destination;
@@ -148,6 +151,7 @@ private:
 	wxTextCtrl* PersonsTextCtrl;
 	wxDatePickerCtrl* DatePicker;
 	wxTimePickerCtrl* TimePickCtrl;
+  wxButton* m_SendBtn;
 	
     //  int               m_show_id;
     //  int               m_hide_id;
