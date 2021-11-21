@@ -7,85 +7,74 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AIS_VD_pi 1.1.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-29 01:11+0200\n"
+"POT-Creation-Date: 2021-11-21 12:03+0100\n"
 "PO-Revision-Date: 2021-08-29 01:23+0200\n"
+"Last-Translator: \n"
 "Language-Team: \n"
+"Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.0\n"
-"Last-Translator: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"Language: sv_SE\n"
-
-#: src\AIS_VD_pi.cpp:170
+#
 msgid "AIS static"
 msgstr "AIS statisk"
-
-#: src\AIS_VD_pi.cpp:172
-msgid "Set static voyage data to AIS"
-msgstr "Ange statiska färddata till AIS"
-
-#: src\AIS_VD_pi.cpp:179
-msgid "Navigational status"
-msgstr "Navigeringsstatus"
-
-#: src\AIS_VD_pi.cpp:184
-msgid "At anchor"
-msgstr "Ankrad"
-
-#: src\AIS_VD_pi.cpp:185
-msgid "Underway using engine"
-msgstr "Igång med motor"
-
-#: src\AIS_VD_pi.cpp:186
-msgid "Not under command"
-msgstr "Ej manöverbar"
-
-#: src\AIS_VD_pi.cpp:187
-msgid "Restricted manoeuverability"
-msgstr "Begränsad manövrerbarhet"
-
-#: src\AIS_VD_pi.cpp:188
-msgid "Constrained by draught"
-msgstr "Begränsad av djupgående"
-
-#: src\AIS_VD_pi.cpp:189
-msgid "Moored"
-msgstr "Förtöjd"
-
-#: src\AIS_VD_pi.cpp:190
+#
 msgid "Aground"
 msgstr "På grund"
-
-#: src\AIS_VD_pi.cpp:191
-msgid "Engaged in Fishing"
-msgstr "Fiskar"
-
-#: src\AIS_VD_pi.cpp:192
-msgid "Under way sailing"
-msgstr "På gång under segel"
-
-#: src\AIS_VD_pi.cpp:197
-msgid "Destination"
-msgstr "Destination"
-
-#: src\AIS_VD_pi.cpp:205
+#
+msgid "At anchor"
+msgstr "Ankrad"
+#
+msgid "Constrained by draught"
+msgstr "Begränsad av djupgående"
+#
 msgid "Draught (m)"
 msgstr "Djupgående (m)"
-
-#: src\AIS_VD_pi.cpp:211
+#
+msgid "ETA Time (UTC)"
+msgstr "ETA tid (UTC)"
+#
+msgid "ETA date"
+msgstr "ETA Datum"
+#
+msgid "Engaged in Fishing"
+msgstr "Fiskar"
+#
+msgid "Key a destination"
+msgstr "Skriv Destination"
+#
+msgid "Moored"
+msgstr "Förtöjd"
+#
+msgid "Navigational status"
+msgstr "Navigeringsstatus"
+#
 msgid "No. of Persons onboard"
 msgstr "Antal personer ombord"
-
-#: src\AIS_VD_pi.cpp:217
-msgid "eta date"
-msgstr "ETA Datum"
-
-#: src\AIS_VD_pi.cpp:223
-msgid "eta Time"
-msgstr "ETA Tid"
-
-#: src\AIS_VD_pi.cpp:235
+#
+msgid "Not under command"
+msgstr "Ej manöverbar"
+#
+msgid "Restricted manoeuverability"
+msgstr "Begränsad manövrerbarhet"
+#
+msgid "Send To AIS"
+msgstr "Skicka till AIS"
+#
 msgid "Send to AIS"
 msgstr "Skicka till AIS"
+#
+msgid "Set static voyage data to AIS"
+msgstr "Uppdatera statisk färddata till AIS"
+#
+msgid "Under way sailing"
+msgstr "På gång under segel"
+#
+msgid "Underway using engine"
+msgstr "På gång med motor"
+#
+msgid "or select a destination"
+msgstr "eller välj en destination"
+#
