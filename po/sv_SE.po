@@ -43,7 +43,7 @@ msgid "ETA date"
 msgstr "ETA Datum"
 #
 msgid "Engaged in Fishing"
-msgstr "Fiskar"
+msgstr "Bedriver fiske"
 #
 msgid "Key a destination"
 msgstr "Skriv Destination"

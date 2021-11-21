@@ -238,7 +238,7 @@ void aisvd_pi::OnSetupOptions(){
                                 wxDefaultSize, StatusChoiceStrings, 0);
     itemFlexGridSizer4->Add(StatusChoice, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
     StatusChoice->Connect(wxEVT_CHOICE, wxCommandEventHandler(
-                  aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
+                  aisvd_pi_event_handler::OnNavStatusSelect), NULL, m_event_handler);
 
     wxStaticText* itemStaticText7 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
                                     _("Key a destination"),
@@ -263,7 +263,7 @@ void aisvd_pi::OnSetupOptions(){
                                     wxDefaultPosition, wxDefaultSize, 0, NULL, 0);
     itemFlexGridSizer4->Add(m_DestComboBox, 0, wxEXPAND | wxTOP, 5);
     m_DestComboBox->Connect(wxEVT_COMBOBOX,
-                            wxCommandEventHandler(aisvd_pi_event_handler::OnDestValSelChange),
+                            wxCommandEventHandler(aisvd_pi_event_handler::OnDestValSelect),
                             NULL, m_event_handler);
 
     wxStaticText* itemStaticText9 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
@@ -334,12 +334,7 @@ void aisvd_pi::OnSetupOptions(){
     m_DestTextCtrl->SetValue(m_Destination);
     DraughtTextCtrl->SetValue(m_Draught);
     PersonsTextCtrl->SetValue(m_Persons);
-    wxDateTime now = wxDateTime::Now().MakeUTC();
-    if (now.IsLaterThan(m_EtaDateTime)) {
-      m_EtaDateTime= now.SetSecond(0);
-    }
-    DatePicker->SetValue(m_EtaDateTime);
-    TimePickCtrl->SetValue(m_EtaDateTime);
+    CheckForOldDateTime(); // If old set to Now
     m_DestComboBox->Append(">>");
     wxStringTokenizer tkn(m_InitDest, ";");
     while (tkn.HasMoreTokens()) {
@@ -396,6 +391,15 @@ bool aisvd_pi::SaveConfig( void )
 void aisvd_pi::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)
 {
 
+}
+
+void aisvd_pi::CheckForOldDateTime() {
+  wxDateTime now = wxDateTime::Now().MakeUTC();
+  if (now.IsLaterThan(m_EtaDateTime)) {
+    m_EtaDateTime = now.SetSecond(0);
+  }
+  DatePicker->SetValue(m_EtaDateTime);
+  TimePickCtrl->SetValue(m_EtaDateTime);
 }
 
 void aisvd_pi::UpdateDestVal()
@@ -554,7 +558,7 @@ void aisvd_pi_event_handler::OnSendBtnClick( wxCommandEvent &event )
   m_parent->SendSentence();
 }
 
-void aisvd_pi_event_handler::OnDestValSelChange(wxCommandEvent &event) {
+void aisvd_pi_event_handler::OnDestValSelect(wxCommandEvent &event) {
   m_parent->SetSendBtnLabel();
   m_parent->UpdateDestVal();
 }
@@ -562,4 +566,9 @@ void aisvd_pi_event_handler::OnDestValSelChange(wxCommandEvent &event) {
 void aisvd_pi_event_handler::OnAnyValueChange(wxCommandEvent &event) {
   m_parent->SetSendBtnLabel();
   event.Skip();
+}
+
+void aisvd_pi_event_handler::OnNavStatusSelect(wxCommandEvent &event) {
+  m_parent->SetSendBtnLabel();
+  m_parent->CheckForOldDateTime();
 }

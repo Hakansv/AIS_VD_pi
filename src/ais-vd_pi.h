@@ -76,8 +76,9 @@ public:
   aisvd_pi_event_handler(aisvd_pi *parent);
   ~aisvd_pi_event_handler();
   void OnSendBtnClick( wxCommandEvent &event );
-  void OnDestValSelChange(wxCommandEvent &event);
+  void OnDestValSelect(wxCommandEvent &event);
   void OnAnyValueChange(wxCommandEvent &event);
+  void OnNavStatusSelect(wxCommandEvent &event);
   /*void OnImportPermitClick( wxCommandEvent &event );
   void OnRemovePermitClick( wxCommandEvent &event );
   void OnImportCellsClick( wxCommandEvent &event );
@@ -125,6 +126,7 @@ class aisvd_pi : public opencpn_plugin_116
 	void UpdateEta();
 	void SendSentence();
   void SetSendBtnLabel();
+  void CheckForOldDateTime();
 	PreferenceDlg *prefDlg;
 	wxString AIS_type;
 	wxString m_Destination;
