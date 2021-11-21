@@ -147,7 +147,7 @@ wxString aisvd_pi::GetLongDescription()
 void aisvd_pi::SetNMEASentence(wxString &sentence)
 {
   if (sentence.Mid(0, 1).IsSameAs("$") && sentence.Mid(3, 3).IsSameAs("VSD")) {
-    wxString msg = "Sent to OpenCPN multiplexer: ";
+    wxString msg = _("Sent to OpenCPN multiplexer: ");
     wxString nmea = sentence.Mid(0, sentence.Len() - 2);
     msg.Append(nmea);
     wxLogMessage(msg);

@@ -21,6 +21,9 @@ msgstr ""
 msgid "AIS static"
 msgstr "AIS statisk"
 #
+msgid "Sent to OpenCPN multiplexer: "
+msgstr "Skickat till OpenCPN multiplexer: "
+#
 msgid "Aground"
 msgstr "På grund"
 #
