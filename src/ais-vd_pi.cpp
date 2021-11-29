@@ -73,6 +73,8 @@ aisvd_pi::aisvd_pi(void *ppimgr)
 
   //    Get a pointer to the opencpn configuration object
   m_pconfig = GetOCPNConfigObject();
+  //  Prepare for a first time empty config file.
+  m_EtaDateTime = wxDateTime::Now().MakeUTC();
   //    And load the configuration items
   LoadConfig();
 }
@@ -371,11 +373,11 @@ bool aisvd_pi::SaveConfig( void )
         pConf->Write( _T("Draught"), m_Draught );
         pConf->Write( _T("Persons"), m_Persons );
         pConf->Write( _T("Eta"), m_EtaDateTime.Format() );
-        // Save max 15 dest-selections to config.
+        // Save max 18 dest-selections to config.
         if (m_AIS_VoyDataWin) {
           wxString destarr;
           size_t size(0);
-          size = wxMin(15, m_DestComboBox->GetCount());
+          size = wxMin(18, m_DestComboBox->GetCount());
           for (size_t i = 1; i < size; i++) {
             m_DestComboBox->Select(i);
             destarr << m_DestComboBox->GetValue();
