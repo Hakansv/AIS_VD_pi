@@ -353,8 +353,8 @@ bool aisvd_pi::LoadConfig( void )
         wxString temp;
         pConf->SetPath( _T("/PlugIns/ais-vd") );
         pConf->Read( _T("Destination"), &m_Destination );
-        pConf->Read( _T("Draught"), &m_Draught );
-        pConf->Read( _T("Persons"), &m_Persons);
+        pConf->Read( _T("Draught"), &m_Draught, wxEmptyString );
+        pConf->Read( _T("Persons"), &m_Persons, wxEmptyString);
         pConf->Read( _T("Eta"), &temp);
         m_EtaDateTime.ParseDateTime(temp); 
         pConf->Read(_T("DestSelections"), &m_InitDest);
@@ -433,22 +433,28 @@ void aisvd_pi::UpdateDestVal()
 void aisvd_pi::UpdateDraught()
 {
     m_Draught = DraughtTextCtrl->GetValue();
-    double temp;
-    m_Draught.ToDouble(&temp);
-    if ( temp >= 25.5 )
+    // Don't change if user didn't edit
+    if (m_Draught != wxEmptyString) {
+      double temp;
+      m_Draught.ToDouble(&temp);
+      if (temp >= 25.5)
         temp = 25.5;
-    m_Draught = wxString::Format(wxT("%2.1f"), temp);
-    DraughtTextCtrl->SetValue(m_Draught);
+      m_Draught = wxString::Format(wxT("%2.1f"), temp);
+      DraughtTextCtrl->SetValue(m_Draught);
+    }
 }
 void aisvd_pi::UpdatePersons()
 {
+  // Don't change if user didn't edit
+  if (m_Persons != wxEmptyString) {
     m_Persons = PersonsTextCtrl->GetValue();
     long temp;
     m_Persons.ToLong(&temp);
-    if ( temp >= 8100 )
-        temp = 8100;
+    if (temp >= 8100)
+      temp = 8100;
     m_Persons = wxString::Format(wxT("%i"), temp);
     PersonsTextCtrl->SetValue(m_Persons);
+  }
 }
 void aisvd_pi::UpdateEta()
 {
