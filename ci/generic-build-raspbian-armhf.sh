@@ -1,18 +1,9 @@
 #!/usr/bin/env bash
-#
-# Build for Raspbian Bullseye in a docker container
-#
-# Intended as a temporary work-around for not being able to build on drone.io
-# due to libseccomp problems with both host and guest OS i. e., #217
-#
-# Bugs: The build is real slow: https://forums.balena.io/t/85743
 
-# Copyright (c) 2021 Alec Leamas
 #
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
+# Build for Raspbian in a docker container
+#
+# Bugs: The buster build is real slow: https://forums.balena.io/t/85743
 
 set -xe
 
@@ -31,20 +22,30 @@ curl http://mirrordirector.raspbian.org/raspbian.public.key  | apt-key add -
 curl http://archive.raspbian.org/raspbian.public.key  | apt-key add -
 sudo apt -q update
 
-sudo apt install devscripts equivs wget git lsb-release
-sudo mk-build-deps -ir /ci-source/build-deps/control
+sudo apt install devscripts equivs
+sudo mk-build-deps -ir /ci-source/build-deps/control-raspbian
 sudo apt-get -q --allow-unauthenticated install -f
 
-# Temporary fix until 3.19 is available as a pypi package
-# 3.19 is needed: https://gitlab.kitware.com/cmake/cmake/-/issues/20568
-url='https://dl.cloudsmith.io/public/alec-leamas/opencpn-plugins-stable/deb/debian'
-wget $url/pool/bullseye/main/c/cm/cmake-data_3.20.5-0.1/cmake-data_3.20.5-0.1_all.deb
-wget $url/pool/bullseye/main/c/cm/cmake_3.20.5-0.1/cmake_3.20.5-0.1_armhf.deb
-sudo apt install ./cmake_3.*-0.1_armhf.deb ./cmake-data_3.*-0.1_all.deb
+if [  ${OCPN_TARGET} = "bullseye-armhf" ]; then
+    mkdir cmake
+    cd cmake
+    wget https://www.dropbox.com/s/m9t9sqvlho7cfsh/cmake-3.22.0-Linux-armv7l.sh
+    sudo sh cmake-3.22.0-Linux-armv7l.sh --prefix=/usr/local/ --exclude-subdir
+    cd ..
+else
+    # Temporary fix until 3.19 is available as a pypi package
+    # 3.19 is needed: https://gitlab.kitware.com/cmake/cmake/-/issues/20568
+    url='https://dl.cloudsmith.io/public/alec-leamas/opencpn-plugins-stable/deb/debian'
+    wget $url/pool/buster/main/c/cm/cmake-data_3.19.3-0.1_all.deb
+    wget $url/pool/${OCPN_TARGET/-*/}/main/c/cm/cmake_3.19.3-0.1_armhf.deb
+    sudo apt install ./cmake_3.19.3-0.1_armhf.deb ./cmake-data_3.19.3-0.1_all.deb
+fi
+
+cmake --version
 
 cd /ci-source
-rm -rf build-raspbian; mkdir build-raspbian; cd build-raspbian
-cmake -DCMAKE_BUILD_TYPE=debug ..
+rm -rf build; mkdir build; cd build
+cmake -DCMAKE_BUILD_TYPE=Release ..
 make -j $(nproc) VERBOSE=1 tarball
 ldd  app/*/lib/opencpn/*.so
 EOF
@@ -52,35 +53,27 @@ EOF
 
 # Run script in docker image
 #
-if [ -n "$CI" ]; then
-    sudo apt -q update
-    sudo apt install qemu-user-static
-fi
-docker run --rm --privileged multiarch/qemu-user-static:register --reset || :
-docker run --privileged \
+docker run --rm --privileged multiarch/qemu-user-static:register --reset
+docker run --privileged -ti \
     -e "OCPN_TARGET=$OCPN_TARGET" \
     -e "CLOUDSMITH_STABLE_REPO=$CLOUDSMITH_STABLE_REPO" \
-    -e "CLOUDSMITH_BETA_REPO=$OCPN_BETA_REPO" \
+    -e "CLOUDSMITH_BETA_REPO=$CLOUDSMITH_BETA_REPO" \
     -e "CLOUDSMITH_UNSTABLE_REPO=$CLOUDSMITH_UNSTABLE_REPO" \
     -e "CIRCLE_BUILD_NUM=$CIRCLE_BUILD_NUM" \
     -e "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER" \
     -v "$ci_source:/ci-source:rw" \
-    balenalib/raspberry-pi-debian:bullseye /bin/bash -xe /ci-source/build.sh
+    $DOCKER_IMAGE /bin/bash -xe /ci-source/build.sh
 rm -f $ci_source/build.sh
 
 
 # Install cloudsmith-cli (for upload) and cryptography (for git-push).
 #
-if pyenv versions &>/dev/null;  then
-  pyenv versions | sed 's/*//' | awk '{print $1}' | tail -1 \
-      > $HOME/.python-version
-fi
-
-# Latest pip 21.0.0 requires python 3.7+, we have just 3.5:
-python3 -m pip install -q --force-reinstall pip==20.3.4
-
+pyenv versions | sed 's/*//' | awk '{print $1}' | tail -1 \
+    > $HOME/.python-version
+# Latest pip 21.0.0 is broken:
+python3 -m pip install --force-reinstall pip==20.3.4
 # https://github.com/pyca/cryptography/issues/5753 -> cryptography < 3.4
-python3 -m pip install -q --user cloudsmith-cli 'cryptography<3.4'
+python3 -m pip install --user cloudsmith-cli 'cryptography<3.4'
 
 # python install scripts in ~/.local/bin, teach upload.sh to use in it's PATH:
 echo 'export PATH=$PATH:$HOME/.local/bin' >> ~/.uploadrc

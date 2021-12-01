@@ -3,30 +3,20 @@
 #
 # Build the flatpak artifacts.
 #
-
-# Copyright (c) 2021 Alec Leamas
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
-
 set -e
 
 MANIFEST=$(cd flatpak; ls org.opencpn.OpenCPN.Plugin*yaml)
 echo "Using manifest file: $MANIFEST"
 set -x
-if [ -n "$TRAVIS_BUILD_DIR" ]; then cd $TRAVIS_BUILD_DIR; fi
 
-if [ -n "$CI" ]; then
-    sudo apt update
+sudo apt update
 
-    # Avoid using outdated TLS certificates, see #210.
-    sudo apt install --reinstall  ca-certificates
 
-    # Install flatpak and flatpak-builder
-    sudo apt install flatpak flatpak-builder
-fi
+# Avoid using outdated TLS certificates, see #210.
+sudo apt install --reinstall  ca-certificates
+
+# Install flatpak and flatpak-builder
+sudo apt install flatpak flatpak-builder
 flatpak remote-add --user --if-not-exists \
     flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
@@ -64,13 +54,11 @@ fi
 sed -i "/^runtime-version/s/:.*/: $FLATPAK_BRANCH/" flatpak/$MANIFEST
 
 # The flatpak checksumming needs python3:
-if ! python3 --version 2>&1 >/dev/null; then
-    pyenv local $(pyenv versions | sed 's/*//' | awk '{print $1}' | tail -1)
-    cp .python-version $HOME
-fi
+pyenv local $(pyenv versions | sed 's/*//' | awk '{print $1}' | tail -1)
+cp .python-version $HOME
 
 # Configure and build the plugin tarball and metadata.
-rm -rf build-flatpak && mkdir build-flatpak && cd build-flatpak
+mkdir build; cd build
 cmake -DCMAKE_BUILD_TYPE=Release ..
 make -j $(nproc) VERBOSE=1 flatpak
 
