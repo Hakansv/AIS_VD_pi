@@ -199,11 +199,11 @@ workflows:
       - build-buster:
           <<: *std-filters
 
-      - build-android-arm64:
-          <<: *std-filters
+      # - build-android-arm64:
+      #     <<: *std-filters
 
-      - build-android-armhf:
-          <<: *std-filters
+      # - build-android-armhf:
+      #    <<: *std-filters
 
       - build-raspbian-bullseye:
           <<: *std-filters
