@@ -33,10 +33,6 @@ modules:
         cflags: -fPIC -I/run/build/ais-vd/bundled-gl
         cxxflags: -fPIC -I/run/build/ais-vd/bundled-gl
         strip: true
-      #build-options:
-       #   cxxflags: -DFLATPAK -O3
-        #  cflags: -DFLATPAK -O3
-          # The flatpak-builder default CFLAGS adds -g
     sources:
       - type: git
         url: ..
