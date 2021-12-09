@@ -22,6 +22,7 @@ modules:
   - name: ais-vd
     no-autogen: true
     buildsystem: cmake
+    builddir: true
       config-opts:
           - -DCMAKE_INSTALL_PREFIX=/app/extensions/ais-vd/
           - -DCMAKE_BUILD_TYPE:STRING=Release
