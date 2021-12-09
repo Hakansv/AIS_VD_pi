@@ -78,12 +78,7 @@ public:
   void OnSendBtnClick( wxCommandEvent &event );
   void OnDestValSelect(wxCommandEvent &event);
   void OnAnyValueChange(wxCommandEvent &event);
-  void OnNavStatusSelect(wxCommandEvent &event);
-  /*void OnImportPermitClick( wxCommandEvent &event );
-  void OnRemovePermitClick( wxCommandEvent &event );
-  void OnImportCellsClick( wxCommandEvent &event );
-  void OnSelectPermit( wxListEvent& event );    
-  void OnNewUserpermitClick( wxCommandEvent& event ); */   
+  void OnNavStatusSelect(wxCommandEvent &event); 
   aisvd_pi  *m_parent;
 };
 
