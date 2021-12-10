@@ -143,7 +143,7 @@ wxString aisvd_pi::GetShortDescription()
 
 wxString aisvd_pi::GetLongDescription()
 {
-      return _T("Set static voyage data to the AIS class A tranceiver");
+      return _T("Set static voyage data to a AIS class A transceiver");
 }
 
 void aisvd_pi::SetNMEASentence(wxString &sentence)
@@ -213,9 +213,9 @@ void aisvd_pi::OnSetupOptions(){
     //PersonsTextCtrl->SetValidator( PersonsVal );
 
     //  Create the AISVD Options panel, and load it
-    m_AIS_VoyDataWin = AddOptionsPage( PI_OPTIONS_PARENT_SHIPS, _("AIS static") );
+    m_AIS_VoyDataWin = AddOptionsPage( PI_OPTIONS_PARENT_SHIPS, _("AIS Voyage data") );
     wxStaticBox* itemStaticBoxSizer3Static = new wxStaticBox(m_AIS_VoyDataWin, 
-                                             wxID_ANY, _("Set static voyage data to AIS"));
+                                             wxID_ANY, _("Set static voyage data on the AIS class A"));
     wxStaticBoxSizer* itemStaticBoxSizer3 = new wxStaticBoxSizer(itemStaticBoxSizer3Static, wxVERTICAL);
     m_AIS_VoyDataWin->SetSizer(itemStaticBoxSizer3);
 
@@ -244,7 +244,7 @@ void aisvd_pi::OnSetupOptions(){
                   aisvd_pi_event_handler::OnNavStatusSelect), NULL, m_event_handler);
 
     wxStaticText* itemStaticText7 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
-                                    _("Key a destination"),
+                                    _("Enter destination"),
                                     wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText7, 0, 
                         wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
