@@ -33,7 +33,7 @@ option(AIS-VD_USE_SVG "Use SVG graphics" OFF)
 #
 # -------  Plugin setup --------
 #
-set(PKG_VERSION  1.1.31)
+set(PKG_VERSION  1.2.0)
 set(PKG_PRERELEASE "")  # Empty, or a tag like 'beta'
 
 set(DISPLAY_NAME ais-vd)    # Dialogs, installer artifacts, ...
