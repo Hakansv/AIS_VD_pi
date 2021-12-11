@@ -7,16 +7,14 @@ Source: https://github.com/Hakansv/ais-vd_pi[Github Repository]
 
 Releases: OpenCPN plugin manager
 
-
-Forum:
-[Cruiser's Forum ]
+Forum: https://www.cruisersforum.com/forums/f134/a-new-plugin-for-ais-class-a-voyage-data-ais-vd_pi-258798.html[OpenCPN Forum]
 
 == 1. What and Why
 
 
 AIS-VD is a tool for the AIS class A transponder to upload static voyage data. +
 When installed and activated the plugin will be a part of the OpenCPN option tools. +
-The tool is located in Options > Ships > AIS Static.
+The tool is located in Options > Ships > AIS Voyage data.
 
 image::aisStaticTool.png[]
 
@@ -40,12 +38,24 @@ Thus will the least used destination be sorted out if more than 15 in the list.
 According to NMEA0183 standard the ETA date and time shall be given as UTC and not local time.
 
 When you are satisfied push the "Send to AIS" button and the NMEA setence ECVSD will be +
-sent to every connection set up as an "Output".
+sent to every connection set up as an "Output". 
+(It can be wise to add a "Output filter" to the connection: Transmitt sentences: ECVSD )
 
 image::output.png[]
 
 image::vsd.png[]
 
-== 2. Install
+After having used the "Send to AIS" button the NMEA0183 VSD message is collected from the data stream flowing trough OCPN multiplexer and printed as the button text.
+The plugins have no API to OCPN messaging if there are any output connections established or not.
+Neither are no AIS devices we have seen communicating any receiving receipt message.
+All together we don't know if the message is received or not. The user is therefore requested to check on the AIS device itself.
 
-Use OpenCPN plugin manager.
+image::now_sent.png[]
+
+== 2. Installation or update.
+
+Use OpenCPN plugin manager as for most other plugins.
+Options->Plugins-> Update Catalog: (master) 
+
+When the catalog is updated scroll to find ais-vd_pi plugin. Select it and "Install".  
+If it's the first time for this plugin don't forget to activate it after the installation. 
