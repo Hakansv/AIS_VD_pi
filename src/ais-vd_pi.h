@@ -122,9 +122,10 @@ class aisvd_pi : public opencpn_plugin_116
 	void SendSentence();
   void SetSendBtnLabel();
   void CheckForOldDateTime();
-	PreferenceDlg *prefDlg;
-	wxString AIS_type;
-	wxString m_Destination;
+  PreferenceDlg *prefDlg;
+  wxArrayString StatusChoiceStrings;
+  wxString AIS_type;
+  wxString m_Destination;
   wxString m_Draught;
   wxString m_Persons;
   wxString m_EtaDate; //MMDD

@@ -148,16 +148,32 @@ wxString aisvd_pi::GetLongDescription()
 
 void aisvd_pi::SetNMEASentence(wxString &sentence)
 {
-  if (sentence.Mid(0, 1).IsSameAs("$") && sentence.Mid(3, 3).IsSameAs("VSD")) {
-    wxString msg = _("Sent: [");
+  // Check for a VSD receipt from a AIS after the AIQ query
+  if (sentence.Mid(0, 6).IsSameAs("$AIVSD")) {
+    wxString msg = _("Receipt from AIS: ");
     wxString nmea = sentence.Mid(0, sentence.Len() - 2);
-    msg.Append(nmea);
-    msg.Append("] " + _("Check result on the AIS"));
+    // Clean out possible white space complements in destination
+    nmea.Replace((" "), wxEmptyString);
+    // Create an understandable user message
+    wxString VSD_Nr[15];
+    int nr = 1;
+    wxStringTokenizer tkn(nmea, ",");
+    while (tkn.HasMoreTokens()) {
+      VSD_Nr[nr] = (tkn.GetNextToken());
+      nr += 1;
+      if (nr > 14) break;
+    }
+    int statusNr = wxAtoi(VSD_Nr[9]);
+    msg.Append(_("Status") + (": ") + StatusChoiceStrings[statusNr] + " ");
+    msg.Append(_("Dest") + (": ") + VSD_Nr[5] + " ");
+    msg.Append(_("Time") + (": ") + VSD_Nr[6].Mid(0,2) + ":" + 
+                                     VSD_Nr[6].Mid(2, 2) + " ");
+    msg.Append(_("Day") + (": ") + VSD_Nr[7] + " ");
+    msg.Append(_("Month") + (": ") + VSD_Nr[8] + " ");
     wxLogMessage(msg);
     m_SendBtn->SetLabel(msg);
   }
 }
-
 
 void aisvd_pi::ShowPreferencesDialog( wxWindow* parent )
 {
@@ -225,8 +241,6 @@ void aisvd_pi::OnSetupOptions(){
     wxStaticText* itemStaticText5 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
                                     _("Navigational status"), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText5, 0, wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
-
-    wxArrayString StatusChoiceStrings;
 
     StatusChoiceStrings.Add(_("Underway using engine"));
     StatusChoiceStrings.Add(_("At anchor"));
@@ -465,26 +479,41 @@ void aisvd_pi::UpdateEta()
 }
 void aisvd_pi::SendSentence()
 {
-    wxString S;
-    S= _T("$ECVSD,"); // EC for Electronic Chart
+  // $IISPW,E,1,00000000,,,0*10  A possible password.
+  wxString S;
+  S= _T("$ECVSD,"); // EC for Electronic Chart
 
-    // We dont send ship type. It will be set by AIS static 
-    // data and can be password protected by some devices
-    S.Append( _T(",") );
-    S.Append( m_Draught ); S.Append( _T(",") );
-    S.Append( m_Persons ); S.Append( _T(",") );
-    S.Append( m_Destination ); S.Append( _T(",") );
-    S.Append( wxString::Format(_T("%02d%02d00,"), m_EtaDateTime.GetHour(), 
-                               m_EtaDateTime.GetMinute() )); //eta time HHmm
-    S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetDay() )); // eta Day
-    S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetMonth()+1 )); // eta Month
-    S.Append( wxString::Format(_T("%d,"), StatusChoice->GetSelection() )); //Navigation status
-    S.Append( wxString::Format(_T("%d"), 0 )); // TODO Regional application flags, 0 to 15
-    S.Append( _T("*")); // End data
-    S.Append( wxString::Format(_T("%02X"), ComputeChecksum(S) ));
-    S += _T("\r\n");
-    //wxPuts(S);
-    PushNMEABuffer(S); //finaly send NMEA string
+  // We dont send ship type. It will be set by AIS static 
+  // data and can be password protected by some devices
+  S.Append( _T(",") );
+  S.Append( m_Draught ); S.Append( _T(",") );
+  S.Append( m_Persons ); S.Append( _T(",") );
+  S.Append( m_Destination ); S.Append( _T(",") );
+  S.Append( wxString::Format(_T("%02d%02d00,"), m_EtaDateTime.GetHour(), 
+                              m_EtaDateTime.GetMinute() )); //eta time HHmm
+  S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetDay() )); // eta Day
+  S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetMonth()+1 )); // eta Month
+  S.Append( wxString::Format(_T("%d,"), StatusChoice->GetSelection() )); //Navigation status
+  S.Append( wxString::Format(_T("%d"), 0 )); // TODO Regional application flags, 0 to 15
+  S.Append( _T("*")); // End data
+  S.Append( wxString::Format(_T("%02X"), ComputeChecksum(S) ));
+  S += _T("\r\n");
+  //wxPuts(S);
+  PushNMEABuffer(S); //finaly send NMEA string
+
+  // Deafult user message if no answer from AIS
+  wxString msg;
+  msg = _("Yet no answer from any AIS! Please check connections and cabling.");
+  m_SendBtn->SetLabel(msg);
+
+  // Now querry a AIS for updated voyage data
+  S = _T("$ECAIQ"); // EC for Electronic Chart
+  S.Append(_T(","));
+  S.Append("VSD");
+  S.Append(_T("*"));
+  S.Append(wxString::Format(_T("%02X"), ComputeChecksum(S)));
+  S += _T("\r\n");
+  PushNMEABuffer(S);
 }
 
 void aisvd_pi::SetSendBtnLabel() {
