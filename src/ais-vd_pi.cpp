@@ -150,7 +150,7 @@ void aisvd_pi::SetNMEASentence(wxString &sentence)
 {
   // Check for a VSD receipt from a AIS after the AIQ query
   if (sentence.Mid(0, 6).IsSameAs("$AIVSD")) {
-    wxString msg = _("Receipt from AIS: ");
+    wxString msg = _("From the AIS") + ": ";
     wxString nmea = sentence.Mid(0, sentence.Len() - 2);
     // Clean out possible white space complements in destination
     nmea.Replace((" "), wxEmptyString);

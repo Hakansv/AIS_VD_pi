@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: AIS_VD_pi 1.1.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-11-21 12:03+0100\n"
+"POT-Creation-Date: 2021-12-12 20:55+0100\n"
 "PO-Revision-Date: 2021-08-29 01:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -18,11 +18,8 @@ msgstr ""
 "X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 #
-msgid "AIS static"
-msgstr "AIS statisk"
-#
-msgid "Sent to OpenCPN multiplexer: "
-msgstr "Skickat till OpenCPN multiplexer: "
+msgid "AIS Voyage data"
+msgstr "AIS Färddata"
 #
 msgid "Aground"
 msgstr "På grund"
@@ -32,6 +29,12 @@ msgstr "Ankrad"
 #
 msgid "Constrained by draught"
 msgstr "Begränsad av djupgående"
+#
+msgid "Day"
+msgstr "Dag"
+#
+msgid "Dest"
+msgstr "Dest"
 #
 msgid "Draught (m)"
 msgstr "Djupgående (m)"
@@ -45,8 +48,14 @@ msgstr "ETA Datum"
 msgid "Engaged in Fishing"
 msgstr "Bedriver fiske"
 #
-msgid "Key a destination"
+msgid "Enter destination"
 msgstr "Skriv Destination"
+#
+msgid "From the AIS"
+msgstr "Från AIS"
+#
+msgid "Month"
+msgstr "Månad"
 #
 msgid "Moored"
 msgstr "Förtöjd"
@@ -69,8 +78,14 @@ msgstr "Skicka till AIS"
 msgid "Send to AIS"
 msgstr "Skicka till AIS"
 #
-msgid "Set static voyage data to AIS"
-msgstr "Uppdatera statisk färddata till AIS"
+msgid "Set static voyage data on the AIS class A"
+msgstr "Uppdatera färddata på en AIS klass A"
+#
+msgid "Status"
+msgstr "Status"
+#
+msgid "Time"
+msgstr "Tid"
 #
 msgid "Under way sailing"
 msgstr "På gång under segel"
@@ -78,6 +93,13 @@ msgstr "På gång under segel"
 msgid "Underway using engine"
 msgstr "På gång med motor"
 #
+msgid "Yet no answer from any AIS! Please check connections and cabling."
+msgstr "Inget svar från AIS! Kontrollera OCPN Anslutningar och kablage"
+#
 msgid "or select a destination"
 msgstr "eller välj en destination"
 #
+#
+#
+#~ msgid "Receipt from AIS: "
+#~ msgstr "Mottaget från AIS"
