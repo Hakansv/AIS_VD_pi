@@ -13,6 +13,7 @@ Forum: https://www.cruisersforum.com/forums/f134/a-new-plugin-for-ais-class-a-vo
 
 
 AIS-VD is a tool for the AIS class A transponder to upload static voyage data. +
+Static voyage data is not used by a class B transponder so for those this plugin is of no use.
 When installed and activated the plugin will be a part of the OpenCPN option tools. +
 The tool is located in Options > Ships > AIS Voyage data.
 
@@ -38,19 +39,22 @@ Thus will the least used destination be sorted out if more than 15 in the list.
 According to NMEA0183 standard the ETA date and time shall be given as UTC and not local time.
 
 When you are satisfied push the "Send to AIS" button and the NMEA setence ECVSD will be +
-sent to every connection set up as an "Output". 
-(It can be wise to add a "Output filter" to the connection: Transmitt sentences: ECVSD )
+sent to every OpenCPN connection set up as an "Output". 
 
 image::output.png[]
 
 image::vsd.png[]
 
-After having used the "Send to AIS" button the NMEA0183 VSD message is collected from the data stream flowing trough OCPN multiplexer and printed as the button text.
-The plugins have no API to OCPN messaging if there are any output connections established or not.
-Neither are no AIS devices we have seen communicating any receiving receipt message.
-All together we don't know if the message is received or not. The user is therefore requested to check on the AIS device itself.
+After having used the "Send to AIS" button and the NMEA0183 $ECVSD message is sent to the AIS another message, $ECAIQ, is also sent to query the AIS for a response.
+The AIS is then requested to send what's stored using the $AIVSD sentence.
+That message is collected and the content is presented as a receipt on the "Send to AIS" button.
 
 image::now_sent.png[]
+
+
+In the case the AIS answer message is not detected the "Send to AIS" button text will inform the user.
+
+image::warning.png[]
 
 == 2. Installation or update.
 
@@ -58,4 +62,6 @@ Use OpenCPN plugin manager as for most other plugins.
 Options->Plugins-> Update Catalog: (master) 
 
 When the catalog is updated scroll to find ais-vd_pi plugin. Select it and "Install".  
-If it's the first time for this plugin don't forget to activate it after the installation. 
+If it's the first time for this plugin don't forget to activate it after the installation.
+
+After that the plugin interface can be found at Options->Ships->AIS Voyage data.
