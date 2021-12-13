@@ -51,7 +51,7 @@ using NMEA0183 ECVSD sentence.
 set(PKG_AUTHOR "Dirk R and Hakan S")
 set(PKG_IS_OPEN_SOURCE "yes")
 set(PKG_HOMEPAGE https://github.com/Hakansv/ais-vd_pi)
-set(PKG_INFO_URL https://github.com/Hakansv/ais-vd_pi)
+set(PKG_INFO_URL https://opencpn-manuals.github.io/main/ais-vd/0.1/index.html)
 
 set(SRC
   src/ais-vd_pi.h

@@ -2,6 +2,8 @@
 
 A plugin for OpenCPN to update a AIS class A transceiver voyage static data.
 
+More user info: https://opencpn-manuals.github.io/main/ais-vd/0.1/index.html
+
 Building is documented in INSTALL.md
 
 The plugin uses a continuous integration setup described in the
