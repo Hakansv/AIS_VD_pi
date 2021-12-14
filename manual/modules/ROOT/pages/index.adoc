@@ -1,6 +1,8 @@
 :imagesdir: ../images/
 = AIS-Voyage Data
 
+Manual for OpenCPN plugin ais-vd_pi version 1.3.0
+
 == Links
 
 Source: https://github.com/Hakansv/ais-vd_pi[Github Repository]
