@@ -517,7 +517,7 @@ void aisvd_pi::SendSentence()
 }
 
 void aisvd_pi::SetSendBtnLabel() {
-  m_SendBtn->SetLabel(_("Send To AIS"));
+  m_SendBtn->SetLabel(_("Send to AIS"));
 }
 
 unsigned char aisvd_pi::ComputeChecksum( wxString sentence ) const
