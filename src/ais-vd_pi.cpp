@@ -57,9 +57,7 @@ aisvd_pi::aisvd_pi(void *ppimgr)
      :opencpn_plugin_116(ppimgr)
 {
   // Create the PlugIn icons
-  //m_panelBitmap = wxBitmap(default_pi);
-  //m_pplugin_icon = &m_panelBitmap;
-  m_pplugin_icon = new wxBitmap(default_pi);
+  m_plugin_icon = wxBitmap(default_pi);
 
   m_event_handler = new aisvd_pi_event_handler(this);
 
@@ -77,11 +75,6 @@ aisvd_pi::aisvd_pi(void *ppimgr)
   m_EtaDateTime = wxDateTime::Now().MakeUTC();
   //    And load the configuration items
   LoadConfig();
-}
-
-aisvd_pi::~aisvd_pi()
-{
-  delete m_pplugin_icon;
 }
 
 int aisvd_pi::Init(void)
@@ -128,7 +121,7 @@ int aisvd_pi::GetPlugInVersionMinor()
 
 wxBitmap *aisvd_pi::GetPlugInBitmap()
 {
-      return m_pplugin_icon;
+      return &m_plugin_icon;
 }
 
 wxString aisvd_pi::GetCommonName()

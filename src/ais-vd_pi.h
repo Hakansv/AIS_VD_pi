@@ -91,7 +91,6 @@ class aisvd_pi : public opencpn_plugin_116
 {
   public:
     aisvd_pi(void *ppimgr);
-	  ~aisvd_pi();
 
 //  The required PlugIn Methods
     int Init(void);
@@ -136,7 +135,7 @@ class aisvd_pi : public opencpn_plugin_116
 private:
   bool LoadConfig( void );  
 	wxWindow         *m_parent_window;
-	wxBitmap          *m_pplugin_icon;
+	wxBitmap          m_plugin_icon;
   wxScrolledWindow  *m_AIS_VoyDataWin;
   wxString          g_PrivateDataDir;
 	aisvd_pi_event_handler *m_event_handler;
