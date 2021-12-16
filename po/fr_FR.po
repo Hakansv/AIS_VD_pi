@@ -5,123 +5,123 @@ msgstr ""
 "POT-Creation-Date: 2021-12-12 20:55+0100\n"
 "PO-Revision-Date: 2021-12-16 19:00\n"
 "Last-Translator: \n"
-"Language-Team: Swedish\n"
-"Language: sv_SE\n"
+"Language-Team: French\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Crowdin-Project: opencpn\n"
 "X-Crowdin-Project-ID: 49843\n"
-"X-Crowdin-Language: sv-SE\n"
+"X-Crowdin-Language: fr\n"
 "X-Crowdin-File: /plugins/ais-vd_pi/po/ais-vd_pi.pot\n"
 "X-Crowdin-File-ID: 377\n"
 
 #: src\ais-vd_pi.cpp:153
 msgid "From the AIS"
-msgstr "Från AIS"
+msgstr "Fourni par l'AIS"
 
 #: src\ais-vd_pi.cpp:167
 msgid "Status"
-msgstr "Status"
+msgstr "Statut"
 
 #: src\ais-vd_pi.cpp:168
 msgid "Dest"
-msgstr "Dest."
+msgstr "Vers"
 
 #: src\ais-vd_pi.cpp:169
 msgid "Time"
-msgstr "Tid"
+msgstr "Temps"
 
 #: src\ais-vd_pi.cpp:171
 msgid "Day"
-msgstr "Dag"
+msgstr "Jour"
 
 #: src\ais-vd_pi.cpp:172
 msgid "Month"
-msgstr "Månad"
+msgstr "Mois"
 
 #: src\ais-vd_pi.cpp:232
 msgid "AIS Voyage data"
-msgstr "AIS Färddata"
+msgstr "Info Voyage AIS"
 
 #: src\ais-vd_pi.cpp:234
 msgid "Set static voyage data on the AIS class A"
-msgstr "Uppdatera färddata på en AIS klass A"
+msgstr "Choisir \"Static Voyage Data\" sur l'AIS-A"
 
 #: src\ais-vd_pi.cpp:242
 msgid "Navigational status"
-msgstr "Navigeringsstatus"
+msgstr "Statut de navigation"
 
 #: src\ais-vd_pi.cpp:245
 msgid "Underway using engine"
-msgstr "På gång med motor"
+msgstr "En route avec moteur"
 
 #: src\ais-vd_pi.cpp:246
 msgid "At anchor"
-msgstr "Ankrad"
+msgstr "A l'ancre"
 
 #: src\ais-vd_pi.cpp:247
 msgid "Not under command"
-msgstr "Ej manöverbar"
+msgstr "Non Manoeuvrable"
 
 #: src\ais-vd_pi.cpp:248
 msgid "Restricted manoeuverability"
-msgstr "Begränsad manövrerbarhet"
+msgstr "Capacité Manoeuvre Restreinte"
 
 #: src\ais-vd_pi.cpp:249
 msgid "Constrained by draught"
-msgstr "Begränsad av djupgående"
+msgstr "Handicapé par son Tirant d'Eau"
 
 #: src\ais-vd_pi.cpp:250
 msgid "Moored"
-msgstr "Förtöjd"
+msgstr "Amarré"
 
 #: src\ais-vd_pi.cpp:251
 msgid "Aground"
-msgstr "På grund"
+msgstr "Echoué"
 
 #: src\ais-vd_pi.cpp:252
 msgid "Engaged in Fishing"
-msgstr "Bedriver fiske"
+msgstr "En action de peche"
 
 #: src\ais-vd_pi.cpp:253
 msgid "Under way sailing"
-msgstr "På gång under segel"
+msgstr "En route sous voile"
 
 #: src\ais-vd_pi.cpp:261
 msgid "Enter destination"
-msgstr "Skriv Destination"
+msgstr "Entrer la destination"
 
 #: src\ais-vd_pi.cpp:267
 msgid "or select a destination"
-msgstr "eller välj en destination"
+msgstr "Ou choisir une destination"
 
 #: src\ais-vd_pi.cpp:287
 msgid "Draught (m)"
-msgstr "Djupgående (m)"
+msgstr "Tirant d'eau (m)"
 
 #: src\ais-vd_pi.cpp:299
 msgid "No. of Persons onboard"
-msgstr "Antal personer ombord"
+msgstr "Nbre personnes à bord"
 
 #: src\ais-vd_pi.cpp:311
 msgid "ETA date"
-msgstr "ETA Datum"
+msgstr "Date ETA"
 
 #: src\ais-vd_pi.cpp:322
 msgid "ETA Time (UTC)"
-msgstr "ETA tid (UTC)"
+msgstr "Temps ETA (UTC)"
 
 #: src\ais-vd_pi.cpp:340
 msgid "Send to AIS"
-msgstr "Skicka till AIS"
+msgstr "Envoyé à l'AIS"
 
 #: src\ais-vd_pi.cpp:506
 msgid "Yet no answer from any AIS! Please check connections and cabling."
-msgstr "Inget svar från AIS! Kontrollera OCPN Anslutningar och kablage"
+msgstr "Aucune signalisations AIS,  Vérifier le câblage et les connexions"
 
 #: src\ais-vd_pi.cpp:520
 msgid "Send To AIS"
-msgstr "Skicka till AIS"
+msgstr "Envoyé à l'AIS"
 
