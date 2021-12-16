@@ -57,17 +57,17 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 static wxBitmap load_plugin_icon(unsigned size) {
   wxBitmap bitmap;
 #ifdef ocpnUSE_SVG
-  wxLogMessage("Installing SVG icon");
+  wxLogDebug("Installing SVG icon");
   wxFileName fn;
   fn.SetPath(GetPluginDataDir("ais-vd_pi"));
   fn.AppendDir("data");
   fn.SetFullName("ais-vd.svg");
   bitmap = GetBitmapFromSVGFile(fn.GetFullPath(), size, size);
 #else
-  wxLogMessage("Installing default icon");
+  wxLogDebug("Installing default icon");
   bitmap = wxBitmap(default_pi);
 #endif
-  wxLogMessage("Installed icon, result: %s", bitmap.IsOk()? "ok" : "fail");
+  wxLogDebug("Installed icon, result: %s", bitmap.IsOk()? "ok" : "fail");
   return bitmap;
 }
 
