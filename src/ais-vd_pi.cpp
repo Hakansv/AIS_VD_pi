@@ -53,13 +53,33 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
 //
 //---------------------------------------------------------------------------------------------------------
 
+
+static wxBitmap load_plugin_icon(unsigned size) {
+  wxBitmap bitmap;
+#ifdef ocpnUSE_SVG
+  wxLogDebug("Installing SVG icon");
+  wxFileName fn;
+  fn.SetPath(GetPluginDataDir("ais-vd_pi"));
+  fn.AppendDir("data");
+  fn.SetFullName("ais-vd.svg");
+  bitmap = GetBitmapFromSVGFile(fn.GetFullPath(), size, size);
+#else
+  wxLogDebug("Installing default icon");
+  bitmap = wxBitmap(default_pi);
+#endif
+  wxLogDebug("Installed icon, result: %s", bitmap.IsOk()? "ok" : "fail");
+  return bitmap;
+}
+
+
 aisvd_pi::aisvd_pi(void *ppimgr)
      :opencpn_plugin_116(ppimgr)
 {
-  // Create the PlugIn icons
-  //m_panelBitmap = wxBitmap(default_pi);
-  //m_pplugin_icon = &m_panelBitmap;
-  m_pplugin_icon = new wxBitmap(default_pi);
+  // Create the PlugIn icon
+  wxInitAllImageHandlers();
+
+  const static int ICON_SIZE = 48;  // FIXME: Needs size from GUI code
+  m_plugin_icon = load_plugin_icon(ICON_SIZE);
 
   m_event_handler = new aisvd_pi_event_handler(this);
 
@@ -77,11 +97,6 @@ aisvd_pi::aisvd_pi(void *ppimgr)
   m_EtaDateTime = wxDateTime::Now().MakeUTC();
   //    And load the configuration items
   LoadConfig();
-}
-
-aisvd_pi::~aisvd_pi()
-{
-  delete m_pplugin_icon;
 }
 
 int aisvd_pi::Init(void)
@@ -128,7 +143,7 @@ int aisvd_pi::GetPlugInVersionMinor()
 
 wxBitmap *aisvd_pi::GetPlugInBitmap()
 {
-      return m_pplugin_icon;
+      return &m_plugin_icon;
 }
 
 wxString aisvd_pi::GetCommonName()
