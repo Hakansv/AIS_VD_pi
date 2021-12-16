@@ -27,8 +27,6 @@ set(OCPN_RELEASE_REPO
     "Default repository for tagged builds not matching 'beta'"
 )
 
-option(AIS-VD_USE_SVG "Use SVG graphics" OFF)
-
 #
 #
 # -------  Plugin setup --------
@@ -65,9 +63,6 @@ set(PKG_API_LIB api-16)  #  A directory in libs/ e. g., api-17 or api-16
 macro(late_init)
   # Perform initialization after the PACKAGE_NAME library, compilers
   # and ocpn::api is available.
-  if (AIS-VD_USE_SVG)
-    target_compile_definitions(${PACKAGE_NAME} PUBLIC AIS-VD_USE_SVG_USE_SVG)
-  endif ()
 endmacro ()
 
 macro(add_plugin_libraries)
@@ -80,4 +75,7 @@ macro(add_plugin_libraries)
 
   add_subdirectory("libs/plugingl")
   target_link_libraries(${PACKAGE_NAME} ocpn::plugingl)
+
+  add_subdirectory("libs/wxsvg")
+  target_link_libraries(${PACKAGE_NAME} ocpn::wxsvg)
 endmacro ()
