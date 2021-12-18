@@ -167,8 +167,6 @@ void aisvd_pi::SetNMEASentence(wxString &sentence)
   if (sentence.Mid(0, 6).IsSameAs("$AIVSD")) {
     wxString msg = _("From the AIS") + ": ";
     wxString nmea = sentence.Mid(0, sentence.Len() - 2);
-    // Clean out possible white space complements in destination
-    nmea.Replace((" "), wxEmptyString);
     // Create an understandable user message
     wxString VSD_Nr[15];
     int nr = 1;
@@ -180,6 +178,8 @@ void aisvd_pi::SetNMEASentence(wxString &sentence)
     }
     int statusNr = wxAtoi(VSD_Nr[9]);
     msg.Append(_("Status") + (": ") + StatusChoiceStrings[statusNr] + " ");
+    // Clean out possible white space complements in destination
+    VSD_Nr[5].Replace(( "  " ), wxEmptyString);
     msg.Append(_("Dest") + (": ") + VSD_Nr[5] + " ");
     msg.Append(_("Time") + (": ") + VSD_Nr[6].Mid(0,2) + ":" + 
                                      VSD_Nr[6].Mid(2, 2) + " ");
