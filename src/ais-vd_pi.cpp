@@ -330,7 +330,7 @@ void aisvd_pi::OnSetupOptions(){
     DatePicker = new wxDatePickerCtrl(m_AIS_VoyDataWin, ID_DATECTRL, wxDateTime(), 
                                       wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT);
     itemFlexGridSizer4->Add(DatePicker, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
-    DatePicker->Connect(wxEVT_CHAR, wxCommandEventHandler(
+    DatePicker->Connect(wxEVT_DATE_CHANGED, wxCommandEventHandler(
                 aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
 
     wxStaticText* itemStaticText15 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
@@ -341,7 +341,7 @@ void aisvd_pi::OnSetupOptions(){
     TimePickCtrl = new wxTimePickerCtrl(m_AIS_VoyDataWin, ID_TIMECTR,
                                         wxDateTime(), wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(TimePickCtrl, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
-    TimePickCtrl->Connect(wxEVT_CHAR, wxCommandEventHandler(
+    TimePickCtrl->Connect(wxEVT_TIME_CHANGED, wxCommandEventHandler(
                   aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
 
     wxBoxSizer* itemBoxSizer17 = new wxBoxSizer(wxHORIZONTAL);
