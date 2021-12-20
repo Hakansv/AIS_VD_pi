@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-12 20:55+0100\n"
-"PO-Revision-Date: 2021-12-16 19:00\n"
+"PO-Revision-Date: 2021-12-20 13:03\n"
 "Last-Translator: \n"
 "Language-Team: Finnish\n"
 "Language: fi_FI\n"
@@ -19,109 +19,109 @@ msgstr ""
 
 #: src\ais-vd_pi.cpp:153
 msgid "From the AIS"
-msgstr ""
+msgstr "AIS-järjestelmästä"
 
 #: src\ais-vd_pi.cpp:167
 msgid "Status"
-msgstr ""
+msgstr "Tila"
 
 #: src\ais-vd_pi.cpp:168
 msgid "Dest"
-msgstr ""
+msgstr "Kohde"
 
 #: src\ais-vd_pi.cpp:169
 msgid "Time"
-msgstr ""
+msgstr "Aika"
 
 #: src\ais-vd_pi.cpp:171
 msgid "Day"
-msgstr ""
+msgstr "Päivä"
 
 #: src\ais-vd_pi.cpp:172
 msgid "Month"
-msgstr ""
+msgstr "Kuukausi"
 
 #: src\ais-vd_pi.cpp:232
 msgid "AIS Voyage data"
-msgstr ""
+msgstr "AIS Voyage data"
 
 #: src\ais-vd_pi.cpp:234
 msgid "Set static voyage data on the AIS class A"
-msgstr ""
+msgstr "Määritä staattiset matkatiedot AIS-luokan A osalta."
 
 #: src\ais-vd_pi.cpp:242
 msgid "Navigational status"
-msgstr ""
+msgstr "Navigoinnin tila"
 
 #: src\ais-vd_pi.cpp:245
 msgid "Underway using engine"
-msgstr ""
+msgstr "Kulussa moottorilla"
 
 #: src\ais-vd_pi.cpp:246
 msgid "At anchor"
-msgstr ""
+msgstr "Ankkurissa"
 
 #: src\ais-vd_pi.cpp:247
 msgid "Not under command"
-msgstr ""
+msgstr "Ei hallittavissa"
 
 #: src\ais-vd_pi.cpp:248
 msgid "Restricted manoeuverability"
-msgstr ""
+msgstr "Rajoitettu ohjattavuus"
 
 #: src\ais-vd_pi.cpp:249
 msgid "Constrained by draught"
-msgstr ""
+msgstr "Syväyksen rajoittama"
 
 #: src\ais-vd_pi.cpp:250
 msgid "Moored"
-msgstr ""
+msgstr "Laiturissa"
 
 #: src\ais-vd_pi.cpp:251
 msgid "Aground"
-msgstr ""
+msgstr "Karilla"
 
 #: src\ais-vd_pi.cpp:252
 msgid "Engaged in Fishing"
-msgstr ""
+msgstr "Harjoittaa kalastusta"
 
 #: src\ais-vd_pi.cpp:253
 msgid "Under way sailing"
-msgstr ""
+msgstr "Kulussa purjeilla"
 
 #: src\ais-vd_pi.cpp:261
 msgid "Enter destination"
-msgstr ""
+msgstr "Syötä määränpää"
 
 #: src\ais-vd_pi.cpp:267
 msgid "or select a destination"
-msgstr ""
+msgstr "tai valitse kohde"
 
 #: src\ais-vd_pi.cpp:287
 msgid "Draught (m)"
-msgstr ""
+msgstr "Syväys (m)"
 
 #: src\ais-vd_pi.cpp:299
 msgid "No. of Persons onboard"
-msgstr ""
+msgstr "Aluksella olevien henkilöiden lkm"
 
 #: src\ais-vd_pi.cpp:311
 msgid "ETA date"
-msgstr ""
+msgstr "ETA päiväys"
 
 #: src\ais-vd_pi.cpp:322
 msgid "ETA Time (UTC)"
-msgstr ""
+msgstr "ETA Aika (UTC)"
 
 #: src\ais-vd_pi.cpp:340
 msgid "Send to AIS"
-msgstr ""
+msgstr "Lähetä AIS"
 
 #: src\ais-vd_pi.cpp:506
 msgid "Yet no answer from any AIS! Please check connections and cabling."
-msgstr ""
+msgstr "Vielä ei vastausta yhdestäkään AIS:sta! Tarkista yhteydet ja kaapelointi."
 
 #: src\ais-vd_pi.cpp:520
 msgid "Send To AIS"
-msgstr ""
+msgstr "Lähetä AIS"
 
