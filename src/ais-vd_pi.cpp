@@ -93,8 +93,6 @@ aisvd_pi::aisvd_pi(void *ppimgr)
 
   //    Get a pointer to the opencpn configuration object
   m_pconfig = GetOCPNConfigObject();
-  //  Prepare for a first time empty config file.
-  m_EtaDateTime = wxDateTime::Now().MakeUTC();
   //    And load the configuration items
   LoadConfig();
 }
@@ -165,28 +163,7 @@ void aisvd_pi::SetNMEASentence(wxString &sentence)
 {
   // Check for a VSD receipt from a AIS after the AIQ query
   if (sentence.Mid(0, 6).IsSameAs("$AIVSD")) {
-    wxString msg = _("From the AIS") + ": ";
-    wxString nmea = sentence.Mid(0, sentence.Len() - 2);
-    // Create an understandable user message
-    wxString VSD_Nr[15];
-    int nr = 1;
-    wxStringTokenizer tkn(nmea, ",");
-    while (tkn.HasMoreTokens()) {
-      VSD_Nr[nr] = (tkn.GetNextToken());
-      nr += 1;
-      if (nr > 14) break;
-    }
-    int statusNr = wxAtoi(VSD_Nr[9]);
-    msg.Append(_("Status") + (": ") + StatusChoiceStrings[statusNr] + " ");
-    // Clean out possible white space complements in destination
-    VSD_Nr[5].Replace(( "  " ), wxEmptyString);
-    msg.Append(_("Dest") + (": ") + VSD_Nr[5] + " ");
-    msg.Append(_("Time") + (": ") + VSD_Nr[6].Mid(0,2) + ":" + 
-                                     VSD_Nr[6].Mid(2, 2) + " ");
-    msg.Append(_("Day") + (": ") + VSD_Nr[7] + " ");
-    msg.Append(_("Month") + (": ") + VSD_Nr[8] + " ");
-    wxLogMessage(msg);
-    m_SendBtn->SetLabel(msg);
+    UpdateDataFromVSD(sentence);
   }
 }
 
@@ -205,7 +182,7 @@ void aisvd_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
 {
 
 }
-//      Options Dialog Page management
+// Options Dialog Page management
 void aisvd_pi::OnSetupOptions(){
    // Set validators
         const wxString AllowDest[] = {
@@ -245,6 +222,7 @@ void aisvd_pi::OnSetupOptions(){
 
     //  Create the AISVD Options panel, and load it
     m_AIS_VoyDataWin = AddOptionsPage( PI_OPTIONS_PARENT_SHIPS, _("AIS Voyage data") );
+    
     wxStaticBox* itemStaticBoxSizer3Static = new wxStaticBox(m_AIS_VoyDataWin, 
                                              wxID_ANY, _("Set static voyage data on the AIS class A"));
     wxStaticBoxSizer* itemStaticBoxSizer3 = new wxStaticBoxSizer(itemStaticBoxSizer3Static, wxVERTICAL);
@@ -279,7 +257,7 @@ void aisvd_pi::OnSetupOptions(){
                         wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
     wxStaticText* itemStaticText19 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
-                                     _("or select a destination"), 
+                                     _("or select a previous"), 
                                      wxDefaultPosition, wxDefaultSize, 0);
     itemFlexGridSizer4->Add(itemStaticText19, 0, 
                         wxALIGN_CENTER_HORIZONTAL | wxALIGN_CENTER_VERTICAL | wxALL, 5);
@@ -322,41 +300,94 @@ void aisvd_pi::OnSetupOptions(){
     PersonsTextCtrl->Connect(wxEVT_CHAR, wxCommandEventHandler(
                      aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
 
-    wxStaticText* itemStaticText13 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
-                                     _("ETA date"), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer4->Add(itemStaticText13, 0, wxALIGN_CENTER_HORIZONTAL |
-                                        wxALIGN_CENTER_VERTICAL | wxALL, 5);
-
-    DatePicker = new wxDatePickerCtrl(m_AIS_VoyDataWin, ID_DATECTRL, wxDateTime(), 
-                                      wxDefaultPosition, wxDefaultSize, wxDP_DEFAULT);
-    itemFlexGridSizer4->Add(DatePicker, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
-    DatePicker->Connect(wxEVT_DATE_CHANGED, wxCommandEventHandler(
-                aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
-
-    wxStaticText* itemStaticText15 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, 
-                                     _("ETA Time (UTC)"), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer4->Add(itemStaticText15, 0, wxALIGN_CENTER_HORIZONTAL |
-                                        wxALIGN_CENTER_VERTICAL | wxALL, 5);
-
-    TimePickCtrl = new wxTimePickerCtrl(m_AIS_VoyDataWin, ID_TIMECTR,
-                                        wxDateTime(), wxDefaultPosition, wxDefaultSize, 0);
-    itemFlexGridSizer4->Add(TimePickCtrl, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
-    TimePickCtrl->Connect(wxEVT_TIME_CHANGED, wxCommandEventHandler(
-                  aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
-
-    wxBoxSizer* itemBoxSizer17 = new wxBoxSizer(wxHORIZONTAL);
-    itemStaticBoxSizer3->Add(itemBoxSizer17, 0, wxGROW | wxALL, 5);
+    wxFlexGridSizer* EtaFlexgrid = new wxFlexGridSizer(1, 5, 10, 25);
+    EtaFlexgrid->AddGrowableCol(1);
+    itemStaticBoxSizer3->Add(EtaFlexgrid, 0, wxALL, 10);
     
-    /*wxButton* itemButton18 = new wxButton( m_AIS_VoyDataWin, ID_BUTTON, 
-                            _T("Read from AIS"), wxDefaultPosition, wxDefaultSize, 0 );
-    itemBoxSizer17->Add(itemButton18, 0, wxALIGN_CENTER_VERTICAL|wxALL, 5);*/
+    wxStaticText* StaticTextDate = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
+                                                      _("ETA Date:"), wxDefaultPosition, wxDefaultSize, 0);
+    EtaFlexgrid->Add(StaticTextDate, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 5);
+
+    //month text and box
+    wxDateTime now = wxDateTime::Now().MakeUTC();
+    unsigned short EtaInitMonth = now.GetMonth() + 1; // wx months start at 0!
+    unsigned short EtaInitDay = now.GetDay();
+    unsigned short EtaInitHour = now.GetHour();
     
+    wxStaticText* monthtext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Month"));
+    EtaFlexgrid->Add(monthtext, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
+
+    m_pCtrlMonth = new wxSpinCtrl( m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
+                   wxDefaultPosition, wxSize(80, -1), wxSP_ARROW_KEYS, 1, 12, EtaInitMonth);
+
+    m_pCtrlMonth->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
+      aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
+
+    EtaFlexgrid->Add(m_pCtrlMonth, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 0);
+
+
+    //day text and box
+    wxStaticText* daytext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Day"));
+    EtaFlexgrid->Add(daytext, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
+    m_pCtrlDay = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
+                                wxDefaultPosition, wxSize(80, -1), 
+                                wxSP_ARROW_KEYS, 1, 31, EtaInitDay);
+    m_pCtrlDay->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
+                        aisvd_pi_event_handler::OnAnyValueChange), 
+                        NULL, m_event_handler);
+    EtaFlexgrid->Add(m_pCtrlDay, 0, wxALIGN_LEFT | wxEXPAND | wxALL, 0);
+
+
+    //time text and box
+    wxStaticText* StaticTextTime = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
+                                                    _("ETA Time (UTC!):"), 
+                                                    wxDefaultPosition, wxDefaultSize, 0);
+    EtaFlexgrid->Add(StaticTextTime, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 5);
+
+    wxStaticText* hourtext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Hour"));
+    EtaFlexgrid->Add(hourtext, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
+    m_pCtrlHour = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
+                                 wxDefaultPosition, wxSize(80, -1), 
+                                 wxSP_ARROW_KEYS, 0, 23, EtaInitHour);
+    m_pCtrlHour->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
+                         aisvd_pi_event_handler::OnAnyValueChange), 
+                         NULL, m_event_handler);
+    EtaFlexgrid->Add(m_pCtrlHour, 0, wxALIGN_CENTER_VERTICAL, 0);
+
+
+    //minute text and box
+    wxStaticText* minutetext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
+                                                _("Minute"));
+    EtaFlexgrid->Add(minutetext, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
+    m_pCtrlMinute = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
+                                   wxDefaultPosition, wxSize(80, -1), 
+                                   wxSP_ARROW_KEYS, 0, 59, 00);
+    m_pCtrlMinute->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
+                           aisvd_pi_event_handler::OnAnyValueChange), 
+                           NULL, m_event_handler);
+    EtaFlexgrid->Add(m_pCtrlMinute, 0, wxEXPAND | wxALL, 0);
+
+
+    wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
+    itemStaticBoxSizer3->Add(itemBoxSizer1, 0, wxGROW | wxALL, 5);
+
+    // Read from AIS button
+    wxButton* itemButtonRead = new wxButton(m_AIS_VoyDataWin, ID_BUTTON,
+                                            _T("Read from AIS"),
+                                            wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer1->Add(itemButtonRead, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
+    itemButtonRead->Connect(wxEVT_BUTTON, wxCommandEventHandler(
+                            aisvd_pi_event_handler::OnReadBtnClick),
+                            NULL, m_event_handler);
+
+    //Send button and AIS reply info text
     m_SendBtn = new wxButton(m_AIS_VoyDataWin, ID_BUTTON1, 
-                                     _("Send to AIS"), wxDefaultPosition, wxDefaultSize, 0);
-    itemBoxSizer17->Add(m_SendBtn, 1, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-    m_SendBtn->Connect(wxEVT_BUTTON,
-                     wxCommandEventHandler(aisvd_pi_event_handler::OnSendBtnClick),
-                     NULL, m_event_handler);
+                             _("Send to AIS"), 
+                             wxDefaultPosition, wxDefaultSize, 0);
+    itemBoxSizer1->Add(m_SendBtn, -1, wxEXPAND | wxALL, 5); //itemStaticBoxSizer3
+    m_SendBtn->Connect(wxEVT_BUTTON, wxCommandEventHandler(
+                       aisvd_pi_event_handler::OnSendBtnClick),
+                       NULL, m_event_handler);
 
     //content construction
     m_AIS_VoyDataWin->Layout();
@@ -366,8 +397,7 @@ void aisvd_pi::OnSetupOptions(){
     m_DestTextCtrl->SetValue(m_Destination);
     DraughtTextCtrl->SetValue(m_Draught);
     PersonsTextCtrl->SetValue(m_Persons);
-    CheckForOldDateTime(); // If old set to Now
-    m_DestComboBox->Append(">>");
+    m_DestComboBox->Append(_("Drop down to select"));
     wxStringTokenizer tkn(m_InitDest, ";");
     while (tkn.HasMoreTokens()) {
       m_DestComboBox->Append(tkn.GetNextToken());
@@ -385,8 +415,6 @@ bool aisvd_pi::LoadConfig( void )
         pConf->Read( _T("Destination"), &m_Destination );
         pConf->Read( _T("Draught"), &m_Draught, wxEmptyString );
         pConf->Read( _T("Persons"), &m_Persons, wxEmptyString);
-        pConf->Read( _T("Eta"), &temp);
-        m_EtaDateTime.ParseDateTime(temp); 
         pConf->Read(_T("DestSelections"), &m_InitDest);
     }
 
@@ -402,7 +430,6 @@ bool aisvd_pi::SaveConfig( void )
         pConf->Write( _T("Destination"), m_Destination );
         pConf->Write( _T("Draught"), m_Draught );
         pConf->Write( _T("Persons"), m_Persons );
-        pConf->Write( _T("Eta"), m_EtaDateTime.Format() );
         // Save max 18 dest-selections to config.
         if (m_AIS_VoyDataWin) {
           wxString destarr;
@@ -425,19 +452,11 @@ void aisvd_pi::OnCloseToolboxPanel(int page_sel, int ok_apply_cancel)
 
 }
 
-void aisvd_pi::CheckForOldDateTime() {
-  wxDateTime now = wxDateTime::Now().MakeUTC();
-  if (now.IsLaterThan(m_EtaDateTime)) {
-    m_EtaDateTime = now.SetSecond(0);
-  }
-  DatePicker->SetValue(m_EtaDateTime);
-  TimePickCtrl->SetValue(m_EtaDateTime);
-}
-
 void aisvd_pi::UpdateDestVal()
 {
   if (m_DestComboBox->GetValue() != wxEmptyString &&
-      m_DestComboBox->GetValue() != ">>") {
+      m_DestComboBox->GetSelection() != 0 ){
+      //m_DestComboBox->GetValue() != ">>") {
     m_Destination = m_DestComboBox->GetValue();
     //Move last selection to top
     int pos = m_DestComboBox->GetSelection();
@@ -454,7 +473,7 @@ void aisvd_pi::UpdateDestVal()
   
   m_Destination = m_Destination.MakeUpper();
   m_DestTextCtrl->SetValue( m_Destination );
-  //Check if exist else add it
+  //Check if already exist else add it
   if (wxNOT_FOUND == m_DestComboBox->FindString(m_Destination)) {
     m_DestComboBox->Insert(m_Destination, 1);
   }
@@ -488,40 +507,50 @@ void aisvd_pi::UpdatePersons()
 }
 void aisvd_pi::UpdateEta()
 {
-    m_EtaDateTime = DatePicker->GetValue();
+    /*m_EtaDateTime = DatePicker->GetValue();
     m_EtaDateTime.SetHour( TimePickCtrl->GetValue().GetHour() );
-    m_EtaDateTime.SetMinute( TimePickCtrl->GetValue().GetMinute() );
+    m_EtaDateTime.SetMinute( TimePickCtrl->GetValue().GetMinute() );*/
+
 }
-void aisvd_pi::SendSentence()
-{
+
+void aisvd_pi::SendSentence() {
   // $IISPW,E,1,00000000,,,0*10  A possible password.
   wxString S;
-  S= _T("$ECVSD,"); // EC for Electronic Chart
+  S = _T("$ECVSD,"); // EC for Electronic Chart
 
   // We dont send ship type. It will be set by AIS static 
   // data and can be password protected by some devices
-  S.Append( _T(",") );
-  S.Append( m_Draught ); S.Append( _T(",") );
-  S.Append( m_Persons ); S.Append( _T(",") );
-  S.Append( m_Destination ); S.Append( _T(",") );
-  S.Append( wxString::Format(_T("%02d%02d00,"), m_EtaDateTime.GetHour(), 
-                              m_EtaDateTime.GetMinute() )); //eta time HHmm
-  S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetDay() )); // eta Day
-  S.Append( wxString::Format(_T("%d,"), m_EtaDateTime.GetMonth()+1 )); // eta Month
-  S.Append( wxString::Format(_T("%d,"), StatusChoice->GetSelection() )); //Navigation status
-  S.Append( wxString::Format(_T("%d"), 0 )); // TODO Regional application flags, 0 to 15
-  S.Append( _T("*")); // End data
-  S.Append( wxString::Format(_T("%02X"), ComputeChecksum(S) ));
+  S.Append(_T(","));
+  S.Append(m_Draught); S.Append(_T(","));
+  S.Append(m_Persons); S.Append(_T(","));
+  S.Append(m_Destination); S.Append(_T(","));
+  //S.Append(wxString::Format(_T("%02d%02d00,"), m_EtaDateTime.GetHour(),
+  //                          m_EtaDateTime.GetMinute())); //eta time HHmm
+  //S.Append(wxString::Format(_T("%d,"), m_EtaDateTime.GetDay())); // eta Day
+  //S.Append(wxString::Format(_T("%d,"), m_EtaDateTime.GetMonth() + 1)); // eta Month 
+  S.Append(wxString::Format(_T("%02d%02d00,"), aisvd_pi::m_pCtrlHour->GetValue(),
+                            aisvd_pi::m_pCtrlMinute->GetValue() )); //eta time HHmm
+  S.Append(wxString::Format(_T("%d,"), aisvd_pi::m_pCtrlDay->GetValue() )); // eta Day
+  S.Append(wxString::Format(_T("%d,"), aisvd_pi::m_pCtrlMonth->GetValue() )); // eta Month
+  S.Append(wxString::Format(_T("%d,"), StatusChoice->GetSelection())); //Navigation status
+  S.Append(wxString::Format(_T("%d"), 0)); // TODO Regional application flags, 0 to 15
+  S.Append(_T("*")); // End data
+  S.Append(wxString::Format(_T("%02X"), ComputeChecksum(S)));
   S += _T("\r\n");
   //wxPuts(S);
-  PushNMEABuffer(S); //finaly send NMEA string
-
+  PushNMEABuffer(S); //finaly send NMEA string  
+  // Now querry a AIS for updated voyage data
+  RequestAISstatus();
+}
+  
+void aisvd_pi::RequestAISstatus(){
   // Deafult user message if no answer from AIS
   wxString msg;
-  msg = _("Yet no answer from any AIS! Please check connections and cabling.");
+  msg = _("Yet no answer from any AIS!\n Please check connections and cabling.");
   m_SendBtn->SetLabel(msg);
+  m_AIS_VoyDataWin->Layout();
 
-  // Now querry a AIS for updated voyage data
+  wxString S;
   S = _T("$ECAIQ"); // EC for Electronic Chart
   S.Append(_T(","));
   S.Append("VSD");
@@ -531,8 +560,35 @@ void aisvd_pi::SendSentence()
   PushNMEABuffer(S);
 }
 
+void aisvd_pi::UpdateDataFromVSD(wxString &sentence) {
+  wxString msg = _("Reply from the AIS") + ": \n";
+  wxString nmea = sentence.Mid(0, sentence.Len() - 2);
+  // Create an understandable user message
+  wxString VSD_Nr[15];
+  int nr = 1;
+  wxStringTokenizer tkn(nmea, ",");
+  while (tkn.HasMoreTokens()) {
+    VSD_Nr[nr] = ( tkn.GetNextToken() );
+    nr += 1;
+    if (nr > 14) break;
+  }
+  int statusNr = wxAtoi(VSD_Nr[9]);
+  msg.Append(_("Status") + ( ": " ) + StatusChoiceStrings[statusNr] + " ");
+  // Clean out possible white space complements in destination
+  VSD_Nr[5].Replace(( "  " ), wxEmptyString);
+  msg.Append(_("Dest") + ( ": " ) + VSD_Nr[5] + " \n");
+  msg.Append(_("Month") + ( ": " ) + VSD_Nr[8] + " ");
+  msg.Append(_("Day") + ( ": " ) + VSD_Nr[7] + " ");
+  msg.Append(_("Time") + ( ": " ) + VSD_Nr[6].Mid(0, 2) + ":" +
+             VSD_Nr[6].Mid(2, 2) + " ");
+  wxLogMessage(msg);
+  m_SendBtn->SetLabel(msg);
+  m_AIS_VoyDataWin->Layout();
+}
+
 void aisvd_pi::SetSendBtnLabel() {
   m_SendBtn->SetLabel(_("Send to AIS"));
+  m_AIS_VoyDataWin->Layout();
 }
 
 unsigned char aisvd_pi::ComputeChecksum( wxString sentence ) const
@@ -601,6 +657,10 @@ aisvd_pi_event_handler::~aisvd_pi_event_handler()
 {
 }
 
+void aisvd_pi_event_handler::OnReadBtnClick(wxCommandEvent &event) {
+  m_parent->RequestAISstatus();
+}
+
 void aisvd_pi_event_handler::OnSendBtnClick( wxCommandEvent &event )
 {
   m_parent->UpdateDestVal();
@@ -623,5 +683,4 @@ void aisvd_pi_event_handler::OnAnyValueChange(wxCommandEvent &event) {
 
 void aisvd_pi_event_handler::OnNavStatusSelect(wxCommandEvent &event) {
   m_parent->SetSendBtnLabel();
-  m_parent->CheckForOldDateTime();
 }

@@ -32,6 +32,7 @@
 #include "wx/dateevt.h"
 #include <wx/fileconf.h>
 #include <wx/timectrl.h>
+#include <wx/spinctrl.h>
 #include "ocpn_plugin.h"
 
 
@@ -75,10 +76,11 @@ public:
 
   aisvd_pi_event_handler(aisvd_pi *parent);
   ~aisvd_pi_event_handler();
+  void OnReadBtnClick(wxCommandEvent &event);
   void OnSendBtnClick( wxCommandEvent &event );
   void OnDestValSelect(wxCommandEvent &event);
   void OnAnyValueChange(wxCommandEvent &event);
-  void OnNavStatusSelect(wxCommandEvent &event); 
+  void OnNavStatusSelect(wxCommandEvent &event);
   aisvd_pi  *m_parent;
 };
 
@@ -118,18 +120,17 @@ class aisvd_pi : public opencpn_plugin_116
 	void UpdateDraught();
 	void UpdatePersons();
 	void UpdateEta();
+  void RequestAISstatus();
 	void SendSentence();
   void SetSendBtnLabel();
-  void CheckForOldDateTime();
+  void UpdateDataFromVSD(wxString &sentence);
+
   PreferenceDlg *prefDlg;
   wxArrayString StatusChoiceStrings;
   wxString AIS_type;
   wxString m_Destination;
   wxString m_Draught;
   wxString m_Persons;
-  wxString m_EtaDate; //MMDD
-  wxString m_EtaTime; //HHmm
-	wxDateTime m_EtaDateTime;
   wxString m_InitDest;
 
 private:
@@ -146,12 +147,10 @@ private:
   wxComboBox* m_DestComboBox;
 	wxTextCtrl* DraughtTextCtrl;
 	wxTextCtrl* PersonsTextCtrl;
-	wxDatePickerCtrl* DatePicker;
-	wxTimePickerCtrl* TimePickCtrl;
+  wxSpinCtrl *m_pCtrlMonth, *m_pCtrlDay;
+  wxSpinCtrl *m_pCtrlHour, *m_pCtrlMinute;
   wxButton* m_SendBtn;
 	
-    //  int               m_show_id;
-    //  int               m_hide_id;
 	wxFileConfig        *m_pconfig;
 	////@begin t member function declarations
 
@@ -164,12 +163,7 @@ private:
     wxString GetPersons() const { return m_Persons ; }
     void SetPersons(wxString value) { m_Persons = value ; }
 
-    wxString GetEtaDate() const { return m_EtaDate ; }
-    void SetEtaDate(wxString value) { m_EtaDate = value ; }
-
-    wxString GetEtaTime() const { return m_EtaTime ; }
-    void SetEtaTime(wxString value) { m_EtaTime = value ; }
-	unsigned char ComputeChecksum( wxString sentence ) const;
+    unsigned char ComputeChecksum( wxString sentence ) const;
     /// Retrieves bitmap resources
     //wxBitmap GetBitmapResource( const wxString& name );
 
