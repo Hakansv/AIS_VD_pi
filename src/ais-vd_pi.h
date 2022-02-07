@@ -27,24 +27,29 @@
 #define _AISVDPI_H_
 
 #include "wx/wxprec.h"
+
+#ifndef  WX_PRECOMP
+#include "wx/wx.h"
+#endif //precompiled headers
+
+#include "ocpn_plugin.h"
+#include "config.h"
+
 #include "wx/valtext.h"
 #include "wx/datectrl.h"
 #include "wx/dateevt.h"
+#include "wx/translation.h"
 #include <wx/fileconf.h>
+#include <wx/notebook.h>
 #include <wx/timectrl.h>
 #include <wx/spinctrl.h>
-#include "ocpn_plugin.h"
 
 
-#ifndef  WX_PRECOMP
-  #include "wx/wx.h"
-#endif //precompiled headers
-
-#define     PLUGIN_VERSION_MAJOR    0
-#define     PLUGIN_VERSION_MINOR    0
+//#define     PLUGIN_VERSION_MAJOR    0
+//#define     PLUGIN_VERSION_MINOR    0
 
 #define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    9
+#define     MY_API_VERSION_MINOR    16
 
 //#include "nmea0183/nmea0183.h"
 //@begin control identifiers
@@ -54,6 +59,7 @@
 #define ID_TEXTCTRL wxID_ANY
 #define ID_TEXTCTRL1 wxID_ANY
 #define ID_TEXTCTRL2 wxID_ANY
+#define ID_COMBCTRL wxID_ANY
 #define ID_DATECTRL wxID_ANY
 #define ID_NMEACTRL wxID_ANY
 #define ID_TIMECTR wxID_ANY
@@ -93,6 +99,7 @@ class aisvd_pi : public opencpn_plugin_116
 {
   public:
     aisvd_pi(void *ppimgr);
+    ~aisvd_pi();
 
 //  The required PlugIn Methods
     int Init(void);
@@ -119,11 +126,11 @@ class aisvd_pi : public opencpn_plugin_116
 	void UpdateDestVal();
 	void UpdateDraught();
 	void UpdatePersons();
-	void UpdateEta();
   void RequestAISstatus();
 	void SendSentence();
   void SetSendBtnLabel();
   void UpdateDataFromVSD(wxString &sentence);
+  wxString GetShipType(int);
 
   PreferenceDlg *prefDlg;
   wxArrayString StatusChoiceStrings;
@@ -140,16 +147,16 @@ private:
   wxScrolledWindow  *m_AIS_VoyDataWin;
   wxString          g_PrivateDataDir;
 	aisvd_pi_event_handler *m_event_handler;
-	//wxString DestValid;
 	
 	wxChoice* StatusChoice;
 	wxTextCtrl* m_DestTextCtrl;
   wxComboBox* m_DestComboBox;
 	wxTextCtrl* DraughtTextCtrl;
-	wxTextCtrl* PersonsTextCtrl;
+  wxTextCtrl* PersonsTextCtrl;
   wxSpinCtrl *m_pCtrlMonth, *m_pCtrlDay;
   wxSpinCtrl *m_pCtrlHour, *m_pCtrlMinute;
   wxButton* m_SendBtn;
+  wxButton* m_BtnReadAIS;
 	
 	wxFileConfig        *m_pconfig;
 	////@begin t member function declarations
