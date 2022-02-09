@@ -576,7 +576,7 @@ void aisvd_pi::RequestAISstatus(){
   wxString S;
   S = _T("$ECAIQ"); // EC for Electronic Chart
   S.Append(_T(","));
-  S.Append("VSD");
+  S.Append(_T("VSD"));
   S.Append(_T("*"));
   S.Append(wxString::Format(_T("%02X"), ComputeChecksum(S)));
   S += _T("\r\n");
@@ -584,21 +584,22 @@ void aisvd_pi::RequestAISstatus(){
 }
 
 void aisvd_pi::UpdateDataFromVSD(wxString &sentence) {
-  /*$--VSD, x.x, x.x, x.x, c—c, hhmmss.ss, xx, xx, x.x, x.x*hh<CR> < LF>
-             1    2    3    4      5       6    7   8    9
-    9]Regional application flags, 0 to 15 8)
-    8]Regional application flags, 0 to 15 8)
-    7]Estimated month of arrival at destination, 00 to 12 (UTC)6)
-    6]Estimated day of arrival at destination, 00 to 31 (UTC)6)
-    5]Estimated UTC of arrival at destination 5)
-    4]Destination, 1 - 20 characters 4)
-    3]Persons on - board, 0 to 8 191 3)
-    2]Maximum present static draught, 0 to 25, 5 m 2)
-    1] Type of ship and cargo category, 0 to 255 1*/
 
-  wxString msg = _("Reply from AIS") + " ";
+  //     VSD, x.x, x.x, x.x, c c, hhmmss.ss, xx, xx, x.x, x.x*hh
+  //           1    2    3    4      5       6    7   8    9
+  //  9)Regional application flags, 0 to 15 
+  //  8)Regional application flags, 0 to 15 
+  //  7)Estimated month of arrival at destination, 00 to 12 
+  //  6)Estimated day of arrival at destination, 00 to 31 
+  //  5)Estimated UTC of arrival at destination 
+  //  4)Destination, 1 - 20 characters 
+  //  3)Persons on board, 0 to 8 191 
+  //  2)Maximum present static draught, 0 to 25, 5 m
+  //  1) Type of ship and cargo category, 0 to 255
+
+  wxString msg = _("Reply from AIS");
   wxDateTime now = wxDateTime::Now(); // .MakeUTC();
-  msg.Append(wxString::Format(_T("(%02d:%02d) : "),
+  msg.Append(wxString::Format(_T(" (%02d:%02d) : "),
                               now.GetHour(), now.GetMinute()));
   wxString nmea = sentence.Mid(0, sentence.Len() - 2);
   // Create an understandable user message

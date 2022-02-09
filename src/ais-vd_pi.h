@@ -38,7 +38,6 @@
 #include "wx/valtext.h"
 #include "wx/datectrl.h"
 #include "wx/dateevt.h"
-#include "wx/translation.h"
 #include <wx/fileconf.h>
 #include <wx/notebook.h>
 #include <wx/timectrl.h>
