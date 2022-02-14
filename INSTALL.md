@@ -22,18 +22,9 @@ has been removed in the 5.6.0 cycle.
 
 #### Building for Android
 
-Builds for android requires an ndk installation and an updated cmake,
-see manual (above).
+This plugins is not prepared for Androids. 
+It's unlikely a AIS Class A transponder would connect through a Andorid.
 
-To build an android aarch64 tarball:
-
-    $ cmake -DCMAKE_TOOLCHAIN_FILE=cmake/android-aarch64-toolchain.cmake ..
-    $ make
-
-To build an android armhf tarball
-
-    $ cmake -DCMAKE_TOOLCHAIN_FILE=cmake/android-armhf-toolchain.cmake ..
-    $ make
 
 #### Building on windows (MSVC)
 On windows, a different workflow is used:
