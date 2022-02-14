@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-09 21:19+0100\n"
-"PO-Revision-Date: 2022-02-09 21:28+0100\n"
+"PO-Revision-Date: 2022-02-14 07:24\n"
 "Last-Translator: \n"
 "Language-Team: Swedish\n"
 "Language: sv_SE\n"
@@ -16,7 +16,6 @@ msgstr ""
 "X-Crowdin-Language: sv-SE\n"
 "X-Crowdin-File: /plugins/ais-vd_pi/po/ais-vd_pi.pot\n"
 "X-Crowdin-File-ID: 377\n"
-"X-Generator: Poedit 3.0\n"
 
 #: src\ais-vd_pi.cpp:252
 msgid "AIS Voyage data"
@@ -72,7 +71,7 @@ msgstr "Skriv Destination"
 
 #: src\ais-vd_pi.cpp:297
 msgid "or select a previous used"
-msgstr "eller välj en destination"
+msgstr "eller välj en tidigare använd"
 
 #: src\ais-vd_pi.cpp:317
 msgid "Draught (m)"
@@ -84,7 +83,7 @@ msgstr "Antal personer ombord"
 
 #: src\ais-vd_pi.cpp:347
 msgid "ETA Date:"
-msgstr "ETA Datum"
+msgstr "ETA Datum:"
 
 #: src\ais-vd_pi.cpp:357 src\ais-vd_pi.cpp:627
 msgid "Month"
@@ -96,7 +95,7 @@ msgstr "Dag"
 
 #: src\ais-vd_pi.cpp:380
 msgid "ETA Time (UTC!):"
-msgstr "ETA tid (UTC)"
+msgstr "ETA tid (UTC!):"
 
 #: src\ais-vd_pi.cpp:384
 msgid "Hour"
@@ -112,19 +111,17 @@ msgstr "Skicka till AIS"
 
 #: src\ais-vd_pi.cpp:430
 msgid "Drop down to select"
-msgstr "Fäll ned för att välja"
+msgstr "Fäll ner för att välja"
 
 #: src\ais-vd_pi.cpp:572
-msgid ""
-"Yet no answer from any AIS!\n"
+msgid "Yet no answer from any AIS!\n"
 " Please check connections and cabling."
-msgstr ""
-"Inget svar från AIS!\n"
-" Kontrollera OCPN Anslutningar och kablage."
+msgstr "Inget svar från någon AIS!\n"
+"Kontrollera anslutningar och kablage."
 
 #: src\ais-vd_pi.cpp:600
 msgid "Reply from AIS"
-msgstr "Svar från AIS"
+msgstr "Svar från AIS: "
 
 #: src\ais-vd_pi.cpp:620
 msgid "Status"
@@ -132,7 +129,7 @@ msgstr "Status"
 
 #: src\ais-vd_pi.cpp:625
 msgid "Dest"
-msgstr "Dest"
+msgstr "Dest."
 
 #: src\ais-vd_pi.cpp:626
 msgid "ETA"
@@ -144,86 +141,81 @@ msgstr "Tid"
 
 #: src\ais-vd_pi.cpp:756
 msgid "Wing in ground (WIG)"
-msgstr ""
+msgstr "WIG (Markeffektfarkost)"
 
 #: src\ais-vd_pi.cpp:757
 msgid "Fishing"
-msgstr ""
+msgstr "Fiskebåt"
 
 #: src\ais-vd_pi.cpp:758
 msgid "Towing"
-msgstr ""
+msgstr "Bogserare"
 
 #: src\ais-vd_pi.cpp:759
 msgid "Towing (Long)"
-msgstr ""
+msgstr "Bogserare(Lång)"
 
 #: src\ais-vd_pi.cpp:760
 msgid "Dredging or underwater ops"
-msgstr ""
+msgstr "Muddring eller dykbåt"
 
 #: src\ais-vd_pi.cpp:761
 msgid "Diving ops"
-msgstr ""
+msgstr "Dykfarkost"
 
 #: src\ais-vd_pi.cpp:762
 msgid "Military ops"
-msgstr ""
+msgstr "Militärfarkost"
 
 #: src\ais-vd_pi.cpp:763
 msgid "Sailing vessel"
-msgstr ""
+msgstr "Segelfartyg"
 
 #: src\ais-vd_pi.cpp:764
 msgid "Pleasure Craft"
-msgstr ""
+msgstr "Fritidsbåt"
 
 #: src\ais-vd_pi.cpp:769
 msgid "High speed craft (HSC)"
-msgstr ""
+msgstr "Höghastighetsfarkoster (HSC)"
 
 #: src\ais-vd_pi.cpp:770
 msgid "Pilot Vessel"
-msgstr ""
+msgstr "Lots"
 
 #: src\ais-vd_pi.cpp:771
 msgid "Search and Rescue vessel"
-msgstr ""
+msgstr "Sjöräddningsfartyg"
 
 #: src\ais-vd_pi.cpp:772
 msgid "Tug"
-msgstr ""
+msgstr "Bogserbåt"
 
 #: src\ais-vd_pi.cpp:773
 msgid "Port Tender"
-msgstr ""
+msgstr "Hamnuppsyn"
 
 #: src\ais-vd_pi.cpp:774
 msgid "Law Enforcement"
-msgstr ""
+msgstr "Kustbevakning"
 
 #: src\ais-vd_pi.cpp:775
 msgid "Medical Transport"
-msgstr ""
+msgstr "Sjuktransport"
 
 #: src\ais-vd_pi.cpp:780
 msgid "Passenger ship"
-msgstr ""
+msgstr "Passagerarfartyg"
 
 #: src\ais-vd_pi.cpp:786
 msgid "Cargo ship"
-msgstr ""
+msgstr "Lastfartyg"
 
 #: src\ais-vd_pi.cpp:791
 msgid "Tanker"
-msgstr ""
+msgstr "Tankfartyg"
 
 #: src\ais-vd_pi.cpp:792
 msgid "Other"
-msgstr ""
+msgstr "Annan farkost"
 
-#~ msgid "From the AIS"
-#~ msgstr "Från AIS"
-
-#~ msgid "Send To AIS"
-#~ msgstr "Skicka till AIS"
