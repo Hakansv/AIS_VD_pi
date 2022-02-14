@@ -31,7 +31,9 @@ set(OCPN_RELEASE_REPO
 #
 # -------  Plugin setup --------
 #
-set(PKG_VERSION  1.6.0)
+include("VERSION.cmake")
+set(PKG_NAME ais-vd_pi)
+set(PKG_VERSION ${OCPN_VERSION})
 set(PKG_PRERELEASE "")  # Empty, or a tag like 'beta'
 
 set(DISPLAY_NAME ais-vd)    # Dialogs, installer artifacts, ...
