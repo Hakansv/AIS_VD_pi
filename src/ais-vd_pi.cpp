@@ -338,8 +338,8 @@ void aisvd_pi::OnSetupOptions(void) {
   PersonsTextCtrl->Connect(wxEVT_CHAR, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
 
-  wxFlexGridSizer* EtaFlexgrid = new wxFlexGridSizer(1, 5, 10, 25);
-  EtaFlexgrid->AddGrowableCol(1);
+  wxFlexGridSizer* EtaFlexgrid = new wxFlexGridSizer(0, 5, 10, 25);
+  //EtaFlexgrid->AddGrowableCol(1);
   itemStaticBoxSizer3->Add(EtaFlexgrid, 0, wxALL, 10);
 
   wxStaticText* StaticTextDate = 
@@ -355,7 +355,7 @@ void aisvd_pi::OnSetupOptions(void) {
   unsigned short EtaInitHour = now.GetHour();
 
   wxStaticText* monthtext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Month"));
-  EtaFlexgrid->Add(monthtext, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
+  EtaFlexgrid->Add(monthtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlMonth = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
                                 wxDefaultPosition, wxSize(80, -1), 
@@ -366,7 +366,7 @@ void aisvd_pi::OnSetupOptions(void) {
 
   //day text and box
   wxStaticText* daytext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Day"));
-  EtaFlexgrid->Add(daytext, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
+  EtaFlexgrid->Add(daytext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlDay = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
                               wxDefaultPosition, wxSize(80, -1),
@@ -382,7 +382,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(StaticTextTime, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 5);
 
   wxStaticText* hourtext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Hour"));
-  EtaFlexgrid->Add(hourtext, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
+  EtaFlexgrid->Add(hourtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlHour = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
                                wxDefaultPosition, wxSize(80, -1),
@@ -394,7 +394,7 @@ void aisvd_pi::OnSetupOptions(void) {
   //minute text and box
   wxStaticText* minutetext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
                                               _("Minute"));
-  EtaFlexgrid->Add(minutetext, 1, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
+  EtaFlexgrid->Add(minutetext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlMinute = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
                                  wxDefaultPosition, wxSize(80, -1),
