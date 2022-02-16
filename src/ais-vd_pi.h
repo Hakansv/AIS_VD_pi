@@ -86,6 +86,7 @@ public:
   void OnDestValSelect(wxCommandEvent &event);
   void OnAnyValueChange(wxCommandEvent &event);
   void OnNavStatusSelect(wxCommandEvent &event);
+  void OnMonthChange(wxCommandEvent &event);
   aisvd_pi  *m_parent;
 };
 
@@ -126,9 +127,10 @@ class aisvd_pi : public opencpn_plugin_116
 	void UpdateDraught();
 	void UpdatePersons();
   void RequestAISstatus();
-	void SendSentence();
+  void SendSentence();
   void SetSendBtnLabel();
   void UpdateDataFromVSD(wxString &sentence);
+  void SetMaxDay();
   wxString GetShipType(int);
 
   PreferenceDlg *prefDlg;

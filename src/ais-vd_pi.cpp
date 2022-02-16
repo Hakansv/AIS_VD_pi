@@ -362,7 +362,7 @@ void aisvd_pi::OnSetupOptions(void) {
                                 wxSP_ARROW_KEYS, 1, 12, EtaInitMonth);
   EtaFlexgrid->Add(m_pCtrlMonth, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 0);
   m_pCtrlMonth->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
-    aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
+    aisvd_pi_event_handler::OnMonthChange), NULL, m_event_handler);
 
   //day text and box
   wxStaticText* daytext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Day"));
@@ -398,7 +398,7 @@ void aisvd_pi::OnSetupOptions(void) {
 
   m_pCtrlMinute = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
                                  wxDefaultPosition, wxSize(80, -1),
-                                 wxSP_ARROW_KEYS, 0, 59, 00);
+                                 wxSP_ARROW_KEYS, 0, 59, 30);
   EtaFlexgrid->Add(m_pCtrlMinute, 0, wxEXPAND | wxALL, 0);
   m_pCtrlMinute->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
@@ -433,9 +433,10 @@ void aisvd_pi::OnSetupOptions(void) {
     m_DestComboBox->Append(tkn.GetNextToken());
   }
   m_DestComboBox->Select(0);
+
+  SetMaxDay();
   // Uppdate data from AIS if available
   RequestAISstatus();
-
   //content construction
   m_AIS_VoyDataWin->Layout();
 }
@@ -539,6 +540,26 @@ void aisvd_pi::UpdatePersons()
       PersonsTextCtrl->ChangeValue(m_Persons);
   }
 }
+//Set Max day according to month
+void aisvd_pi::SetMaxDay() {
+  int month = m_pCtrlMonth->GetValue();
+  int max = 31;
+  switch (month) {
+    case 2: {
+      max = 29;
+      break;
+    }
+    case 4:
+    case 6:
+    case 9:
+    case 11: {
+      max = 30;
+      break;
+    }
+    default: max = 31;
+  }
+  m_pCtrlDay->SetMax(max);
+}
 
 void aisvd_pi::SendSentence() {
   // $IISPW,E,1,00000000,,,0*10  A possible password.
@@ -641,7 +662,7 @@ void aisvd_pi::UpdateDataFromVSD(wxString &sentence) {
   if (VSD_Nr[3] != _T("0") && VSD_Nr[3] != wxEmptyString) {
     PersonsTextCtrl->ChangeValue(VSD_Nr[3]);
   }
-
+  SetMaxDay();
   m_AIS_VoyDataWin->Layout();
 }
 
@@ -738,6 +759,12 @@ void aisvd_pi_event_handler::OnDestValSelect(wxCommandEvent &event) {
 }
 
 void aisvd_pi_event_handler::OnAnyValueChange(wxCommandEvent &event) {
+  m_parent->SetSendBtnLabel();
+  event.Skip();
+}
+
+void aisvd_pi_event_handler::OnMonthChange(wxCommandEvent &event) {
+  m_parent->SetMaxDay();
   m_parent->SetSendBtnLabel();
   event.Skip();
 }
