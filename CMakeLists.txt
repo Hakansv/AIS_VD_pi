@@ -29,10 +29,8 @@ include(Plugin.cmake)
 
 # -------- Setup completed, build the plugin --------
 #
-project(ais-vd_pi VERSION ${PKG_VERSION})
+project(${PKG_NAME} VERSION ${PKG_VERSION})
 include(PluginCompiler)
-
-message(STATUS "Building: ${BUILD_TYPE}")
 
 add_library(${CMAKE_PROJECT_NAME} SHARED ${SRC})
 include_directories(BEFORE ${CMAKE_BINARY_DIR}/include)
@@ -40,17 +38,10 @@ include_directories(BEFORE ${CMAKE_BINARY_DIR}/include)
 add_subdirectory("libs/${PKG_API_LIB}")
 target_link_libraries(${CMAKE_PROJECT_NAME} ocpn::api)
 
-# -------- Setup completed, build the plugin --------
-#
-#add_library(${CMAKE_PROJECT_NAME} SHARED ${SRC})
-#include_directories(BEFORE ${CMAKE_BINARY_DIR}/include)
-
-#add_subdirectory("libs/api-16")
-#target_link_libraries(${CMAKE_PROJECT_NAME} ocpn::api)
-
 set(VERSION_MAJOR ${PROJECT_VERSION_MAJOR})
 set(VERSION_MINOR ${PROJECT_VERSION_MINOR})
 set(VERSION_PATCH ${PROJECT_VERSION_PATCH})
+
 set(PACKAGE_NAME ${CMAKE_PROJECT_NAME})
 
 # Create the minimim ocpn version id string like ov50
@@ -87,11 +78,13 @@ if (NOT ${BUILD_TYPE} STREQUAL "flatpak")
 
   include_directories(BEFORE ${CMAKE_BINARY_DIR}/include)
 
-  add_subdirectory("libs/jsoncpp")
-  target_link_libraries(${PACKAGE_NAME} ocpn::jsoncpp)
-
   if (COMMAND add_plugin_libraries)
     add_plugin_libraries()
+  endif ()
+
+  if (EXISTS "libs/jsoncpp" AND NOT TARGET ocpn::jsoncpp)
+    add_subdirectory("libs/jsoncpp")
+    target_link_libraries(${PACKAGE_NAME} ocpn::jsoncpp)
   endif ()
 
 endif ()
