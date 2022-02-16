@@ -32,7 +32,7 @@ execute_process(
 )
 
 execute_process(
-  COMMAND git tag --contains HEAD
+  COMMAND git tag --points-at HEAD
   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
   OUTPUT_VARIABLE _git_tag
   RESULT_VARIABLE error_code
@@ -110,7 +110,7 @@ if (NOT "${_pre_rel}" STREQUAL "" AND _pre_rel MATCHES "^[^-]")
   string(PREPEND _pre_rel "-")
 endif ()
 if ("${_git_tag}" STREQUAL "")
-  set(pkg_semver "${PROJECT_VERSION}${_pre_rel}")
+  set(pkg_semver "${PROJECT_VERSION}${_pre_rel}+${_build_id}.${_gitversion}")
 else ()
   set(pkg_semver "${_git_tag}")
 endif ()
