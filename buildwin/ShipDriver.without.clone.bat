@@ -8,13 +8,13 @@ set wxWidgets_LIB_DIR=%WXWIN%\lib\vc_dll
 SET PATH=%PATH%;%WXWIN%;%wxWidgets_LIB_DIR%;C:\Program Files (x86)\Poedit\Gettexttools\bin;
 set PATH=C:\Program Files\Cmake\bin;%PATH%
 
-REM Example Only. Change xxx_pi to match the repo being used.
-cd ais-vd_pi
+REM Example Only. Change shipdriver_pi to match the repo being used.
+cd shipdriver_pi
 
 mkdir  build
 cd build
 cmake -T v141_xp ..
-cmake -G "Visual Studio 15 2017" --config RelWithDebInfo  ..
+cmake -G "Visual Studio 15 2017" -DCMAKE_BUILD_TYPE=RelWithDebInfo  ..
 cmake --build . --target tarball --config RelWithDebInfo
 
 cmd /k
