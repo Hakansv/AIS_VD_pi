@@ -558,7 +558,7 @@ void aisvd_pi::SetMaxDay() {
     }
     default: max = 31;
   }
-  m_pCtrlDay->SetMax(max);
+  m_pCtrlDay->SetRange(1, max);
 }
 
 void aisvd_pi::SendSentence() {
