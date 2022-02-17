@@ -338,8 +338,8 @@ void aisvd_pi::OnSetupOptions(void) {
   PersonsTextCtrl->Connect(wxEVT_CHAR, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
 
-  wxFlexGridSizer* EtaFlexgrid = new wxFlexGridSizer(0, 5, 10, 25);
-  //EtaFlexgrid->AddGrowableCol(1);
+  wxFlexGridSizer* EtaFlexgrid = new wxFlexGridSizer( 5, 10, 25);
+  //EtaFlexgrid->AddGrowableCol(3);
   itemStaticBoxSizer3->Add(EtaFlexgrid, 0, wxALL, 10);
 
   wxStaticText* StaticTextDate = 
@@ -358,7 +358,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(monthtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlMonth = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                                wxDefaultPosition, wxSize(80, -1), 
+                                wxDefaultPosition, wxSize(90, 40), 
                                 wxSP_ARROW_KEYS, 1, 12, EtaInitMonth);
   EtaFlexgrid->Add(m_pCtrlMonth, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 0);
   m_pCtrlMonth->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
@@ -369,7 +369,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(daytext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlDay = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                              wxDefaultPosition, wxSize(80, -1),
+                              wxDefaultPosition, wxSize(90, 40),
                               wxSP_ARROW_KEYS, 1, 31, EtaInitDay);
   EtaFlexgrid->Add(m_pCtrlDay, 0, wxALIGN_LEFT | wxEXPAND | wxALL, 0);
   m_pCtrlDay->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
@@ -385,7 +385,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(hourtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlHour = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                               wxDefaultPosition, wxSize(80, -1),
+                               wxDefaultPosition, wxSize(90, 40),
                                wxSP_ARROW_KEYS, 0, 23, EtaInitHour);
   EtaFlexgrid->Add(m_pCtrlHour, 0, wxALIGN_CENTER_VERTICAL, 0);
   m_pCtrlHour->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
@@ -397,7 +397,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(minutetext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlMinute = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                                 wxDefaultPosition, wxSize(80, -1),
+                                 wxDefaultPosition, wxSize(90, 40),
                                  wxSP_ARROW_KEYS, 0, 59, 30);
   EtaFlexgrid->Add(m_pCtrlMinute, 0, wxEXPAND | wxALL, 0);
   m_pCtrlMinute->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
