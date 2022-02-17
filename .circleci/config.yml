@@ -24,7 +24,7 @@ flatpak-steps: &flatpak-steps
 
 jobs:
 
-build-bionic-armhf:
+  build-bionic-armhf:
     machine:
       image: ubuntu-2004:202101-01
     resource_class: arm.medium
