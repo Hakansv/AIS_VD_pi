@@ -1,8 +1,6 @@
 :imagesdir: ../images/
 = AIS-Voyage Data
 
-Manual for OpenCPN plugin ais-vd_pi version 1.3.0
-
 == Links
 
 Source: https://github.com/Hakansv/ais-vd_pi[Github Repository]
@@ -15,7 +13,7 @@ Forum: https://www.cruisersforum.com/forums/f134/a-new-plugin-for-ais-class-a-vo
 
 
 AIS-VD is a tool for the AIS class A transponder to upload static voyage data. +
-Static voyage data is not used by a class B transponder so for those this plugin is of no use.
+Static voyage data is not used by a class B transponder so for those this plugin is of no use. +
 When installed and activated the plugin will be a part of the OpenCPN option tools. +
 The tool is located in Options > Ships > AIS Voyage data.
 
@@ -25,7 +23,7 @@ You can select a Navigational status from the list.
 
 image::nav_status.png[]
 
-Next destination can be typed in the text box.
+Enter next destination in the text box.
 
 image::new_dest.png[]
 
@@ -38,9 +36,14 @@ Maximum 15 used destinations will be saved in the list box. +
 A destination selected from the list box will be moved to up in list if not already there. +
 Thus will the least used destination be sorted out if more than 15 in the list.
 
-According to NMEA0183 standard the ETA date and time shall be given as UTC and not local time.
 
-When you are satisfied push the "Send to AIS" button and the NMEA setence ECVSD will be +
+According to NMEA0183 standard the ETA date and time shall be given as UTC and not local time.
+Use the text boxes to edit month, day, hour and minutes. You can scroll the arrows, use the key board upp/down arrows or simply enter in the boxes.
+
+image::Date_time_selection.png[]
+
+
+When you are satisfied push the "Send to AIS" button and the NMEA sentence ECVSD will be +
 sent to every OpenCPN connection set up as an "Output". 
 
 image::output.png[]
@@ -50,6 +53,7 @@ image::vsd.png[]
 After having used the "Send to AIS" button and the NMEA0183 $ECVSD message is sent to the AIS another message, $ECAIQ, is also sent to query the AIS for a response.
 The AIS is then requested to send what's stored using the $AIVSD sentence.
 That message is collected and the content is presented as a receipt on the "Send to AIS" button.
+Data received from AIS will also be used to update the controls to present AIS status.
 
 image::now_sent.png[]
 
@@ -57,6 +61,9 @@ image::now_sent.png[]
 In the case the AIS answer message is not detected the "Send to AIS" button text will inform the user.
 
 image::warning.png[]
+
+The button "Read from AIS" can be used to query the AIS to reply present status like after the "Send to AIS" is used.
+The same function is also activated upon OCPN start up to initialize the dialog at first time use.
 
 == 2. Installation or update.
 
