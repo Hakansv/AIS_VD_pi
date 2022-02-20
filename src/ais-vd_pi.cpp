@@ -435,13 +435,15 @@ void aisvd_pi::OnSetupOptions(void) {
   m_DestComboBox->Select(0);
 
   SetMaxDay();
+  
+  //Adjust SpinCtrl to fit GTK3
+  //m_pCtrlMonth->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
 
-  //Adjust spincontrols to fit Ubuntu GTK2
 #ifdef GTK_CHECK_VERSION(3,0,0)
-  m_pCtrlMonth->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
-  m_pCtrlDay->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
-  m_pCtrlHour->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
-  m_pCtrlMinute->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
+  m_pCtrlMonth->SetSize(wxSize(-1, -1));
+  m_pCtrlDay->SetSize(wxSize(-1, -1));
+  m_pCtrlHour->SetSize(wxSize(-1, -1));
+  m_pCtrlMinute->SetSize(wxSize(-1, -1));
 #endif
 
   // Uppdate data from AIS if available
