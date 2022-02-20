@@ -358,7 +358,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(monthtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlMonth = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                                wxDefaultPosition, wxSize(90, 40), 
+                                wxDefaultPosition, wxSize(80, -1), 
                                 wxSP_ARROW_KEYS, 1, 12, EtaInitMonth);
   EtaFlexgrid->Add(m_pCtrlMonth, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 0);
   m_pCtrlMonth->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
@@ -369,7 +369,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(daytext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlDay = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                              wxDefaultPosition, wxSize(90, 40),
+                              wxDefaultPosition, wxSize(80, -1),
                               wxSP_ARROW_KEYS, 1, 31, EtaInitDay);
   EtaFlexgrid->Add(m_pCtrlDay, 0, wxALIGN_LEFT | wxEXPAND | wxALL, 0);
   m_pCtrlDay->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
@@ -385,7 +385,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(hourtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlHour = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                               wxDefaultPosition, wxSize(90, 40),
+                               wxDefaultPosition, wxSize(80, -1),
                                wxSP_ARROW_KEYS, 0, 23, EtaInitHour);
   EtaFlexgrid->Add(m_pCtrlHour, 0, wxALIGN_CENTER_VERTICAL, 0);
   m_pCtrlHour->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
@@ -397,7 +397,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(minutetext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlMinute = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                                 wxDefaultPosition, wxSize(90, 40),
+                                 wxDefaultPosition, wxSize(80, -1),
                                  wxSP_ARROW_KEYS, 0, 59, 30);
   EtaFlexgrid->Add(m_pCtrlMinute, 0, wxEXPAND | wxALL, 0);
   m_pCtrlMinute->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
@@ -435,6 +435,15 @@ void aisvd_pi::OnSetupOptions(void) {
   m_DestComboBox->Select(0);
 
   SetMaxDay();
+
+  //Adjust spincontrols to fit Ubuntu GTK2
+#ifdef GTK_CHECK_VERSION(3,0,0)
+  m_pCtrlMonth->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
+  m_pCtrlDay->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
+  m_pCtrlHour->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
+  m_pCtrlMinute->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
+#endif
+
   // Uppdate data from AIS if available
   RequestAISstatus();
   //content construction
