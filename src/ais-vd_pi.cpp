@@ -260,7 +260,7 @@ void aisvd_pi::OnSetupOptions(void) {
   wxStaticBoxSizer* itemStaticBoxSizer3 = new wxStaticBoxSizer(itemStaticBoxSizer3Static, wxVERTICAL);
   m_AIS_VoyDataWin->SetSizer(itemStaticBoxSizer3);
 
-  wxFlexGridSizer* itemFlexGridSizer4 = new wxFlexGridSizer(0, 2, 0, 0); // 10, 5);
+  wxFlexGridSizer* itemFlexGridSizer4 = new wxFlexGridSizer( 2);
   itemStaticBoxSizer3->Add(itemFlexGridSizer4, 0, wxGROW | wxALL, 20);
 
   wxStaticText* itemStaticText5 = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
@@ -392,9 +392,9 @@ void aisvd_pi::OnSetupOptions(void) {
   m_pCtrlMinute->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
 
-  ETAbox->Add(EtaFlexgrid, 0, wxEXPAND, 10);
+  ETAbox->Add(EtaFlexgrid, 0, wxEXPAND, 20);
 
-  itemStaticBoxSizer3->Add(ETAbox, 0, wxEXPAND, 10);
+  itemStaticBoxSizer3->Add(ETAbox, 0, wxEXPAND, 20);
 
   wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
   itemStaticBoxSizer3->Add(itemBoxSizer1, 0, wxGROW | wxALL, 5);
@@ -429,17 +429,6 @@ void aisvd_pi::OnSetupOptions(void) {
 
   SetMaxDay();
   
-  //Adjust SpinCtrl to fit GTK3
-  //m_pCtrlMonth->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
-  wxLogMessage(wxString::Format(_T(" ***** CtrlMonth size Y: %d  X: %d"), m_pCtrlMonth->GetSize().GetY(), m_pCtrlMonth->GetSize().GetX()));
-//
-//#ifdef GTK_CHECK_VERSION(3,0,0)
-//  m_pCtrlMonth->SetSize(wxSize(-1, -1));
-//  m_pCtrlDay->SetSize(wxSize(-1, -1));
-//  m_pCtrlHour->SetSize(wxSize(-1, -1));
-//  m_pCtrlMinute->SetSize(wxSize(-1, -1));
-//#endif
-
   // Uppdate data from AIS if available
   RequestAISstatus();
   //content construction
