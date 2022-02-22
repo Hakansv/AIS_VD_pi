@@ -338,16 +338,13 @@ void aisvd_pi::OnSetupOptions(void) {
   PersonsTextCtrl->Connect(wxEVT_CHAR, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
 
-  wxFlexGridSizer* EtaFlexgrid = new wxFlexGridSizer( 5, 10, 25);
+  wxStaticBoxSizer* ETAbox = new wxStaticBoxSizer(
+    new wxStaticBox(m_AIS_VoyDataWin, wxID_ANY, _("E.T.A. Date and Time")),
+    wxVERTICAL);
+
+  wxFlexGridSizer* EtaFlexgrid = new wxFlexGridSizer(4, 5, 5);
   //EtaFlexgrid->AddGrowableCol(3);
-  itemStaticBoxSizer3->Add(EtaFlexgrid, 0, wxALL, 10);
 
-  wxStaticText* StaticTextDate = 
-    new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
-                     _("ETA Date:"), wxDefaultPosition, wxDefaultSize, 0);
-  EtaFlexgrid->Add(StaticTextDate, 0, wxALIGN_CENTER_VERTICAL | wxALIGN_LEFT, 5);
-
-  //month text and box. 
   //Set defaults. Normally later updated by a AIS.
   wxDateTime now = wxDateTime::Now().MakeUTC();
   unsigned short EtaInitMonth = now.GetMonth() + 1; // wx months start at 0!
@@ -358,50 +355,46 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(monthtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlMonth = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                                wxDefaultPosition, wxSize(80, -1), 
+                                wxDefaultPosition, wxDefaultSize, 
                                 wxSP_ARROW_KEYS, 1, 12, EtaInitMonth);
   EtaFlexgrid->Add(m_pCtrlMonth, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 0);
   m_pCtrlMonth->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
     aisvd_pi_event_handler::OnMonthChange), NULL, m_event_handler);
 
-  //day text and box
   wxStaticText* daytext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Day"));
   EtaFlexgrid->Add(daytext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlDay = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                              wxDefaultPosition, wxSize(80, -1),
+                              wxDefaultPosition, wxDefaultSize,
                               wxSP_ARROW_KEYS, 1, 31, EtaInitDay);
   EtaFlexgrid->Add(m_pCtrlDay, 0, wxALIGN_LEFT | wxEXPAND | wxALL, 0);
   m_pCtrlDay->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
-
-  //time text and box
-  wxStaticText* StaticTextTime = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
-                                                  _("ETA Time (UTC!):"),
-                                                  wxDefaultPosition, wxDefaultSize, 0);
-  EtaFlexgrid->Add(StaticTextTime, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 5);
-
-  wxStaticText* hourtext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Hour"));
+  
+  wxStaticText* hourtext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Hour (UTC)"));
   EtaFlexgrid->Add(hourtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlHour = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                               wxDefaultPosition, wxSize(80, -1),
+                               wxDefaultPosition, wxDefaultSize,
                                wxSP_ARROW_KEYS, 0, 23, EtaInitHour);
   EtaFlexgrid->Add(m_pCtrlHour, 0, wxALIGN_CENTER_VERTICAL, 0);
   m_pCtrlHour->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
 
-  //minute text and box
   wxStaticText* minutetext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
                                               _("Minute"));
   EtaFlexgrid->Add(minutetext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlMinute = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                                 wxDefaultPosition, wxSize(80, -1),
+                                 wxDefaultPosition, wxDefaultSize,
                                  wxSP_ARROW_KEYS, 0, 59, 30);
   EtaFlexgrid->Add(m_pCtrlMinute, 0, wxEXPAND | wxALL, 0);
   m_pCtrlMinute->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
+
+  ETAbox->Add(EtaFlexgrid, 0, wxEXPAND, 10);
+
+  itemStaticBoxSizer3->Add(ETAbox, 0, wxEXPAND, 10);
 
   wxBoxSizer* itemBoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
   itemStaticBoxSizer3->Add(itemBoxSizer1, 0, wxGROW | wxALL, 5);
@@ -438,13 +431,14 @@ void aisvd_pi::OnSetupOptions(void) {
   
   //Adjust SpinCtrl to fit GTK3
   //m_pCtrlMonth->SetMinClientSize(wxSize(m_pCtrlMonth->GetSize().GetY() * 5, -1));
-
-#ifdef GTK_CHECK_VERSION(3,0,0)
-  m_pCtrlMonth->SetSize(wxSize(-1, -1));
-  m_pCtrlDay->SetSize(wxSize(-1, -1));
-  m_pCtrlHour->SetSize(wxSize(-1, -1));
-  m_pCtrlMinute->SetSize(wxSize(-1, -1));
-#endif
+  wxLogMessage(wxString::Format(_T(" ***** CtrlMonth size Y: %d  X: %d"), m_pCtrlMonth->GetSize().GetY(), m_pCtrlMonth->GetSize().GetX()));
+//
+//#ifdef GTK_CHECK_VERSION(3,0,0)
+//  m_pCtrlMonth->SetSize(wxSize(-1, -1));
+//  m_pCtrlDay->SetSize(wxSize(-1, -1));
+//  m_pCtrlHour->SetSize(wxSize(-1, -1));
+//  m_pCtrlMinute->SetSize(wxSize(-1, -1));
+//#endif
 
   // Uppdate data from AIS if available
   RequestAISstatus();
