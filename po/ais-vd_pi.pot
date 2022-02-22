@@ -1,217 +1,216 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the ais-vd_pi package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: opencpn\n"
+"Project-Id-Version: ais-vd_pi 1.6.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-22 17:02+0100\n"
-"PO-Revision-Date: 2022-02-22 16:08\n"
-"Last-Translator: \n"
-"Language-Team: Swedish\n"
-"Language: sv_SE\n"
+"POT-Creation-Date: 2022-02-22 17:09+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Crowdin-Project: opencpn\n"
-"X-Crowdin-Project-ID: 49843\n"
-"X-Crowdin-Language: sv-SE\n"
-"X-Crowdin-File: /plugins/ais-vd_pi/po/ais-vd_pi.pot\n"
-"X-Crowdin-File-ID: 377\n"
 
 #: src\ais-vd_pi.cpp:252
 msgid "AIS Voyage data"
-msgstr "AIS Färddata"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:259
 msgid "Set static voyage data on the AIS class A"
-msgstr "Uppdatera färddata på en AIS klass A"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:267
 msgid "Navigational status"
-msgstr "Navigeringsstatus"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:270
 msgid "Underway using engine"
-msgstr "På gång med motor"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:271
 msgid "At anchor"
-msgstr "Ankrad"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:272
 msgid "Not under command"
-msgstr "Ej manöverbar"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:273
 msgid "Restricted manoeuverability"
-msgstr "Begränsad manövrerbarhet"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:274
 msgid "Constrained by draught"
-msgstr "Begränsad av djupgående"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:275
 msgid "Moored"
-msgstr "Förtöjd"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:276
 msgid "Aground"
-msgstr "På grund"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:277
 msgid "Engaged in Fishing"
-msgstr "Bedriver fiske"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:278
 msgid "Under way sailing"
-msgstr "På gång under segel"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:290
 msgid "Enter destination"
-msgstr "Skriv Destination"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:297
 msgid "or select a previous used"
-msgstr "eller välj en tidigare använd"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:317
 msgid "Draught (m)"
-msgstr "Djupgående (m)"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:330
 msgid "No. of Persons onboard"
-msgstr "Antal personer ombord"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:342
 msgid "E.T.A. Date and Time"
-msgstr "E.T.A. Datum och tid"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:354 src\ais-vd_pi.cpp:642
 msgid "Month"
-msgstr "Månad"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:364 src\ais-vd_pi.cpp:643
 msgid "Day"
-msgstr "Dag"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:374
 msgid "Hour (UTC)"
-msgstr "Timme (UTC)"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:385
 msgid "Minute"
-msgstr "Minut"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:412 src\ais-vd_pi.cpp:664
 msgid "Send to AIS"
-msgstr "Skicka till AIS"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:423
 msgid "Drop down to select"
-msgstr "Fäll ner för att välja"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:587
-msgid "Yet no answer from any AIS!\n"
+msgid ""
+"Yet no answer from any AIS!\n"
 " Please check connections and cabling."
-msgstr "Inget svar från någon AIS!\n"
-"Kontrollera anslutningar och kablage."
+msgstr ""
 
 #: src\ais-vd_pi.cpp:615
 msgid "Reply from AIS"
-msgstr "Svar från AIS: "
+msgstr ""
 
 #: src\ais-vd_pi.cpp:635
 msgid "Status"
-msgstr "Status"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:640
 msgid "Dest"
-msgstr "Dest."
+msgstr ""
 
 #: src\ais-vd_pi.cpp:641
 msgid "ETA"
-msgstr "ETA"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:646
 msgid "Time"
-msgstr "Tid"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:777
 msgid "Wing in ground (WIG)"
-msgstr "WIG (Markeffektfarkost)"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:778
 msgid "Fishing"
-msgstr "Fiskebåt"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:779
 msgid "Towing"
-msgstr "Bogserare"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:780
 msgid "Towing (Long)"
-msgstr "Bogserare(Lång)"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:781
 msgid "Dredging or underwater ops"
-msgstr "Muddring eller dykbåt"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:782
 msgid "Diving ops"
-msgstr "Dykfarkost"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:783
 msgid "Military ops"
-msgstr "Militärfarkost"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:784
 msgid "Sailing vessel"
-msgstr "Segelfartyg"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:785
 msgid "Pleasure Craft"
-msgstr "Fritidsbåt"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:790
 msgid "High speed craft (HSC)"
-msgstr "Höghastighetsfarkoster (HSC)"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:791
 msgid "Pilot Vessel"
-msgstr "Lots"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:792
 msgid "Search and Rescue vessel"
-msgstr "Sjöräddningsfartyg"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:793
 msgid "Tug"
-msgstr "Bogserbåt"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:794
 msgid "Port Tender"
-msgstr "Hamnuppsyn"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:795
 msgid "Law Enforcement"
-msgstr "Kustbevakning"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:796
 msgid "Medical Transport"
-msgstr "Sjuktransport"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:801
 msgid "Passenger ship"
-msgstr "Passagerarfartyg"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:807
 msgid "Cargo ship"
-msgstr "Lastfartyg"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:812
 msgid "Tanker"
-msgstr "Tankfartyg"
+msgstr ""
 
 #: src\ais-vd_pi.cpp:813
 msgid "Other"
-msgstr "Annan farkost"
-
+msgstr ""
