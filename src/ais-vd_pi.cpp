@@ -568,8 +568,8 @@ void aisvd_pi::SendSentence() {
   S.Append(m_Destination); S.Append(_T(","));
   S.Append(wxString::Format(_T("%02d%02d00,"), aisvd_pi::m_pCtrlHour->GetValue(),
                             aisvd_pi::m_pCtrlMinute->GetValue() )); //eta time HHmm
-  S.Append(wxString::Format(_T("%d,"), aisvd_pi::m_pCtrlDay->GetValue() )); // eta Day
-  S.Append(wxString::Format(_T("%d,"), aisvd_pi::m_pCtrlMonth->GetValue() )); // eta Month
+  S.Append(wxString::Format(_T("%02d,"), aisvd_pi::m_pCtrlDay->GetValue() )); // eta Day
+  S.Append(wxString::Format(_T("%02d,"), aisvd_pi::m_pCtrlMonth->GetValue() )); // eta Month
   S.Append(wxString::Format(_T("%d,"), StatusChoice->GetSelection())); //Navigation status
   S.Append(wxString::Format(_T("%d"), 0)); // TODO Regional application flags, 0 to 15
   S.Append(_T("*")); // End data
