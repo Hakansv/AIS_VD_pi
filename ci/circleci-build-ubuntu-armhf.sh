@@ -1,12 +1,7 @@
 #!/usr/bin/env bash
 #
-# Build for Raspbian Bullseye in a docker container
+# Build for Ubuntu armhf in a docker container
 #
-# Intended as a temporary work-around for not being able to build on drone.io
-# due to libseccomp problems with both host and guest OS i. e., #217
-#
-# Bugs: The build is real slow: https://forums.balena.io/t/85743
-
 # Copyright (c) 2021 Alec Leamas
 #
 # This program is free software; you can redistribute it and/or modify
@@ -26,29 +21,33 @@ else
     ci_source="$(pwd)"
 fi
 
+cd $ci_source
+git submodule update --init opencpn-libs
+
 cat > $ci_source/build.sh << "EOF"
 
-# The following two lines have already been executed in the docker image before upload
-#sudo apt -y update
-#sudo apt -y install devscripts equivs wget git lsb-release
+# The  docker images are updated and have installed devscripts and equivs
+# i. e., what is required for mk-build-deps.
 
+sudo apt -q update
 sudo mk-build-deps  /ci-source/build-deps/control
 sudo apt -y install ./opencpn-build-deps_1.0_all.deb
 sudo apt-get -q --allow-unauthenticated install -f
 
-#  cmake 3.22 was built in this docker image, and installed before uploading to dockerhub
-
+# cmake 3.20/3.22 is installed in the docker images before uploading to
+# dockerhub. Alternatively, cmake could be installed at configure time
+# as described in  https://apt.kitware.com/
 
 cd /ci-source
 rm -rf build-ubuntu; mkdir build-ubuntu; cd build-ubuntu
-cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake -DCMAKE_BUILD_TYPE=Release -DOCPN_TARGET_TUPLE="@TARGET_TUPLE@" ..
 make -j $(nproc) VERBOSE=1 tarball
 ldd  app/*/lib/opencpn/*.so
 sudo chown --reference=.. .
 EOF
 
+sed -i "s/@TARGET_TUPLE@/$TARGET_TUPLE/" $ci_source/build.sh
 
-cat $ci_source/build.sh
 
 # Run script in docker image
 #
@@ -58,29 +57,23 @@ if [ -n "$CI" ]; then
 fi
 docker run --rm --privileged multiarch/qemu-user-static:register --reset || :
 docker run --platform linux/arm/v7 --privileged \
-    -e "OCPN_TARGET=$OCPN_TARGET" \
     -e "CLOUDSMITH_STABLE_REPO=$CLOUDSMITH_STABLE_REPO" \
     -e "CLOUDSMITH_BETA_REPO=$OCPN_BETA_REPO" \
     -e "CLOUDSMITH_UNSTABLE_REPO=$CLOUDSMITH_UNSTABLE_REPO" \
     -e "CIRCLE_BUILD_NUM=$CIRCLE_BUILD_NUM" \
     -e "TRAVIS_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER" \
     -v "$ci_source:/ci-source:rw" \
-    opencpn/ubuntu-bionic-armhf:v1 /bin/bash -xe /ci-source/build.sh
+    ${DOCKER_IMAGE:-opencpn/ubuntu-focal-armhf:v1} /bin/bash -xe /ci-source/build.sh
 rm -f $ci_source/build.sh
 
 
 # Install cloudsmith-cli (for upload) and cryptography (for git-push).
 #
 if pyenv versions &>/dev/null;  then
-  pyenv versions | sed 's/*//' | awk '{print $1}' | tail -1 \
-      > $HOME/.python-version
+    pyenv versions | tr -d '*' | awk '{print $1}' | tail -1 \
+        > $HOME/.python-version
 fi
-
-# Latest pip 21.0.0 requires python 3.7+, we have just 3.5:
-python3 -m pip install -q --force-reinstall pip==20.3.4
-
-# https://github.com/pyca/cryptography/issues/5753 -> cryptography < 3.4
-python3 -m pip install -q --user cloudsmith-cli 'cryptography<3.4'
+python3 -m pip install -q --user cloudsmith-cli cryptography
 
 # python install scripts in ~/.local/bin, teach upload.sh to use in it's PATH:
 echo 'export PATH=$PATH:$HOME/.local/bin' >> ~/.uploadrc

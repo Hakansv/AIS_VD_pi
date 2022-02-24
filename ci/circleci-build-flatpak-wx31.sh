@@ -12,7 +12,8 @@
 # (at your option) any later version.
 
 set -e
-_glob_pattern=${OCPN_MANIFEST_GLOB:-'org.opencpn.OpenCPN.Plugin*yaml'}
+
+_glob_pattern=${OCPN_MANIFEST_GLOB:-'org.opencpn.OpenCPN.wx31.Plugin*yaml'}
 MANIFEST=$(cd flatpak; ls $_glob_pattern)
 echo "Using manifest file: $MANIFEST"
 set -x
@@ -20,6 +21,7 @@ set -x
 # Load local environment if it exists i. e., this is a local build
 if [ -f ~/.config/local-build.rc ]; then source ~/.config/local-build.rc; fi
 if [ -d /ci-source ]; then cd /ci-source; fi
+if [ -n "$TRAVIS_BUILD_DIR" ]; then cd $TRAVIS_BUILD_DIR; fi
 
 git submodule update --init opencpn-libs
 
@@ -32,8 +34,6 @@ if [ "$PWD" != "/"  ]; then sudo ln -sf $PWD/$builddir /$builddir; fi
 # Create a log file.
 exec > >(tee $builddir/build.log) 2>&1
 
-if [ -n "$TRAVIS_BUILD_DIR" ]; then cd $TRAVIS_BUILD_DIR; fi
-
 if [ -n "$CI" ]; then
     sudo apt update
 
@@ -44,6 +44,8 @@ if [ -n "$CI" ]; then
     sudo apt install flatpak flatpak-builder
 fi
 
+flatpak remote-add --user --if-not-exists flathub-beta \
+    https://flathub.org/beta-repo/flathub-beta.flatpakrepo
 flatpak remote-add --user --if-not-exists \
     flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
@@ -54,7 +56,7 @@ flatpak install --user -y --or-update --noninteractive \
     flathub  org.opencpn.OpenCPN
 
 flatpak install --user -y --or-update --noninteractive \
-    flathub  org.opencpn.OpenCPN
+    flathub-beta  org.opencpn.OpenCPN//beta
 
 # The flatpak checksumming needs python3:
 if ! python3 --version 2>&1 >/dev/null; then
@@ -64,9 +66,9 @@ fi
 
 # Configure and build the plugin tarball and metadata.
 cd $builddir
-manifest_glob=${OCPN_MANIFEST_GLOB:-'org.opencpn.OpenCPN.Plugin.*.yaml'}
 cmake -DCMAKE_BUILD_TYPE=Release \
-      -DOCPN_MANIFEST_GLOB="$manifest_glob" \
+      -DOCPN_WX_ABI=wx315 \
+      -DOCPN_MANIFEST_GLOB="$OCPN_MANIFEST_GLOB" \
       ..
 make -j $(nproc) VERBOSE=1 flatpak
 
