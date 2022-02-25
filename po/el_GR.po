@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-12 20:55+0100\n"
-"PO-Revision-Date: 2021-12-16 19:00\n"
+"POT-Creation-Date: 2022-02-22 17:02+0100\n"
+"PO-Revision-Date: 2022-02-25 09:29\n"
 "Last-Translator: \n"
 "Language-Team: Greek\n"
 "Language: el_GR\n"
@@ -17,111 +17,201 @@ msgstr ""
 "X-Crowdin-File: /plugins/ais-vd_pi/po/ais-vd_pi.pot\n"
 "X-Crowdin-File-ID: 377\n"
 
-#: src\ais-vd_pi.cpp:153
-msgid "From the AIS"
-msgstr "Από το AIS"
-
-#: src\ais-vd_pi.cpp:167
-msgid "Status"
-msgstr "Κατάσταση"
-
-#: src\ais-vd_pi.cpp:168
-msgid "Dest"
-msgstr "Προορ"
-
-#: src\ais-vd_pi.cpp:169
-msgid "Time"
-msgstr "Ώρα"
-
-#: src\ais-vd_pi.cpp:171
-msgid "Day"
-msgstr "Ημέρα"
-
-#: src\ais-vd_pi.cpp:172
-msgid "Month"
-msgstr "Μήνας"
-
-#: src\ais-vd_pi.cpp:232
+#: src\ais-vd_pi.cpp:252
 msgid "AIS Voyage data"
 msgstr "Δεδομένα AIS"
 
-#: src\ais-vd_pi.cpp:234
+#: src\ais-vd_pi.cpp:259
 msgid "Set static voyage data on the AIS class A"
 msgstr "Ορισμός στατικών δεδομένων ταξιδιού για το AIS-A"
 
-#: src\ais-vd_pi.cpp:242
+#: src\ais-vd_pi.cpp:267
 msgid "Navigational status"
 msgstr "Κατάσταση ναυσιπλοΐας"
 
-#: src\ais-vd_pi.cpp:245
+#: src\ais-vd_pi.cpp:270
 msgid "Underway using engine"
 msgstr " Εν πλω με με μηχανή"
 
-#: src\ais-vd_pi.cpp:246
+#: src\ais-vd_pi.cpp:271
 msgid "At anchor"
 msgstr "Αγκυροβολημένο"
 
-#: src\ais-vd_pi.cpp:247
+#: src\ais-vd_pi.cpp:272
 msgid "Not under command"
 msgstr "Ακυβέρνητο"
 
-#: src\ais-vd_pi.cpp:248
+#: src\ais-vd_pi.cpp:273
 msgid "Restricted manoeuverability"
 msgstr "Περιορισμένη ικανότητα ελιγμών"
 
-#: src\ais-vd_pi.cpp:249
+#: src\ais-vd_pi.cpp:274
 msgid "Constrained by draught"
 msgstr "Περιορισμένο από το βύθισμά του"
 
-#: src\ais-vd_pi.cpp:250
+#: src\ais-vd_pi.cpp:275
 msgid "Moored"
 msgstr "Αγκυροβολιμένο"
 
-#: src\ais-vd_pi.cpp:251
+#: src\ais-vd_pi.cpp:276
 msgid "Aground"
 msgstr "Προσαραγμένο"
 
-#: src\ais-vd_pi.cpp:252
+#: src\ais-vd_pi.cpp:277
 msgid "Engaged in Fishing"
 msgstr "Ψαρεύει"
 
-#: src\ais-vd_pi.cpp:253
+#: src\ais-vd_pi.cpp:278
 msgid "Under way sailing"
 msgstr "Εν πλω με πανιά"
 
-#: src\ais-vd_pi.cpp:261
+#: src\ais-vd_pi.cpp:290
 msgid "Enter destination"
 msgstr "Εισάγετε προορισμό"
 
-#: src\ais-vd_pi.cpp:267
-msgid "or select a destination"
-msgstr "ή επιλέξτε προορισμό"
+#: src\ais-vd_pi.cpp:297
+msgid "or select a previous used"
+msgstr "ή επιλέξτε ένα ήδη σε χρήση"
 
-#: src\ais-vd_pi.cpp:287
+#: src\ais-vd_pi.cpp:317
 msgid "Draught (m)"
 msgstr "Βύθισμα (m)"
 
-#: src\ais-vd_pi.cpp:299
+#: src\ais-vd_pi.cpp:330
 msgid "No. of Persons onboard"
 msgstr "Αρ. επιβαινόντων"
 
-#: src\ais-vd_pi.cpp:311
-msgid "ETA date"
-msgstr "Ημερομηνία ΕΤΑ"
+#: src\ais-vd_pi.cpp:342
+msgid "E.T.A. Date and Time"
+msgstr ""
 
-#: src\ais-vd_pi.cpp:322
-msgid "ETA Time (UTC)"
-msgstr "ETA (UTC)"
+#: src\ais-vd_pi.cpp:354 src\ais-vd_pi.cpp:642
+msgid "Month"
+msgstr "Μήνας"
 
-#: src\ais-vd_pi.cpp:340
+#: src\ais-vd_pi.cpp:364 src\ais-vd_pi.cpp:643
+msgid "Day"
+msgstr "Ημέρα"
+
+#: src\ais-vd_pi.cpp:374
+msgid "Hour (UTC)"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:385
+msgid "Minute"
+msgstr "Λεπτό"
+
+#: src\ais-vd_pi.cpp:412 src\ais-vd_pi.cpp:664
 msgid "Send to AIS"
 msgstr "Αποστολή στο AIS"
 
-#: src\ais-vd_pi.cpp:506
-msgid "Yet no answer from any AIS! Please check connections and cabling."
-msgstr "Καμία απάντηση ακόμα από το AIS! Ελέγξτε τις συνδέσεις."
+#: src\ais-vd_pi.cpp:423
+msgid "Drop down to select"
+msgstr "Ανοίξτε για επιλογή"
 
-#: src\ais-vd_pi.cpp:520
-msgid "Send To AIS"
-msgstr "Αποστολή στο AIS"
+#: src\ais-vd_pi.cpp:587
+msgid "Yet no answer from any AIS!\n"
+" Please check connections and cabling."
+msgstr "Καμία απάντηση ακόμα από το AIS! \n"
+" Ελέγξτε τις συνδέσεις."
+
+#: src\ais-vd_pi.cpp:615
+msgid "Reply from AIS"
+msgstr "Απάντηση από το AIS"
+
+#: src\ais-vd_pi.cpp:635
+msgid "Status"
+msgstr "Κατάσταση"
+
+#: src\ais-vd_pi.cpp:640
+msgid "Dest"
+msgstr "Προορ"
+
+#: src\ais-vd_pi.cpp:641
+msgid "ETA"
+msgstr "ETA"
+
+#: src\ais-vd_pi.cpp:646
+msgid "Time"
+msgstr "Ώρα"
+
+#: src\ais-vd_pi.cpp:777
+msgid "Wing in ground (WIG)"
+msgstr "Σε πτήση επίδρασης εδάφους (WIG)"
+
+#: src\ais-vd_pi.cpp:778
+msgid "Fishing"
+msgstr "Ψαρεύει"
+
+#: src\ais-vd_pi.cpp:779
+msgid "Towing"
+msgstr "Ρυμουλκεί"
+
+#: src\ais-vd_pi.cpp:780
+msgid "Towing (Long)"
+msgstr "Μακριά ρυμούλκα"
+
+#: src\ais-vd_pi.cpp:781
+msgid "Dredging or underwater ops"
+msgstr "Βυθοκόρηση ή υποβρύχια έργα"
+
+#: src\ais-vd_pi.cpp:782
+msgid "Diving ops"
+msgstr "Καταδυτικά έργα"
+
+#: src\ais-vd_pi.cpp:783
+msgid "Military ops"
+msgstr "Στρατιωτικές επιχειρήσεις"
+
+#: src\ais-vd_pi.cpp:784
+msgid "Sailing vessel"
+msgstr "Ιστιοφόρο"
+
+#: src\ais-vd_pi.cpp:785
+msgid "Pleasure Craft"
+msgstr "Σκάφος αναψυχής"
+
+#: src\ais-vd_pi.cpp:790
+msgid "High speed craft (HSC)"
+msgstr "Ταχύπλοο"
+
+#: src\ais-vd_pi.cpp:791
+msgid "Pilot Vessel"
+msgstr "Πιλοτίνα"
+
+#: src\ais-vd_pi.cpp:792
+msgid "Search and Rescue vessel"
+msgstr "Πλοίο Έρευνας και Διάσωσης"
+
+#: src\ais-vd_pi.cpp:793
+msgid "Tug"
+msgstr "Ρυμουλκό"
+
+#: src\ais-vd_pi.cpp:794
+msgid "Port Tender"
+msgstr "Λάντζα"
+
+#: src\ais-vd_pi.cpp:795
+msgid "Law Enforcement"
+msgstr "Λιμενική αστυνομία"
+
+#: src\ais-vd_pi.cpp:796
+msgid "Medical Transport"
+msgstr "Ασθενοφόρο"
+
+#: src\ais-vd_pi.cpp:801
+msgid "Passenger ship"
+msgstr "Επιβατηγό πλοίο"
+
+#: src\ais-vd_pi.cpp:807
+msgid "Cargo ship"
+msgstr "Φορτηγό πλοίο"
+
+#: src\ais-vd_pi.cpp:812
+msgid "Tanker"
+msgstr "Δεξαμενόπλοιο"
+
+#: src\ais-vd_pi.cpp:813
+msgid "Other"
+msgstr "Άλλο"
 

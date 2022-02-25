@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-12 20:55+0100\n"
-"PO-Revision-Date: 2021-12-16 19:00\n"
+"POT-Creation-Date: 2022-02-22 17:02+0100\n"
+"PO-Revision-Date: 2022-02-25 09:29\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -17,111 +17,201 @@ msgstr ""
 "X-Crowdin-File: /plugins/ais-vd_pi/po/ais-vd_pi.pot\n"
 "X-Crowdin-File-ID: 377\n"
 
-#: src\ais-vd_pi.cpp:153
-msgid "From the AIS"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:167
-msgid "Status"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:168
-msgid "Dest"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:169
-msgid "Time"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:171
-msgid "Day"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:172
-msgid "Month"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:232
-msgid "AIS Voyage data"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:234
-msgid "Set static voyage data on the AIS class A"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:242
-msgid "Navigational status"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:245
-msgid "Underway using engine"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:246
-msgid "At anchor"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:247
-msgid "Not under command"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:248
-msgid "Restricted manoeuverability"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:249
-msgid "Constrained by draught"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:250
-msgid "Moored"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:251
-msgid "Aground"
-msgstr ""
-
 #: src\ais-vd_pi.cpp:252
-msgid "Engaged in Fishing"
-msgstr ""
+msgid "AIS Voyage data"
+msgstr "선박자동식별시스템(AIS) 항해 데이터"
 
-#: src\ais-vd_pi.cpp:253
-msgid "Under way sailing"
-msgstr ""
-
-#: src\ais-vd_pi.cpp:261
-msgid "Enter destination"
-msgstr ""
+#: src\ais-vd_pi.cpp:259
+msgid "Set static voyage data on the AIS class A"
+msgstr "선박자동식별시스템(AIS) 클래스 A에 대한 정적 항해 데이터 설정"
 
 #: src\ais-vd_pi.cpp:267
-msgid "or select a destination"
-msgstr ""
+msgid "Navigational status"
+msgstr "운항 상태"
 
-#: src\ais-vd_pi.cpp:287
+#: src\ais-vd_pi.cpp:270
+msgid "Underway using engine"
+msgstr "엔진을 사용하여 항해 중"
+
+#: src\ais-vd_pi.cpp:271
+msgid "At anchor"
+msgstr "정박 중"
+
+#: src\ais-vd_pi.cpp:272
+msgid "Not under command"
+msgstr "조종 불능"
+
+#: src\ais-vd_pi.cpp:273
+msgid "Restricted manoeuverability"
+msgstr "운항장애"
+
+#: src\ais-vd_pi.cpp:274
+msgid "Constrained by draught"
+msgstr "흘수제약"
+
+#: src\ais-vd_pi.cpp:275
+msgid "Moored"
+msgstr "정박한"
+
+#: src\ais-vd_pi.cpp:276
+msgid "Aground"
+msgstr "좌초"
+
+#: src\ais-vd_pi.cpp:277
+msgid "Engaged in Fishing"
+msgstr "어로 중"
+
+#: src\ais-vd_pi.cpp:278
+msgid "Under way sailing"
+msgstr "돛을 펼쳐 항해 중"
+
+#: src\ais-vd_pi.cpp:290
+msgid "Enter destination"
+msgstr "목적지 입력"
+
+#: src\ais-vd_pi.cpp:297
+msgid "or select a previous used"
+msgstr "또는 이전에 사용한 것을 선택"
+
+#: src\ais-vd_pi.cpp:317
 msgid "Draught (m)"
-msgstr ""
+msgstr "흘수 (미터)"
 
-#: src\ais-vd_pi.cpp:299
+#: src\ais-vd_pi.cpp:330
 msgid "No. of Persons onboard"
-msgstr ""
+msgstr "승선 인원"
 
-#: src\ais-vd_pi.cpp:311
-msgid "ETA date"
-msgstr ""
+#: src\ais-vd_pi.cpp:342
+msgid "E.T.A. Date and Time"
+msgstr "도착예상 날짜와 시간"
 
-#: src\ais-vd_pi.cpp:322
-msgid "ETA Time (UTC)"
-msgstr ""
+#: src\ais-vd_pi.cpp:354 src\ais-vd_pi.cpp:642
+msgid "Month"
+msgstr "월"
 
-#: src\ais-vd_pi.cpp:340
+#: src\ais-vd_pi.cpp:364 src\ais-vd_pi.cpp:643
+msgid "Day"
+msgstr "일"
+
+#: src\ais-vd_pi.cpp:374
+msgid "Hour (UTC)"
+msgstr "시 (세계협정시 UTC)"
+
+#: src\ais-vd_pi.cpp:385
+msgid "Minute"
+msgstr "분"
+
+#: src\ais-vd_pi.cpp:412 src\ais-vd_pi.cpp:664
 msgid "Send to AIS"
-msgstr ""
+msgstr "선박자동식별시스템(AIS)로 보내기"
 
-#: src\ais-vd_pi.cpp:506
-msgid "Yet no answer from any AIS! Please check connections and cabling."
-msgstr ""
+#: src\ais-vd_pi.cpp:423
+msgid "Drop down to select"
+msgstr "선택하여 내리기"
 
-#: src\ais-vd_pi.cpp:520
-msgid "Send To AIS"
-msgstr ""
+#: src\ais-vd_pi.cpp:587
+msgid "Yet no answer from any AIS!\n"
+" Please check connections and cabling."
+msgstr "그러나 어떤 선박자동식별시스템(AIS)에서도 응답이 없습니다!\n"
+"  연결 및 케이블을 확인하십시오."
+
+#: src\ais-vd_pi.cpp:615
+msgid "Reply from AIS"
+msgstr "선박자동식별시스템(AIS)로부터 응답"
+
+#: src\ais-vd_pi.cpp:635
+msgid "Status"
+msgstr "상태"
+
+#: src\ais-vd_pi.cpp:640
+msgid "Dest"
+msgstr "목적지"
+
+#: src\ais-vd_pi.cpp:641
+msgid "ETA"
+msgstr "예상도착시간(ETA)"
+
+#: src\ais-vd_pi.cpp:646
+msgid "Time"
+msgstr "시간"
+
+#: src\ais-vd_pi.cpp:777
+msgid "Wing in ground (WIG)"
+msgstr "수중익선"
+
+#: src\ais-vd_pi.cpp:778
+msgid "Fishing"
+msgstr "어업"
+
+#: src\ais-vd_pi.cpp:779
+msgid "Towing"
+msgstr "예인"
+
+#: src\ais-vd_pi.cpp:780
+msgid "Towing (Long)"
+msgstr "예인 (원거리)"
+
+#: src\ais-vd_pi.cpp:781
+msgid "Dredging or underwater ops"
+msgstr "준설 또는 수중 작전"
+
+#: src\ais-vd_pi.cpp:782
+msgid "Diving ops"
+msgstr "다이빙 작업"
+
+#: src\ais-vd_pi.cpp:783
+msgid "Military ops"
+msgstr "군사 작전"
+
+#: src\ais-vd_pi.cpp:784
+msgid "Sailing vessel"
+msgstr "범선"
+
+#: src\ais-vd_pi.cpp:785
+msgid "Pleasure Craft"
+msgstr "유람선"
+
+#: src\ais-vd_pi.cpp:790
+msgid "High speed craft (HSC)"
+msgstr "초고속선"
+
+#: src\ais-vd_pi.cpp:791
+msgid "Pilot Vessel"
+msgstr "도선"
+
+#: src\ais-vd_pi.cpp:792
+msgid "Search and Rescue vessel"
+msgstr "수색구조선"
+
+#: src\ais-vd_pi.cpp:793
+msgid "Tug"
+msgstr "예인선"
+
+#: src\ais-vd_pi.cpp:794
+msgid "Port Tender"
+msgstr "항만부속선"
+
+#: src\ais-vd_pi.cpp:795
+msgid "Law Enforcement"
+msgstr "행정선"
+
+#: src\ais-vd_pi.cpp:796
+msgid "Medical Transport"
+msgstr "병원선"
+
+#: src\ais-vd_pi.cpp:801
+msgid "Passenger ship"
+msgstr "여객선"
+
+#: src\ais-vd_pi.cpp:807
+msgid "Cargo ship"
+msgstr "화물선"
+
+#: src\ais-vd_pi.cpp:812
+msgid "Tanker"
+msgstr "유조선"
+
+#: src\ais-vd_pi.cpp:813
+msgid "Other"
+msgstr "기타"
 
