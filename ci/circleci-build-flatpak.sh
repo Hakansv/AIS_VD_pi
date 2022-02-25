@@ -12,16 +12,15 @@
 # (at your option) any later version.
 
 set -e
-_glob_pattern=${OCPN_MANIFEST_GLOB:-'org.opencpn.OpenCPN.Plugin*yaml'}
-MANIFEST=$(cd flatpak; ls $_glob_pattern)
+
+
+MANIFEST=$(cd flatpak; ls org.opencpn.OpenCPN.Plugin*yaml)
 echo "Using manifest file: $MANIFEST"
 set -x
 
 # Load local environment if it exists i. e., this is a local build
 if [ -f ~/.config/local-build.rc ]; then source ~/.config/local-build.rc; fi
 if [ -d /ci-source ]; then cd /ci-source; fi
-
-git submodule update --init opencpn-libs
 
 # Set up build directory and a visible link in /
 builddir=build-flatpak
@@ -53,9 +52,6 @@ flatpak install --user -y --noninteractive \
 flatpak install --user -y --or-update --noninteractive \
     flathub  org.opencpn.OpenCPN
 
-flatpak install --user -y --or-update --noninteractive \
-    flathub  org.opencpn.OpenCPN
-
 # The flatpak checksumming needs python3:
 if ! python3 --version 2>&1 >/dev/null; then
     pyenv local $(pyenv versions | sed 's/*//' | awk '{print $1}' | tail -1)
@@ -64,10 +60,7 @@ fi
 
 # Configure and build the plugin tarball and metadata.
 cd $builddir
-manifest_glob=${OCPN_MANIFEST_GLOB:-'org.opencpn.OpenCPN.Plugin.*.yaml'}
-cmake -DCMAKE_BUILD_TYPE=Release \
-      -DOCPN_MANIFEST_GLOB="$manifest_glob" \
-      ..
+cmake -DCMAKE_BUILD_TYPE=Release ..
 make -j $(nproc) VERBOSE=1 flatpak
 
 # Restore permissions and owner in build tree.
