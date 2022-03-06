@@ -187,8 +187,15 @@ void aisvd_pi::SetNMEASentence(wxString &sentence)
 
 void aisvd_pi::ShowPreferencesDialog( wxWindow* parent )
 {
+  wxString titleString = _("ais-vd_pi Preferences");
+
+  long style = wxDEFAULT_DIALOG_STYLE;
+#ifdef __WXOSX__
+  style |= wxSTAY_ON_TOP;
+#endif
+
     if (!prefDlg)
-        prefDlg = new PreferenceDlg(parent);
+        prefDlg = new PreferenceDlg(parent, wxID_ANY, titleString, wxPoint(20, 20), wxDefaultSize, style);
     if ( prefDlg->ShowModal() == wxID_OK )
         AIS_type = prefDlg->m_choice2->GetString(prefDlg->m_choice2->GetSelection());
 
@@ -680,27 +687,40 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
                              const wxPoint& pos, const wxSize& size, long style ) 
                              : wxDialog( parent, id, title, pos, size, style )
 {
+
+#ifdef __OCPN__ANDROID__
+  SetBackgroundColour(ANDROID_DIALOG_BACKGROUND_COLOR);
+#endif
+
     this->SetSizeHints( wxDefaultSize, wxDefaultSize );
 
     wxBoxSizer* bSizer2;
     bSizer2 = new wxBoxSizer( wxVERTICAL );
 
+    // Plugin Version
+    wxString extVersion;
+    extVersion.Printf(_T("%d.%d.%d"), PLUGIN_VERSION_MAJOR, PLUGIN_VERSION_MINOR, PLUGIN_VERSION_PATCH );
+
+    wxString versionText = _("Plugin version: ") + extVersion;
+    wxStaticText *versionTextBox = new wxStaticText(this, wxID_ANY, versionText);
+    bSizer2->Add(versionTextBox, 0, wxALL, 20);
+
     wxGridSizer* gSizer2;
-    gSizer2 = new wxGridSizer( 0, 2, 0, 0 );
+    gSizer2 = new wxGridSizer( 2);
 
     m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("Type of AIS"),
                                      wxDefaultPosition, wxDefaultSize, 0 );
-    m_staticText2->Wrap( -1 );
-    gSizer2->Add( m_staticText2, 0, wxALL, 5 );
+    //m_staticText2->Wrap( -1 );
+    gSizer2->Add( m_staticText2, 0, wxALL, 20 );
 
     wxString m_choice2Choices[] = { wxT("Class A Transponder supporting NMEA0183 $ECVSD") };
     int m_choice2NChoices = sizeof( m_choice2Choices ) / sizeof( wxString );
     m_choice2 = new wxChoice( this, wxID_ANY, wxDefaultPosition,
                              wxDefaultSize, m_choice2NChoices, m_choice2Choices, 0 );
     m_choice2->SetSelection( 0 );
-    gSizer2->Add( m_choice2, 0, wxALL, 5 );
-
-    bSizer2->Add( gSizer2, 1, wxEXPAND, 5 );
+    gSizer2->Add( m_choice2, 0, wxALL, 20 );
+     
+    bSizer2->Add( gSizer2, 0, 0, 20 );
 
     m_sdbSizer2 = new wxStdDialogButtonSizer();
     m_sdbSizer2OK = new wxButton( this, wxID_OK );
@@ -709,7 +729,7 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
     m_sdbSizer2->AddButton( m_sdbSizer2Cancel );
     m_sdbSizer2->Realize();
 
-    bSizer2->Add( m_sdbSizer2, 1, wxEXPAND, 5 );
+    bSizer2->Add( m_sdbSizer2, 1, wxEXPAND, 20 );
 
     this->SetSizer( bSizer2 );
     this->Layout();
