@@ -35,6 +35,7 @@
 #include "default_pi.xpm"
 #include "wx/tokenzr.h"
 
+#define ANDROID_DIALOG_BACKGROUND_COLOR    wxColour(_T("#7cb0e9"))
 // the class factories, used to create and destroy instances of the PlugIn
 
 extern "C" DECL_EXP opencpn_plugin* create_pi(void *ppimgr)

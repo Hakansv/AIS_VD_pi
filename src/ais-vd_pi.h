@@ -143,7 +143,7 @@ class aisvd_pi : public opencpn_plugin_116
 
 private:
   bool LoadConfig( void );  
-	wxWindow         *m_parent_window;
+	//wxWindow         *m_parent_window;
 	wxBitmap          m_plugin_icon;
   wxScrolledWindow  *m_AIS_VoyDataWin;
   wxString          g_PrivateDataDir;
