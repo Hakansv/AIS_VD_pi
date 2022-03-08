@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-02-22 17:02+0100\n"
-"PO-Revision-Date: 2022-02-27 16:43\n"
+"PO-Revision-Date: 2022-03-08 06:03\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -23,63 +23,63 @@ msgstr ""
 
 #: src\ais-vd_pi.cpp:259
 msgid "Set static voyage data on the AIS class A"
-msgstr ""
+msgstr "Ustaw statyczne dane o rejsie w AIS klasy A"
 
 #: src\ais-vd_pi.cpp:267
 msgid "Navigational status"
-msgstr ""
+msgstr "Status nawigacyjny"
 
 #: src\ais-vd_pi.cpp:270
 msgid "Underway using engine"
-msgstr ""
+msgstr "w drodze na silnikiem"
 
 #: src\ais-vd_pi.cpp:271
 msgid "At anchor"
-msgstr ""
+msgstr "na kotwicy"
 
 #: src\ais-vd_pi.cpp:272
 msgid "Not under command"
-msgstr ""
+msgstr "nieodpowiadający za swoje ruchy"
 
 #: src\ais-vd_pi.cpp:273
 msgid "Restricted manoeuverability"
-msgstr ""
+msgstr "ograniczona zdolność manewrowa"
 
 #: src\ais-vd_pi.cpp:274
 msgid "Constrained by draught"
-msgstr ""
+msgstr "ograniczony swym zanurzeniem"
 
 #: src\ais-vd_pi.cpp:275
 msgid "Moored"
-msgstr ""
+msgstr "zacumowany"
 
 #: src\ais-vd_pi.cpp:276
 msgid "Aground"
-msgstr ""
+msgstr "na mieliźnie"
 
 #: src\ais-vd_pi.cpp:277
 msgid "Engaged in Fishing"
-msgstr ""
+msgstr "zajęty połowem"
 
 #: src\ais-vd_pi.cpp:278
 msgid "Under way sailing"
-msgstr ""
+msgstr "w drodze pod żaglami"
 
 #: src\ais-vd_pi.cpp:290
 msgid "Enter destination"
-msgstr ""
+msgstr "Podaj cel podróży"
 
 #: src\ais-vd_pi.cpp:297
 msgid "or select a previous used"
-msgstr ""
+msgstr "lub wybierz poprzednio używane"
 
 #: src\ais-vd_pi.cpp:317
 msgid "Draught (m)"
-msgstr ""
+msgstr "Zanurzenie (m)"
 
 #: src\ais-vd_pi.cpp:330
 msgid "No. of Persons onboard"
-msgstr ""
+msgstr "Liczba osób na pokładzie"
 
 #: src\ais-vd_pi.cpp:342
 msgid "E.T.A. Date and Time"
@@ -91,11 +91,11 @@ msgstr ""
 
 #: src\ais-vd_pi.cpp:364 src\ais-vd_pi.cpp:643
 msgid "Day"
-msgstr ""
+msgstr "Dzień"
 
 #: src\ais-vd_pi.cpp:374
 msgid "Hour (UTC)"
-msgstr ""
+msgstr "Godzina (UTC)"
 
 #: src\ais-vd_pi.cpp:385
 msgid "Minute"
@@ -132,7 +132,7 @@ msgstr ""
 
 #: src\ais-vd_pi.cpp:646
 msgid "Time"
-msgstr ""
+msgstr "Czas"
 
 #: src\ais-vd_pi.cpp:777
 msgid "Wing in ground (WIG)"
