@@ -564,10 +564,45 @@ void aisvd_pi::SetMaxDay() {
 }
 
 void aisvd_pi::SendSentence() {
-  // $IISPW,E,1,00000000,,,0*10  A possible password.
+  bool psw = false;
+  // $IISPW,E,1,00000000,,,0*10  for VSD? A possible password.
+  // ref: http://annoyingdesigns.com/vsd/VSDControl.pdf
+  //$RASPW,EPV,503123450,1,SESAME*hh
+  //$IISPW,VSD,00000000,1,303030 ??
+    /*$--SPW, ccc, c--c, x, c--c*hh<CR><LF>
+    Password 4
+    Password level 3
+    Unique identifier 2
+    Password protected sentence 1
+    Notes:
+      1) The following sentence formatter that should be protected ( for example EPV )
+      2) For AIS the unique identifier is the MMSI.
+      3) An integer number as defined below :
+      1 = User level password;
+      2 = Administrator level password;
+      3 - 9 = Reserved
+      4) Password as text up to 32 characters.*/
+
+  if (psw) {
+    wxString S;
+    S = _T("$ECSPW"); // EC for Electronic Chart 
+    S.Append(_T(","));
+    S.Append(_T("E")); 
+    S.Append(_T(","));
+    S.Append(_T("303030")); 
+    S.Append(_T(","));
+    S.Append(_T(",")); 
+    S.Append(_T(","));
+    S.Append(_T("0"));
+    S.Append(_T("*")); // End data
+    S.Append(wxString::Format(_T("%02X"), ComputeChecksum(S)));
+    S += _T("\r\n");
+    //wxPuts(S);
+    PushNMEABuffer(S); //finaly send the password string 
+  }
+
   wxString S;
   S = _T("$ECVSD,"); // EC for Electronic Chart
-
   // We dont send ship type. It will be set by AIS static 
   // data and can be password protected by some devices
   S.Append(_T(","));
@@ -592,7 +627,9 @@ void aisvd_pi::SendSentence() {
 void aisvd_pi::RequestAISstatus(){
   // Deafult user message if no reply from AIS
   wxString msg;
-  msg = _("Yet no answer from any AIS!\n Please check connections and cabling.");
+  msg = _("Yet no answer from any AIS!\n"
+          "Please check OCPN connections and AIS cabling.\n"
+          "Output: VSD and AIQ. Input at least: VSD and AIVDM");
   m_SendBtn->SetLabel(msg);
   m_AIS_VoyDataWin->Layout();
 
