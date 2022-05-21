@@ -193,6 +193,7 @@ class PreferenceDlg : public wxDialog
 	private:
 	
 	protected:
+    wxStaticText* m_staticTexthelp;
 		wxStaticText* m_staticText2;
 		
 		wxStdDialogButtonSizer* m_sdbSizer2;

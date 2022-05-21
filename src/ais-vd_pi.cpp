@@ -629,7 +629,7 @@ void aisvd_pi::RequestAISstatus(){
   wxString msg;
   msg = _("Yet no answer from any AIS!\n"
           "Please check OCPN connections and AIS cabling.\n"
-          "Output: VSD and AIQ. Input at least: VSD and AIVDM");
+          "(See Preferences for more info.)");
   m_SendBtn->SetLabel(msg);
   m_AIS_VoyDataWin->Layout();
 
@@ -741,17 +741,28 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
 
     wxString versionText = _("Plugin version: ") + extVersion;
     wxStaticText *versionTextBox = new wxStaticText(this, wxID_ANY, versionText);
-    bSizer2->Add(versionTextBox, 0, wxALL, 20);
+    bSizer2->Add(versionTextBox, 0, wxALL, 20); 
+    
+    wxString helptxt;
+    helptxt = _("OCPN connection help:\n"
+                "You need both input and output connections to the AIS device.\n"
+                "To minimize network handling connection filters may be feasible\n"
+                "For the output filter transmit only VSD and AIQ\n"
+                "For a possible input filter we need at least VSD (and AIVDM + GNSS?)");
+
+    m_staticTexthelp = new wxStaticText(this, wxID_ANY, helptxt,
+                                         wxDefaultPosition, wxDefaultSize, 0);
+    bSizer2->Add(m_staticTexthelp, 0, wxALL, 20);
 
     wxGridSizer* gSizer2;
-    gSizer2 = new wxGridSizer( 2);
-
-    m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("Type of AIS"),
+    gSizer2 = new wxGridSizer( 2);    
+    
+    m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("Type of AIS. So far no options. The future may change that?"),
                                      wxDefaultPosition, wxDefaultSize, 0 );
     //m_staticText2->Wrap( -1 );
     gSizer2->Add( m_staticText2, 0, wxALL, 20 );
 
-    wxString m_choice2Choices[] = { wxT("Class A Transponder supporting NMEA0183 $ECVSD") };
+    wxString m_choice2Choices[] = { wxT("Class A Transponder using NMEA0183 $ECVSD") };
     int m_choice2NChoices = sizeof( m_choice2Choices ) / sizeof( wxString );
     m_choice2 = new wxChoice( this, wxID_ANY, wxDefaultPosition,
                              wxDefaultSize, m_choice2NChoices, m_choice2Choices, 0 );
