@@ -626,10 +626,10 @@ void aisvd_pi::SendSentence() {
   
 void aisvd_pi::RequestAISstatus(){
   // Deafult user message if no reply from AIS
-  wxString msg;
-  msg = _("Yet no answer from any AIS!\n"
-          "Please check OCPN connections and AIS cabling.\n"
-          "(See Preferences for more info.)");
+  wxString msg = _("Yet no answer from any AIS!");
+  msg.Append("\n" + _("Please check OCPN connections and AIS cabling."));
+  msg.Append("\n" + _("See Preferences for more info."));
+
   m_SendBtn->SetLabel(msg);
   m_AIS_VoyDataWin->Layout();
 
@@ -743,12 +743,12 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
     wxStaticText *versionTextBox = new wxStaticText(this, wxID_ANY, versionText);
     bSizer2->Add(versionTextBox, 0, wxALL, 20); 
     
-    wxString helptxt;
-    helptxt = _("OCPN connection help:\n"
-                "You need both input and output connections to the AIS device.\n"
-                "To minimize network handling connection filters may be feasible\n"
-                "For the output filter transmit only VSD and AIQ\n"
-                "For a possible input filter we need at least VSD (and AIVDM + GNSS?)");
+    wxString helptxt = _("OpenCPN connections help:");
+    helptxt.Append(_T("\n"));
+    helptxt.Append(_("You need both input and output connections for the AIS device."));
+    helptxt.Append("\n" + _("To minimize traffic, connection filters may be feasible:"));
+    helptxt.Append("\n" + _("For the output filter transmit only VSD and AIQ"));
+    helptxt.Append("\n" + _("For a possible input filter we need at least VSD (and AIVDM + GNSS?)"));
 
     m_staticTexthelp = new wxStaticText(this, wxID_ANY, helptxt,
                                          wxDefaultPosition, wxDefaultSize, 0);
