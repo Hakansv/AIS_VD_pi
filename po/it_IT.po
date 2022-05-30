@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-22 17:02+0100\n"
-"PO-Revision-Date: 2022-03-08 06:03\n"
+"POT-Creation-Date: 2022-05-22 17:46+0200\n"
+"PO-Revision-Date: 2022-05-30 12:09\n"
 "Last-Translator: \n"
 "Language-Team: Italian\n"
 "Language: it_IT\n"
@@ -17,201 +17,235 @@ msgstr ""
 "X-Crowdin-File: /plugins/ais-vd_pi/po/ais-vd_pi.pot\n"
 "X-Crowdin-File-ID: 377\n"
 
-#: src\ais-vd_pi.cpp:252
+#: src\ais-vd_pi.cpp:191
+msgid "ais-vd_pi Preferences"
+msgstr "Preferenze ais-vd_pi"
+
+#: src\ais-vd_pi.cpp:260
 msgid "AIS Voyage data"
 msgstr "Dati di viaggio AIS"
 
-#: src\ais-vd_pi.cpp:259
+#: src\ais-vd_pi.cpp:267
 msgid "Set static voyage data on the AIS class A"
 msgstr "Imposta i dati statici di viaggio sulla classe A AIS"
 
-#: src\ais-vd_pi.cpp:267
+#: src\ais-vd_pi.cpp:275
 msgid "Navigational status"
 msgstr "Stato di navigazione"
 
-#: src\ais-vd_pi.cpp:270
+#: src\ais-vd_pi.cpp:278
 msgid "Underway using engine"
 msgstr "In corso con motore"
 
-#: src\ais-vd_pi.cpp:271
+#: src\ais-vd_pi.cpp:279
 msgid "At anchor"
 msgstr "All'ancora"
 
-#: src\ais-vd_pi.cpp:272
+#: src\ais-vd_pi.cpp:280
 msgid "Not under command"
 msgstr "Non sotto comando"
 
-#: src\ais-vd_pi.cpp:273
+#: src\ais-vd_pi.cpp:281
 msgid "Restricted manoeuverability"
 msgstr "Manovrabilità limitata"
 
-#: src\ais-vd_pi.cpp:274
+#: src\ais-vd_pi.cpp:282
 msgid "Constrained by draught"
 msgstr "Vincolato da pescaggio"
 
-#: src\ais-vd_pi.cpp:275
+#: src\ais-vd_pi.cpp:283
 msgid "Moored"
 msgstr "all'ancora"
 
-#: src\ais-vd_pi.cpp:276
+#: src\ais-vd_pi.cpp:284
 msgid "Aground"
 msgstr "Arenato "
 
-#: src\ais-vd_pi.cpp:277
+#: src\ais-vd_pi.cpp:285
 msgid "Engaged in Fishing"
 msgstr "In Pesca"
 
-#: src\ais-vd_pi.cpp:278
+#: src\ais-vd_pi.cpp:286
 msgid "Under way sailing"
 msgstr "In Navigazione a Vela"
 
-#: src\ais-vd_pi.cpp:290
+#: src\ais-vd_pi.cpp:298
 msgid "Enter destination"
 msgstr "Inserisci una destinazione"
 
-#: src\ais-vd_pi.cpp:297
+#: src\ais-vd_pi.cpp:305
 msgid "or select a previous used"
 msgstr "o seleziona un precedente usato"
 
-#: src\ais-vd_pi.cpp:317
+#: src\ais-vd_pi.cpp:325
 msgid "Draught (m)"
 msgstr "Pescaggio"
 
-#: src\ais-vd_pi.cpp:330
+#: src\ais-vd_pi.cpp:338
 msgid "No. of Persons onboard"
 msgstr "Numero di persone a bordo"
 
-#: src\ais-vd_pi.cpp:342
+#: src\ais-vd_pi.cpp:350
 msgid "E.T.A. Date and Time"
 msgstr "E.T.A. Data e ora"
 
-#: src\ais-vd_pi.cpp:354 src\ais-vd_pi.cpp:642
+#: src\ais-vd_pi.cpp:362 src\ais-vd_pi.cpp:687
 msgid "Month"
 msgstr "Mese"
 
-#: src\ais-vd_pi.cpp:364 src\ais-vd_pi.cpp:643
+#: src\ais-vd_pi.cpp:372 src\ais-vd_pi.cpp:688
 msgid "Day"
 msgstr "Giorno"
 
-#: src\ais-vd_pi.cpp:374
+#: src\ais-vd_pi.cpp:382
 msgid "Hour (UTC)"
 msgstr "Ora (UTC)"
 
-#: src\ais-vd_pi.cpp:385
+#: src\ais-vd_pi.cpp:393
 msgid "Minute"
 msgstr "Minuto"
 
-#: src\ais-vd_pi.cpp:412 src\ais-vd_pi.cpp:664
+#: src\ais-vd_pi.cpp:420 src\ais-vd_pi.cpp:709
 msgid "Send to AIS"
 msgstr "Invia ad AIS"
 
-#: src\ais-vd_pi.cpp:423
+#: src\ais-vd_pi.cpp:431
 msgid "Drop down to select"
 msgstr "A discesa per selezionare"
 
-#: src\ais-vd_pi.cpp:587
-msgid "Yet no answer from any AIS!\n"
-" Please check connections and cabling."
-msgstr "Eppure nessuna risposta da qualsiasi AIS!\n"
-" Si prega di controllare connessioni e cavi."
+#: src\ais-vd_pi.cpp:629
+msgid "Yet no answer from any AIS!"
+msgstr "Eppure nessuna risposta da qualsiasi AIS!"
 
-#: src\ais-vd_pi.cpp:615
+#: src\ais-vd_pi.cpp:630
+msgid "Please check OCPN connections and AIS cabling."
+msgstr "Controllare le connessioni OCPN e il cablaggio AIS."
+
+#: src\ais-vd_pi.cpp:631
+msgid "See Preferences for more info."
+msgstr "Vedere Preferenze per piu informazioni."
+
+#: src\ais-vd_pi.cpp:660
 msgid "Reply from AIS"
 msgstr "Risposta dell'AIS"
 
-#: src\ais-vd_pi.cpp:635
+#: src\ais-vd_pi.cpp:680
 msgid "Status"
 msgstr "Stato"
 
-#: src\ais-vd_pi.cpp:640
+#: src\ais-vd_pi.cpp:685
 msgid "Dest"
 msgstr "Dest"
 
-#: src\ais-vd_pi.cpp:641
+#: src\ais-vd_pi.cpp:686
 msgid "ETA"
 msgstr "ETA"
 
-#: src\ais-vd_pi.cpp:646
+#: src\ais-vd_pi.cpp:691
 msgid "Time"
 msgstr "Ora"
 
-#: src\ais-vd_pi.cpp:777
+#: src\ais-vd_pi.cpp:742
+msgid "Plugin version: "
+msgstr "Versione del plugin:"
+
+#: src\ais-vd_pi.cpp:746
+msgid "OpenCPN connections help:"
+msgstr "Aiuto connessioni OpenCPN:"
+
+#: src\ais-vd_pi.cpp:748
+msgid "You need both input and output connections for the AIS device."
+msgstr "Per ridurre il traffico, è possibile creare filtri di connessione:"
+
+#: src\ais-vd_pi.cpp:749
+msgid "To minimize traffic, connection filters may be feasible:"
+msgstr "Per ridurre al minimo il traffico, è possibile creare filtri di connessione:"
+
+#: src\ais-vd_pi.cpp:750
+msgid "For the output filter transmit only VSD and AIQ"
+msgstr "Per il filtro di uscita trasmettere solo VSD e AIQ"
+
+#: src\ais-vd_pi.cpp:751
+msgid "For a possible input filter we need at least VSD (and AIVDM + GNSS?)"
+msgstr "Filtro di input necessario: almeno VSD (e AIVDM + GNSS?)"
+
+#: src\ais-vd_pi.cpp:846
 msgid "Wing in ground (WIG)"
 msgstr "Ali a terra (WIG)"
 
-#: src\ais-vd_pi.cpp:778
+#: src\ais-vd_pi.cpp:847
 msgid "Fishing"
 msgstr "Pesca"
 
-#: src\ais-vd_pi.cpp:779
+#: src\ais-vd_pi.cpp:848
 msgid "Towing"
 msgstr "Rimochiato"
 
-#: src\ais-vd_pi.cpp:780
+#: src\ais-vd_pi.cpp:849
 msgid "Towing (Long)"
 msgstr "Rimorchiato (lungo)"
 
-#: src\ais-vd_pi.cpp:781
+#: src\ais-vd_pi.cpp:850
 msgid "Dredging or underwater ops"
 msgstr "dragaggio in corso o operazioni subacquee"
 
-#: src\ais-vd_pi.cpp:782
+#: src\ais-vd_pi.cpp:851
 msgid "Diving ops"
 msgstr "Ops subacquei"
 
-#: src\ais-vd_pi.cpp:783
+#: src\ais-vd_pi.cpp:852
 msgid "Military ops"
 msgstr "ops militari"
 
-#: src\ais-vd_pi.cpp:784
+#: src\ais-vd_pi.cpp:853
 msgid "Sailing vessel"
 msgstr "Unità a Vela"
 
-#: src\ais-vd_pi.cpp:785
+#: src\ais-vd_pi.cpp:854
 msgid "Pleasure Craft"
 msgstr "Unità da diporto"
 
-#: src\ais-vd_pi.cpp:790
+#: src\ais-vd_pi.cpp:859
 msgid "High speed craft (HSC)"
 msgstr "Unità alta velocita (HSC)"
 
-#: src\ais-vd_pi.cpp:791
+#: src\ais-vd_pi.cpp:860
 msgid "Pilot Vessel"
 msgstr "Pilotina"
 
-#: src\ais-vd_pi.cpp:792
+#: src\ais-vd_pi.cpp:861
 msgid "Search and Rescue vessel"
 msgstr "Unità da Ricerca e Soccorso"
 
-#: src\ais-vd_pi.cpp:793
+#: src\ais-vd_pi.cpp:862
 msgid "Tug"
 msgstr "Rimorchiatore"
 
-#: src\ais-vd_pi.cpp:794
+#: src\ais-vd_pi.cpp:863
 msgid "Port Tender"
 msgstr "barca di servizio del porto"
 
-#: src\ais-vd_pi.cpp:795
+#: src\ais-vd_pi.cpp:864
 msgid "Law Enforcement"
 msgstr "Forze dell'ordine"
 
-#: src\ais-vd_pi.cpp:796
+#: src\ais-vd_pi.cpp:865
 msgid "Medical Transport"
 msgstr "Trasporto Medico"
 
-#: src\ais-vd_pi.cpp:801
+#: src\ais-vd_pi.cpp:870
 msgid "Passenger ship"
 msgstr "Nave Passeggeri"
 
-#: src\ais-vd_pi.cpp:807
+#: src\ais-vd_pi.cpp:876
 msgid "Cargo ship"
 msgstr "Nave Cargo"
 
-#: src\ais-vd_pi.cpp:812
+#: src\ais-vd_pi.cpp:881
 msgid "Tanker"
 msgstr "Petroliera"
 
-#: src\ais-vd_pi.cpp:813
+#: src\ais-vd_pi.cpp:882
 msgid "Other"
 msgstr "Altro"
 

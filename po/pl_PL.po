@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-22 17:02+0100\n"
-"PO-Revision-Date: 2022-03-08 06:03\n"
+"POT-Creation-Date: 2022-05-22 17:46+0200\n"
+"PO-Revision-Date: 2022-05-30 12:09\n"
 "Last-Translator: \n"
 "Language-Team: Polish\n"
 "Language: pl_PL\n"
@@ -17,200 +17,235 @@ msgstr ""
 "X-Crowdin-File: /plugins/ais-vd_pi/po/ais-vd_pi.pot\n"
 "X-Crowdin-File-ID: 377\n"
 
-#: src\ais-vd_pi.cpp:252
+#: src\ais-vd_pi.cpp:191
+msgid "ais-vd_pi Preferences"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:260
 msgid "AIS Voyage data"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:259
+#: src\ais-vd_pi.cpp:267
 msgid "Set static voyage data on the AIS class A"
 msgstr "Ustaw statyczne dane o rejsie w AIS klasy A"
 
-#: src\ais-vd_pi.cpp:267
+#: src\ais-vd_pi.cpp:275
 msgid "Navigational status"
 msgstr "Status nawigacyjny"
 
-#: src\ais-vd_pi.cpp:270
+#: src\ais-vd_pi.cpp:278
 msgid "Underway using engine"
 msgstr "w drodze na silnikiem"
 
-#: src\ais-vd_pi.cpp:271
+#: src\ais-vd_pi.cpp:279
 msgid "At anchor"
 msgstr "na kotwicy"
 
-#: src\ais-vd_pi.cpp:272
+#: src\ais-vd_pi.cpp:280
 msgid "Not under command"
 msgstr "nieodpowiadający za swoje ruchy"
 
-#: src\ais-vd_pi.cpp:273
+#: src\ais-vd_pi.cpp:281
 msgid "Restricted manoeuverability"
 msgstr "ograniczona zdolność manewrowa"
 
-#: src\ais-vd_pi.cpp:274
+#: src\ais-vd_pi.cpp:282
 msgid "Constrained by draught"
 msgstr "ograniczony swym zanurzeniem"
 
-#: src\ais-vd_pi.cpp:275
+#: src\ais-vd_pi.cpp:283
 msgid "Moored"
 msgstr "zacumowany"
 
-#: src\ais-vd_pi.cpp:276
+#: src\ais-vd_pi.cpp:284
 msgid "Aground"
 msgstr "na mieliźnie"
 
-#: src\ais-vd_pi.cpp:277
+#: src\ais-vd_pi.cpp:285
 msgid "Engaged in Fishing"
 msgstr "zajęty połowem"
 
-#: src\ais-vd_pi.cpp:278
+#: src\ais-vd_pi.cpp:286
 msgid "Under way sailing"
 msgstr "w drodze pod żaglami"
 
-#: src\ais-vd_pi.cpp:290
+#: src\ais-vd_pi.cpp:298
 msgid "Enter destination"
 msgstr "Podaj cel podróży"
 
-#: src\ais-vd_pi.cpp:297
+#: src\ais-vd_pi.cpp:305
 msgid "or select a previous used"
 msgstr "lub wybierz poprzednio używane"
 
-#: src\ais-vd_pi.cpp:317
+#: src\ais-vd_pi.cpp:325
 msgid "Draught (m)"
 msgstr "Zanurzenie (m)"
 
-#: src\ais-vd_pi.cpp:330
+#: src\ais-vd_pi.cpp:338
 msgid "No. of Persons onboard"
 msgstr "Liczba osób na pokładzie"
 
-#: src\ais-vd_pi.cpp:342
+#: src\ais-vd_pi.cpp:350
 msgid "E.T.A. Date and Time"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:354 src\ais-vd_pi.cpp:642
+#: src\ais-vd_pi.cpp:362 src\ais-vd_pi.cpp:687
 msgid "Month"
-msgstr ""
+msgstr "Miesiąc"
 
-#: src\ais-vd_pi.cpp:364 src\ais-vd_pi.cpp:643
+#: src\ais-vd_pi.cpp:372 src\ais-vd_pi.cpp:688
 msgid "Day"
 msgstr "Dzień"
 
-#: src\ais-vd_pi.cpp:374
+#: src\ais-vd_pi.cpp:382
 msgid "Hour (UTC)"
 msgstr "Godzina (UTC)"
 
-#: src\ais-vd_pi.cpp:385
+#: src\ais-vd_pi.cpp:393
 msgid "Minute"
-msgstr ""
+msgstr "Minuta"
 
-#: src\ais-vd_pi.cpp:412 src\ais-vd_pi.cpp:664
+#: src\ais-vd_pi.cpp:420 src\ais-vd_pi.cpp:709
 msgid "Send to AIS"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:423
+#: src\ais-vd_pi.cpp:431
 msgid "Drop down to select"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:587
-msgid "Yet no answer from any AIS!\n"
-" Please check connections and cabling."
+#: src\ais-vd_pi.cpp:629
+msgid "Yet no answer from any AIS!"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:615
+#: src\ais-vd_pi.cpp:630
+msgid "Please check OCPN connections and AIS cabling."
+msgstr ""
+
+#: src\ais-vd_pi.cpp:631
+msgid "See Preferences for more info."
+msgstr ""
+
+#: src\ais-vd_pi.cpp:660
 msgid "Reply from AIS"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:635
+#: src\ais-vd_pi.cpp:680
 msgid "Status"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:640
+#: src\ais-vd_pi.cpp:685
 msgid "Dest"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:641
+#: src\ais-vd_pi.cpp:686
 msgid "ETA"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:646
+#: src\ais-vd_pi.cpp:691
 msgid "Time"
 msgstr "Czas"
 
-#: src\ais-vd_pi.cpp:777
+#: src\ais-vd_pi.cpp:742
+msgid "Plugin version: "
+msgstr ""
+
+#: src\ais-vd_pi.cpp:746
+msgid "OpenCPN connections help:"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:748
+msgid "You need both input and output connections for the AIS device."
+msgstr ""
+
+#: src\ais-vd_pi.cpp:749
+msgid "To minimize traffic, connection filters may be feasible:"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:750
+msgid "For the output filter transmit only VSD and AIQ"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:751
+msgid "For a possible input filter we need at least VSD (and AIVDM + GNSS?)"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:846
 msgid "Wing in ground (WIG)"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:778
+#: src\ais-vd_pi.cpp:847
 msgid "Fishing"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:779
+#: src\ais-vd_pi.cpp:848
 msgid "Towing"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:780
+#: src\ais-vd_pi.cpp:849
 msgid "Towing (Long)"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:781
+#: src\ais-vd_pi.cpp:850
 msgid "Dredging or underwater ops"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:782
+#: src\ais-vd_pi.cpp:851
 msgid "Diving ops"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:783
+#: src\ais-vd_pi.cpp:852
 msgid "Military ops"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:784
+#: src\ais-vd_pi.cpp:853
 msgid "Sailing vessel"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:785
+#: src\ais-vd_pi.cpp:854
 msgid "Pleasure Craft"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:790
+#: src\ais-vd_pi.cpp:859
 msgid "High speed craft (HSC)"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:791
+#: src\ais-vd_pi.cpp:860
 msgid "Pilot Vessel"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:792
+#: src\ais-vd_pi.cpp:861
 msgid "Search and Rescue vessel"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:793
+#: src\ais-vd_pi.cpp:862
 msgid "Tug"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:794
+#: src\ais-vd_pi.cpp:863
 msgid "Port Tender"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:795
+#: src\ais-vd_pi.cpp:864
 msgid "Law Enforcement"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:796
+#: src\ais-vd_pi.cpp:865
 msgid "Medical Transport"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:801
+#: src\ais-vd_pi.cpp:870
 msgid "Passenger ship"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:807
+#: src\ais-vd_pi.cpp:876
 msgid "Cargo ship"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:812
+#: src\ais-vd_pi.cpp:881
 msgid "Tanker"
 msgstr ""
 
-#: src\ais-vd_pi.cpp:813
+#: src\ais-vd_pi.cpp:882
 msgid "Other"
 msgstr ""
 

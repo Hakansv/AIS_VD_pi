@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: opencpn\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-02-22 17:02+0100\n"
-"PO-Revision-Date: 2022-03-08 06:03\n"
+"POT-Creation-Date: 2022-05-22 17:46+0200\n"
+"PO-Revision-Date: 2022-05-30 12:09\n"
 "Last-Translator: \n"
 "Language-Team: Korean\n"
 "Language: ko_KR\n"
@@ -17,201 +17,235 @@ msgstr ""
 "X-Crowdin-File: /plugins/ais-vd_pi/po/ais-vd_pi.pot\n"
 "X-Crowdin-File-ID: 377\n"
 
-#: src\ais-vd_pi.cpp:252
+#: src\ais-vd_pi.cpp:191
+msgid "ais-vd_pi Preferences"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:260
 msgid "AIS Voyage data"
 msgstr "선박자동식별시스템(AIS) 항해 데이터"
 
-#: src\ais-vd_pi.cpp:259
+#: src\ais-vd_pi.cpp:267
 msgid "Set static voyage data on the AIS class A"
 msgstr "선박자동식별시스템(AIS) 클래스 A에 대한 정적 항해 데이터 설정"
 
-#: src\ais-vd_pi.cpp:267
+#: src\ais-vd_pi.cpp:275
 msgid "Navigational status"
 msgstr "운항 상태"
 
-#: src\ais-vd_pi.cpp:270
+#: src\ais-vd_pi.cpp:278
 msgid "Underway using engine"
 msgstr "엔진을 사용하여 항해 중"
 
-#: src\ais-vd_pi.cpp:271
+#: src\ais-vd_pi.cpp:279
 msgid "At anchor"
 msgstr "정박 중"
 
-#: src\ais-vd_pi.cpp:272
+#: src\ais-vd_pi.cpp:280
 msgid "Not under command"
 msgstr "조종 불능"
 
-#: src\ais-vd_pi.cpp:273
+#: src\ais-vd_pi.cpp:281
 msgid "Restricted manoeuverability"
 msgstr "운항장애"
 
-#: src\ais-vd_pi.cpp:274
+#: src\ais-vd_pi.cpp:282
 msgid "Constrained by draught"
 msgstr "흘수제약"
 
-#: src\ais-vd_pi.cpp:275
+#: src\ais-vd_pi.cpp:283
 msgid "Moored"
 msgstr "정박한"
 
-#: src\ais-vd_pi.cpp:276
+#: src\ais-vd_pi.cpp:284
 msgid "Aground"
 msgstr "좌초"
 
-#: src\ais-vd_pi.cpp:277
+#: src\ais-vd_pi.cpp:285
 msgid "Engaged in Fishing"
 msgstr "어로 중"
 
-#: src\ais-vd_pi.cpp:278
+#: src\ais-vd_pi.cpp:286
 msgid "Under way sailing"
 msgstr "돛을 펼쳐 항해 중"
 
-#: src\ais-vd_pi.cpp:290
+#: src\ais-vd_pi.cpp:298
 msgid "Enter destination"
 msgstr "목적지 입력"
 
-#: src\ais-vd_pi.cpp:297
+#: src\ais-vd_pi.cpp:305
 msgid "or select a previous used"
 msgstr "또는 이전에 사용한 것을 선택"
 
-#: src\ais-vd_pi.cpp:317
+#: src\ais-vd_pi.cpp:325
 msgid "Draught (m)"
 msgstr "흘수 (미터)"
 
-#: src\ais-vd_pi.cpp:330
+#: src\ais-vd_pi.cpp:338
 msgid "No. of Persons onboard"
 msgstr "승선 인원"
 
-#: src\ais-vd_pi.cpp:342
+#: src\ais-vd_pi.cpp:350
 msgid "E.T.A. Date and Time"
 msgstr "도착예상 날짜와 시간"
 
-#: src\ais-vd_pi.cpp:354 src\ais-vd_pi.cpp:642
+#: src\ais-vd_pi.cpp:362 src\ais-vd_pi.cpp:687
 msgid "Month"
 msgstr "월"
 
-#: src\ais-vd_pi.cpp:364 src\ais-vd_pi.cpp:643
+#: src\ais-vd_pi.cpp:372 src\ais-vd_pi.cpp:688
 msgid "Day"
 msgstr "일"
 
-#: src\ais-vd_pi.cpp:374
+#: src\ais-vd_pi.cpp:382
 msgid "Hour (UTC)"
 msgstr "시 (세계협정시 UTC)"
 
-#: src\ais-vd_pi.cpp:385
+#: src\ais-vd_pi.cpp:393
 msgid "Minute"
 msgstr "분"
 
-#: src\ais-vd_pi.cpp:412 src\ais-vd_pi.cpp:664
+#: src\ais-vd_pi.cpp:420 src\ais-vd_pi.cpp:709
 msgid "Send to AIS"
 msgstr "선박자동식별시스템(AIS)로 보내기"
 
-#: src\ais-vd_pi.cpp:423
+#: src\ais-vd_pi.cpp:431
 msgid "Drop down to select"
 msgstr "선택하여 내리기"
 
-#: src\ais-vd_pi.cpp:587
-msgid "Yet no answer from any AIS!\n"
-" Please check connections and cabling."
-msgstr "그러나 어떤 선박자동식별시스템(AIS)에서도 응답이 없습니다!\n"
-"  연결 및 케이블을 확인하십시오."
+#: src\ais-vd_pi.cpp:629
+msgid "Yet no answer from any AIS!"
+msgstr ""
 
-#: src\ais-vd_pi.cpp:615
+#: src\ais-vd_pi.cpp:630
+msgid "Please check OCPN connections and AIS cabling."
+msgstr ""
+
+#: src\ais-vd_pi.cpp:631
+msgid "See Preferences for more info."
+msgstr ""
+
+#: src\ais-vd_pi.cpp:660
 msgid "Reply from AIS"
 msgstr "선박자동식별시스템(AIS)로부터 응답"
 
-#: src\ais-vd_pi.cpp:635
+#: src\ais-vd_pi.cpp:680
 msgid "Status"
 msgstr "상태"
 
-#: src\ais-vd_pi.cpp:640
+#: src\ais-vd_pi.cpp:685
 msgid "Dest"
 msgstr "목적지"
 
-#: src\ais-vd_pi.cpp:641
+#: src\ais-vd_pi.cpp:686
 msgid "ETA"
 msgstr "예상도착시간(ETA)"
 
-#: src\ais-vd_pi.cpp:646
+#: src\ais-vd_pi.cpp:691
 msgid "Time"
 msgstr "시간"
 
-#: src\ais-vd_pi.cpp:777
+#: src\ais-vd_pi.cpp:742
+msgid "Plugin version: "
+msgstr ""
+
+#: src\ais-vd_pi.cpp:746
+msgid "OpenCPN connections help:"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:748
+msgid "You need both input and output connections for the AIS device."
+msgstr ""
+
+#: src\ais-vd_pi.cpp:749
+msgid "To minimize traffic, connection filters may be feasible:"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:750
+msgid "For the output filter transmit only VSD and AIQ"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:751
+msgid "For a possible input filter we need at least VSD (and AIVDM + GNSS?)"
+msgstr ""
+
+#: src\ais-vd_pi.cpp:846
 msgid "Wing in ground (WIG)"
 msgstr "수중익선"
 
-#: src\ais-vd_pi.cpp:778
+#: src\ais-vd_pi.cpp:847
 msgid "Fishing"
 msgstr "어업"
 
-#: src\ais-vd_pi.cpp:779
+#: src\ais-vd_pi.cpp:848
 msgid "Towing"
 msgstr "예인"
 
-#: src\ais-vd_pi.cpp:780
+#: src\ais-vd_pi.cpp:849
 msgid "Towing (Long)"
 msgstr "예인 (원거리)"
 
-#: src\ais-vd_pi.cpp:781
+#: src\ais-vd_pi.cpp:850
 msgid "Dredging or underwater ops"
 msgstr "준설 또는 수중 작전"
 
-#: src\ais-vd_pi.cpp:782
+#: src\ais-vd_pi.cpp:851
 msgid "Diving ops"
 msgstr "다이빙 작업"
 
-#: src\ais-vd_pi.cpp:783
+#: src\ais-vd_pi.cpp:852
 msgid "Military ops"
 msgstr "군사 작전"
 
-#: src\ais-vd_pi.cpp:784
+#: src\ais-vd_pi.cpp:853
 msgid "Sailing vessel"
 msgstr "범선"
 
-#: src\ais-vd_pi.cpp:785
+#: src\ais-vd_pi.cpp:854
 msgid "Pleasure Craft"
 msgstr "유람선"
 
-#: src\ais-vd_pi.cpp:790
+#: src\ais-vd_pi.cpp:859
 msgid "High speed craft (HSC)"
 msgstr "초고속선"
 
-#: src\ais-vd_pi.cpp:791
+#: src\ais-vd_pi.cpp:860
 msgid "Pilot Vessel"
 msgstr "도선"
 
-#: src\ais-vd_pi.cpp:792
+#: src\ais-vd_pi.cpp:861
 msgid "Search and Rescue vessel"
 msgstr "수색구조선"
 
-#: src\ais-vd_pi.cpp:793
+#: src\ais-vd_pi.cpp:862
 msgid "Tug"
 msgstr "예인선"
 
-#: src\ais-vd_pi.cpp:794
+#: src\ais-vd_pi.cpp:863
 msgid "Port Tender"
 msgstr "항만부속선"
 
-#: src\ais-vd_pi.cpp:795
+#: src\ais-vd_pi.cpp:864
 msgid "Law Enforcement"
 msgstr "행정선"
 
-#: src\ais-vd_pi.cpp:796
+#: src\ais-vd_pi.cpp:865
 msgid "Medical Transport"
 msgstr "병원선"
 
-#: src\ais-vd_pi.cpp:801
+#: src\ais-vd_pi.cpp:870
 msgid "Passenger ship"
 msgstr "여객선"
 
-#: src\ais-vd_pi.cpp:807
+#: src\ais-vd_pi.cpp:876
 msgid "Cargo ship"
 msgstr "화물선"
 
-#: src\ais-vd_pi.cpp:812
+#: src\ais-vd_pi.cpp:881
 msgid "Tanker"
 msgstr "유조선"
 
-#: src\ais-vd_pi.cpp:813
+#: src\ais-vd_pi.cpp:882
 msgid "Other"
 msgstr "기타"
 
