@@ -87,6 +87,20 @@ jobs:
       - run: cd build-debian; /bin/bash < upload.sh
       - run: ci/git-push.sh build-debian
 
+  build-bullseye-arm64:
+    machine:
+      image: ubuntu-2004:2022.04.1
+    resource_class: arm.medium
+    environment:
+      - OCPN_TARGET: bullseye-arm64
+      - TARGET_TUPLE: debian;11;arm64
+      - CMAKE_BUILD_PARALLEL_LEVEL: 2
+    steps:
+      - checkout
+      - run: ci/circleci-build-debian-arm64.sh
+      - run: cd build-debian; /bin/bash < upload.sh
+      - run: ci/git-push.sh build-debian
+
   build-flatpak-arm64:
     machine:
       image: ubuntu-2004:202101-01
@@ -151,17 +165,13 @@ jobs:
       - CMAKE_BUILD_PARALLEL_LEVEL: 2
     <<: *debian-steps
 
-  build-focal-wx31:
+  build-jammy:
     docker:
-      - image: cimg/base:stable-20.04
+      - image: cimg/base:edge-22.04
     environment:
-      - OCPN_TARGET: focal-wx31
+      - OCPN_TARGET: jammy
       - CMAKE_BUILD_PARALLEL_LEVEL: 2
-    steps:
-      - checkout
-      - run: ci/circleci-build-debian-wx31.sh
-      - run: sh -c "cd /build-$OCPN_TARGET; /bin/bash < upload.sh"
-      - run: sh -c "ci/git-push.sh /build-$OCPN_TARGET"
+    <<: *debian-steps
 
   build-buster:
     docker:
@@ -233,13 +243,19 @@ workflows:
       - build-focal:
           <<: *std-filters
 
-      - build-focal-wx31:
+      - build-jammy:
           <<: *std-filters
 
       - build-buster:
           <<: *std-filters
 
       - build-bullseye:
+          <<: *std-filters
+
+      - build-android-arm64:
+          <<: *std-filters
+
+      - build-android-armhf:
           <<: *std-filters
 
       - build-bionic-armhf:
@@ -249,6 +265,9 @@ workflows:
           <<: *std-filters
 
       - build-bullseye-armhf:
+          <<: *std-filters
+
+      - build-bullseye-arm64:
           <<: *std-filters
 
       - build-buster-armhf:

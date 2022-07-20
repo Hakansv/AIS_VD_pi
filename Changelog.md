@@ -1,9 +1,32 @@
+3.1.4 June 29, 2022.
+* Probably last release in the 3.1 series
+
+3.1.4-beta3 June 29, 2022
+* More Flatpak FTBFS fixes for manifest comment lines.
+
+3.1.4-beta2 June 29, 2022
+* Fix a bug when configuring Flatpak manifests causing FTBFS errors.
+* Flatpak manifest: Handle @include in comments when configuring.
+
+3.1.4-beta1 June 13, 2022
+* Fix bad bugs in Flatpak builds resulting in empty tarball (#453, 454).
+* Drop focal-wx31 build.
+* Add a debian-arm64 build (bullseye/11 only).
+* Add @include, @app\_id and @plugin\_name support in flatpak .yaml mainfest.
+* opencpn-libs: Several new libraries, wxcurl update.
+* opencpn-libs: flatpak yaml snippets added for use via @include.
+* Don't restore drone.yml in update-templates (#443).
+
+3.1.3 May 11, 2022
+* Add a build for new Ubuntu LTS Jammy (22.04)
+* Fix correct target ubuntu (not ubuntu-gtk3) for 22.04+ versions.
+* opencpn-libs: plugingl: Incorporate changes from o-charts\_pi affecting
+  Android builds.
+
 3.1.2 April 29, 2022
 * AndroidLibs: Update downloaded library hash (#446).
 * update-templates: Don't access non-existing Flatpak/wx31.patch
 * opencpn-libs: fixes to mute some warnings in plugin\_gl
-
-3.1.1 Mar 27, 2022
 * Handle updated ubuntu repository keys (#436).
 * Remove too early ubuntu-wx315 which fails in validation (#437).
 
