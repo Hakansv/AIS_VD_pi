@@ -73,7 +73,7 @@ set(OCPN_TARGET_TUPLE "" CACHE STRING
 )
 
 string(TOLOWER "${OCPN_TARGET_TUPLE}" _lc_target)
-if (0) #"${_lc_target}" MATCHES "android*")
+if ("${_lc_target}" MATCHES "android*")
   set(QT_ANDROID ON)
   if (NOT DEFINED CMAKE_TOOLCHAIN_FILE)
     message(FATAL_ERROR
