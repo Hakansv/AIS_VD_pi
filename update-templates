@@ -150,7 +150,6 @@ for f in \
     .circleci \
     .clang-format \
     .cmake-format.yaml \
-    .drone.yml \
     .gitattributes \
     .gitignore \
     INSTALL.md \
@@ -194,7 +193,7 @@ if [ -e update-ignored ]; then
     done
 fi
 
-for f in buildosx buildwin/NSIS* libs/AndroidLibs.cmake mingw; do
+for f in buildosx buildwin/NSIS* libs/AndroidLibs.cmake mingw .drone.yml; do
     if test -e $f; then git rm -rf $f; fi
 done
 git diff-index --quiet --cached HEAD -- || {
