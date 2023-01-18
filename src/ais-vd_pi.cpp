@@ -416,8 +416,11 @@ void aisvd_pi::OnSetupOptions(void) {
     aisvd_pi_event_handler::OnReadBtnClick), NULL, m_event_handler);
 
   //Send button and AIS reply info text
-  m_SendBtn = new wxButton(m_AIS_VoyDataWin, ID_BUTTON1,
-                           _("Send to AIS"),
+  // Deafult user message if no reply from AIS
+  wxString defmsg = _("Yet no answer from any AIS!");
+  defmsg.Append("\n" + _("Please check OCPN connections and AIS cabling."));
+  defmsg.Append("\n" + _("See Preferences for more info."));
+  m_SendBtn = new wxButton(m_AIS_VoyDataWin, ID_BUTTON1, defmsg,
                            wxDefaultPosition, wxDefaultSize, 0);
   itemBoxSizer1->Add(m_SendBtn, -1, wxEXPAND | wxALL, 5);
   m_SendBtn->Connect(wxEVT_BUTTON, wxCommandEventHandler(
