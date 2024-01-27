@@ -34,6 +34,7 @@
 #include "ais-vd_pi.h"
 #include "default_pi.xpm"
 #include "wx/tokenzr.h"
+#include "wx/event.h"
 
 #define ANDROID_DIALOG_BACKGROUND_COLOR    wxColour(_T("#7cb0e9"))
 // the class factories, used to create and destroy instances of the PlugIn
@@ -74,7 +75,7 @@ static wxBitmap load_plugin_icon(unsigned size) {
 
 
 aisvd_pi::aisvd_pi(void *ppimgr)
-     :opencpn_plugin_116(ppimgr)
+     :opencpn_plugin_18(ppimgr)
 {
   // Create the PlugIn icon
   wxInitAllImageHandlers();
@@ -177,6 +178,33 @@ wxString aisvd_pi::GetLongDescription()
 {
       return _T("Set static voyage data to a AIS class A transceiver");
 }
+
+ // initialize NavMsg listeners
+//-----------------------------
+
+// N0183 VDM
+
+/*m_BtnReadAIS->Connect(wxEVT_BUTTON, wxCommandEventHandler(
+    aisvd_pi_event_handler::OnReadBtnClick), NULL, m_event_handler);*/
+
+wxDEFINE_EVENT(EVT_N0183_VDM, ObservedEvt);
+NMEA0183Id id_VDM = NMEA0183Id("VDM");
+listener_N0183_VDM = GetListener(id_VDM, EVT_N0183_VDM, this); //wxEvtHandler *handler);
+Bind(EVT_N0183_VDM, [&](ObservedEvt ev) {
+  HandleN0183_VDM(ev); });
+
+
+
+ // Test
+void aisvd_pi::HandleN0183_VDM(ObservedEvt ev)
+{
+      NMEA0183Id id_VDM("VDM");
+      std::string v = GetN0183Payload(id_VDM, ev);
+      wxString mes = "*********DB-VDM payload ";
+      mes << v;
+      wxLogMessage(mes);
+}
+
 
 void aisvd_pi::SetNMEASentence(wxString &sentence)
 {

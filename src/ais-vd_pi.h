@@ -48,7 +48,7 @@
 //#define     PLUGIN_VERSION_MINOR    0
 
 #define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    16
+#define     MY_API_VERSION_MINOR    18
 
 //#include "nmea0183/nmea0183.h"
 //@begin control identifiers
@@ -87,6 +87,7 @@ public:
   void OnAnyValueChange(wxCommandEvent &event);
   void OnNavStatusSelect(wxCommandEvent &event);
   void OnMonthChange(wxCommandEvent &event);
+
   aisvd_pi  *m_parent;
 };
 
@@ -95,7 +96,7 @@ public:
 //----------------------------------------------------------------------------------------------------------
 
 
-class aisvd_pi : public opencpn_plugin_116 
+class aisvd_pi : public opencpn_plugin_18
 {
   public:
     aisvd_pi(void *ppimgr);
@@ -183,6 +184,10 @@ private:
     //static bool ShowToolTips();
 
     //wxBitmap m_panelBitmap;
+
+  void HandleN0183_VDM(ObservedEvt ev);
+
+  std::shared_ptr<ObservableListener> listener_N0183_VDM;
 	
 };
 ///////////////////////////////////////////////////////////////////////////////
