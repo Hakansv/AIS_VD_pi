@@ -60,7 +60,7 @@ set(SRC
   #src/SpesTextCtrl.cpp
 )
 
-set(PKG_API_LIB api-16)  #  A directory in libs/ e. g., api-17 or api-16
+set(PKG_API_LIB api-18)  #  A directory in libs/ e. g., api-17 or api-16
 
 macro(late_init)
   # Perform initialization after the PACKAGE_NAME library, compilers
@@ -80,7 +80,10 @@ macro(add_plugin_libraries)
 
   add_subdirectory("libs/wxsvg")
   target_link_libraries(${PACKAGE_NAME} ocpn::wxsvg)
-  
+
+  add_subdirectory("libs/observable")
+  target_link_libraries(${PACKAGE_NAME} observable::observable)
+
   add_subdirectory("opencpn-libs/nmea0183")
   target_link_libraries(${PACKAGE_NAME} ocpn::nmea0183)
 endmacro ()

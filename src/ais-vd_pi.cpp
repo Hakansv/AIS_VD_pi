@@ -48,6 +48,12 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
     delete p;
 }
 
+static void HandleGPGGA(ObservedEvt ev) {
+  NMEA0183Id id("GPGGA");
+  std::string payload = GetN0183Payload(id, ev);
+  std::cout << "Got  GPGGA message: " << payload << "\n";
+}
+
 //---------------------------------------------------------------------------------------------------------
 //
 //          PlugIn initialization and de-init
@@ -73,8 +79,7 @@ static wxBitmap load_plugin_icon(unsigned size) {
 }
 
 
-aisvd_pi::aisvd_pi(void *ppimgr)
-     :opencpn_plugin_116(ppimgr)
+aisvd_pi::aisvd_pi(void *ppimgr) : opencpn_plugin_118(ppimgr)
 {
   // Create the PlugIn icon
   wxInitAllImageHandlers();
@@ -101,21 +106,21 @@ aisvd_pi::aisvd_pi(void *ppimgr)
   LoadConfig();
 }
 
-aisvd_pi::~aisvd_pi() 
+aisvd_pi::~aisvd_pi()
 {
 }
 
 int aisvd_pi::Init(void)
 {
       AddLocaleCatalog( _T("opencpn-ais-vd_pi") );
-      return ( INSTALLS_TOOLBOX_PAGE | 
+      return ( INSTALLS_TOOLBOX_PAGE |
                 WANTS_NMEA_SENTENCES |
-                   WANTS_PREFERENCES | 
-                        WANTS_CONFIG );      
+                   WANTS_PREFERENCES |
+                        WANTS_CONFIG );
 }
 
 bool aisvd_pi::DeInit(void) {
-  //SaveConfig(); 
+  //SaveConfig();
 
   if (m_AIS_VoyDataWin) {
     if (DeleteOptionsPage(aisvd_pi::m_AIS_VoyDataWin)) {
@@ -285,22 +290,22 @@ void aisvd_pi::OnSetupOptions(void) {
   StatusChoiceStrings.Add(_("Engaged in Fishing"));
   StatusChoiceStrings.Add(_("Under way sailing"));
 
-  StatusChoice = 
+  StatusChoice =
     new wxChoice(m_AIS_VoyDataWin, ID_CHOICE, wxDefaultPosition,
                  wxDefaultSize, StatusChoiceStrings, 0);
-  itemFlexGridSizer4->Add(StatusChoice, 0, wxALIGN_LEFT | 
+  itemFlexGridSizer4->Add(StatusChoice, 0, wxALIGN_LEFT |
                           wxALIGN_CENTER_VERTICAL | wxALL, 5);
   StatusChoice->Connect(wxEVT_CHOICE, wxCommandEventHandler(
     aisvd_pi_event_handler::OnNavStatusSelect), NULL, m_event_handler);
 
-  wxStaticText* itemStaticText7 = 
+  wxStaticText* itemStaticText7 =
     new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
                      _("Enter destination"),
                      wxDefaultPosition, wxDefaultSize, 0);
   itemFlexGridSizer4->Add(itemStaticText7, 0,
                           wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
 
-  wxStaticText* itemStaticText19 = 
+  wxStaticText* itemStaticText19 =
     new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
                      _("or select a previous used"),
                      wxDefaultPosition, wxDefaultSize, 0);
@@ -320,7 +325,7 @@ void aisvd_pi::OnSetupOptions(void) {
   m_DestComboBox->Connect(wxEVT_COMBOBOX, wxCommandEventHandler(
     aisvd_pi_event_handler::OnDestValSelect), NULL, m_event_handler);
 
-  wxStaticText* itemStaticText9 = 
+  wxStaticText* itemStaticText9 =
     new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
                      _("Draught (m)"), wxDefaultPosition, wxDefaultSize, 0);
   itemFlexGridSizer4->Add(itemStaticText9, 0, wxALIGN_LEFT |
@@ -333,7 +338,7 @@ void aisvd_pi::OnSetupOptions(void) {
   DraughtTextCtrl->Connect(wxEVT_CHAR, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
 
-  wxStaticText* itemStaticText11 = 
+  wxStaticText* itemStaticText11 =
     new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC,
                      _("No. of Persons onboard"), wxDefaultPosition, wxDefaultSize, 0);
   itemFlexGridSizer4->Add(itemStaticText11, 0, wxALIGN_LEFT |
@@ -363,7 +368,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(monthtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
   m_pCtrlMonth = new wxSpinCtrl(m_AIS_VoyDataWin, wxID_ANY, wxEmptyString,
-                                wxDefaultPosition, wxDefaultSize, 
+                                wxDefaultPosition, wxDefaultSize,
                                 wxSP_ARROW_KEYS, 1, 12, EtaInitMonth);
   EtaFlexgrid->Add(m_pCtrlMonth, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 0);
   m_pCtrlMonth->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
@@ -378,7 +383,7 @@ void aisvd_pi::OnSetupOptions(void) {
   EtaFlexgrid->Add(m_pCtrlDay, 0, wxALIGN_LEFT | wxEXPAND | wxALL, 0);
   m_pCtrlDay->Connect(wxEVT_SPINCTRL, wxCommandEventHandler(
     aisvd_pi_event_handler::OnAnyValueChange), NULL, m_event_handler);
-  
+
   wxStaticText* hourtext = new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Hour (UTC)"));
   EtaFlexgrid->Add(hourtext, 0, wxALIGN_RIGHT | wxALIGN_CENTER_VERTICAL, 5);
 
@@ -439,7 +444,7 @@ void aisvd_pi::OnSetupOptions(void) {
   m_DestComboBox->Select(0);
 
   SetMaxDay();
-  
+
   // Uppdate data from AIS if available
   RequestAISstatus();
   //content construction
@@ -510,7 +515,7 @@ void aisvd_pi::UpdateDestVal()
     m_Destination = m_DestTextCtrl->GetValue();
   }
   else return;
-  
+
   m_Destination = m_Destination.MakeUpper();
   m_DestTextCtrl->SetValue( m_Destination );
   //Check if already exist else add it
@@ -588,25 +593,25 @@ void aisvd_pi::SendSentence() {
 
   if (psw) {
     wxString S;
-    S = _T("$ECSPW"); // EC for Electronic Chart 
+    S = _T("$ECSPW"); // EC for Electronic Chart
     S.Append(_T(","));
-    S.Append(_T("E")); 
+    S.Append(_T("E"));
     S.Append(_T(","));
-    S.Append(_T("303030")); 
+    S.Append(_T("303030"));
     S.Append(_T(","));
-    S.Append(_T(",")); 
+    S.Append(_T(","));
     S.Append(_T(","));
     S.Append(_T("0"));
     S.Append(_T("*")); // End data
     S.Append(wxString::Format(_T("%02X"), ComputeChecksum(S)));
     S += _T("\r\n");
     //wxPuts(S);
-    PushNMEABuffer(S); //finaly send the password string 
+    PushNMEABuffer(S); //finaly send the password string
   }
 
   wxString S;
   S = _T("$ECVSD,"); // EC for Electronic Chart
-  // We dont send ship type. It will be set by AIS static 
+  // We dont send ship type. It will be set by AIS static
   // data and can be password protected by some devices
   S.Append(_T(","));
   S.Append(m_Draught); S.Append(_T(","));
@@ -622,11 +627,11 @@ void aisvd_pi::SendSentence() {
   S.Append(wxString::Format(_T("%02X"), ComputeChecksum(S)));
   S += _T("\r\n");
   //wxPuts(S);
-  PushNMEABuffer(S); //finaly send NMEA string  
+  PushNMEABuffer(S); //finaly send NMEA string
   // Now querry a AIS for updated voyage data
   RequestAISstatus();
 }
-  
+
 void aisvd_pi::RequestAISstatus(){
   // Deafult user message if no reply from AIS
   wxString msg = _("Yet no answer from any AIS!");
@@ -650,13 +655,13 @@ void aisvd_pi::UpdateDataFromVSD(wxString &sentence) {
 
   //     VSD, x.x, x.x, x.x, c c, hhmmss.ss, xx, xx, x.x, x.x*hh
   //           1    2    3    4      5       6    7   8    9
-  //  9)Regional application flags, 0 to 15 
-  //  8)Regional application flags, 0 to 15 
-  //  7)Estimated month of arrival at destination, 00 to 12 
-  //  6)Estimated day of arrival at destination, 00 to 31 
-  //  5)Estimated UTC of arrival at destination 
-  //  4)Destination, 1 - 20 characters 
-  //  3)Persons on board, 0 to 8 191 
+  //  9)Regional application flags, 0 to 15
+  //  8)Regional application flags, 0 to 15
+  //  7)Estimated month of arrival at destination, 00 to 12
+  //  6)Estimated day of arrival at destination, 00 to 31
+  //  5)Estimated UTC of arrival at destination
+  //  4)Destination, 1 - 20 characters
+  //  3)Persons on board, 0 to 8 191
   //  2)Maximum present static draught, 0 to 25, 5 m
   //  1) Type of ship and cargo category, 0 to 255
 
@@ -674,7 +679,7 @@ void aisvd_pi::UpdateDataFromVSD(wxString &sentence) {
     nr += 1; // xxVSD
     if (nr > 10) break;
   }
-  
+
   int id = wxAtoi(VSD_Nr[1]);
   msg.Append("  (" + GetShipType(id) + ")\n");
 
@@ -724,8 +729,8 @@ unsigned char aisvd_pi::ComputeChecksum( wxString sentence ) const
 
 
 //The preference dialog
-PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& title, 
-                             const wxPoint& pos, const wxSize& size, long style ) 
+PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& title,
+                             const wxPoint& pos, const wxSize& size, long style )
                              : wxDialog( parent, id, title, pos, size, style )
 {
 
@@ -744,8 +749,8 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
 
     wxString versionText = _("Plugin version: ") + extVersion;
     wxStaticText *versionTextBox = new wxStaticText(this, wxID_ANY, versionText);
-    bSizer2->Add(versionTextBox, 0, wxALL, 20); 
-    
+    bSizer2->Add(versionTextBox, 0, wxALL, 20);
+
     wxString helptxt = _("OpenCPN connections help:");
     helptxt.Append(_T("\n"));
     helptxt.Append(_("You need both input and output connections for the AIS device."));
@@ -758,8 +763,8 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
     bSizer2->Add(m_staticTexthelp, 0, wxALL, 20);
 
     wxGridSizer* gSizer2;
-    gSizer2 = new wxGridSizer( 2);    
-    
+    gSizer2 = new wxGridSizer( 2);
+
     m_staticText2 = new wxStaticText( this, wxID_ANY, wxT("Type of AIS. So far no options. The future may change that?"),
                                      wxDefaultPosition, wxDefaultSize, 0 );
     //m_staticText2->Wrap( -1 );
@@ -771,7 +776,7 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
                              wxDefaultSize, m_choice2NChoices, m_choice2Choices, 0 );
     m_choice2->SetSelection( 0 );
     gSizer2->Add( m_choice2, 0, wxALL, 20 );
-     
+
     bSizer2->Add( gSizer2, 0, 0, 20 );
 
     m_sdbSizer2 = new wxStdDialogButtonSizer();
@@ -788,6 +793,11 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
     bSizer2->Fit( this );
 
     this->Centre( wxBOTH );
+
+    NMEA0183Id nmea_id("GPGGA");
+    wxDEFINE_EVENT(EVT_GPGGA, ObservedEvt);
+    gpgga_listener = GetListener(nmea_id, EVT_GPGGA, this);
+    Bind(EVT_GPGGA, [&](ObservedEvt ev) { HandleGPGGA(ev); });
 }
 
 PreferenceDlg::~PreferenceDlg()
