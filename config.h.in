@@ -39,3 +39,10 @@
 // Walk around strange (buggy?) DECL_IMP definition in ocpn_plugin.h
 #define DECL_IMP
 #endif
+
+#define PLUGIN_VERSION_TWEAK @PROJECT_VERSION_TWEAK@
+
+#define PKG_PRERELEASE "@PKG_PRERELEASE@"
+#define PKG_BUILD_INFO "@pkg_vers_build_info@"
+
+#define PLUGIN

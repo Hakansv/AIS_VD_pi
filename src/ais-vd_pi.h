@@ -95,7 +95,7 @@ public:
 //----------------------------------------------------------------------------------------------------------
 
 
-class aisvd_pi : public opencpn_plugin_116 
+class aisvd_pi : public opencpn_plugin_118
 {
   public:
     aisvd_pi(void *ppimgr);
@@ -113,6 +113,11 @@ class aisvd_pi : public opencpn_plugin_116
     wxString GetCommonName();
     wxString GetShortDescription();
     wxString GetLongDescription();
+    int GetPlugInVersionPatch() { return PLUGIN_VERSION_PATCH; }
+    int GetPlugInVersionPost() { return PLUGIN_VERSION_TWEAK; }
+    const char *GetPlugInVersionPre() { return PKG_PRERELEASE; }
+    const char *GetPlugInVersionBuild() { return PKG_BUILD_INFO; }
+
 
 // The optional method overrides
   void SetNMEASentence(wxString &sentence);
@@ -142,13 +147,13 @@ class aisvd_pi : public opencpn_plugin_116
   wxString m_InitDest;
 
 private:
-  bool LoadConfig( void );  
+  bool LoadConfig( void );
 	//wxWindow         *m_parent_window;
 	wxBitmap          m_plugin_icon;
   wxScrolledWindow  *m_AIS_VoyDataWin;
   wxString          g_PrivateDataDir;
 	aisvd_pi_event_handler *m_event_handler;
-	
+
 	wxChoice* StatusChoice;
 	wxTextCtrl* m_DestTextCtrl;
   wxComboBox* m_DestComboBox;
@@ -158,7 +163,7 @@ private:
   wxSpinCtrl *m_pCtrlHour, *m_pCtrlMinute;
   wxButton* m_SendBtn;
   wxButton* m_BtnReadAIS;
-	
+
 	wxFileConfig        *m_pconfig;
 	////@begin t member function declarations
 
@@ -183,26 +188,26 @@ private:
     //static bool ShowToolTips();
 
     //wxBitmap m_panelBitmap;
-	
+
 };
 ///////////////////////////////////////////////////////////////////////////////
 /// Class PreferenceDlg
 ///////////////////////////////////////////////////////////////////////////////
-class PreferenceDlg : public wxDialog 
+class PreferenceDlg : public wxDialog
 {
 	private:
-	
+
 	protected:
     wxStaticText* m_staticTexthelp;
 		wxStaticText* m_staticText2;
-		
+
 		wxStdDialogButtonSizer* m_sdbSizer2;
 		wxButton* m_sdbSizer2OK;
 		wxButton* m_sdbSizer2Cancel;
-	
+
 	public:
-		
-		PreferenceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE ); 
+
+		PreferenceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
 		~PreferenceDlg();
 		wxChoice* m_choice2;
 		wxStringList m_AIS_type_list;
