@@ -48,6 +48,12 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
     delete p;
 }
 
+static void HandleGPGGA(ObservedEvt ev) {
+  NMEA0183Id id("GPGGA");
+  std::string payload = GetN0183Payload(id, ev);
+  std::cout << "Got  GPGGA message: " << payload << "\n";
+}
+
 //---------------------------------------------------------------------------------------------------------
 //
 //          PlugIn initialization and de-init
@@ -787,6 +793,11 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
     bSizer2->Fit( this );
 
     this->Centre( wxBOTH );
+
+    NMEA0183Id nmea_id("GPGGA");
+    wxDEFINE_EVENT(EVT_GPGGA, ObservedEvt);
+    gpgga_listener = GetListener(nmea_id, EVT_GPGGA, this);
+    Bind(EVT_GPGGA, [&](ObservedEvt ev) { HandleGPGGA(ev); });
 }
 
 PreferenceDlg::~PreferenceDlg()

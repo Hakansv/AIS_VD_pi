@@ -196,6 +196,7 @@ private:
 class PreferenceDlg : public wxDialog
 {
 	private:
+    std::shared_ptr<ObservableListener> gpgga_listener;
 
 	protected:
     wxStaticText* m_staticTexthelp;
