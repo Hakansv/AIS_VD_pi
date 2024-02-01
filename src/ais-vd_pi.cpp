@@ -44,30 +44,6 @@ extern "C" DECL_EXP opencpn_plugin* create_pi(void* ppimgr) {
 
 extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p) { delete p; }
 
-// void aisvd_pi::UpdateDataFromVSD(wxString& sentence);
-
-// static void HandleAIVSD(ObservedEvt ev)
-//{
-//   NMEA0183Id id("AIVSD");
-//   std::string payload = GetN0183Payload(id, ev);
-//   UpdateDataFromVSD(payload);
-//   std::cout << "Got  AIVSD message: " << payload << "\n";
-//   wxString mes = "*** Observed event ";
-//   mes << payload;
-//   wxLogMessage(mes);
-// }
-
-// void aisvd_pi::HandleAIVSD(ObservedEvt ev)
-//{
-//     NMEA0183Id id("AIVSD");
-//     std::string payload = GetN0183Payload(id, ev);
-//     UpdateDataFromVSD(wxString::FromUTF8(payload));
-//     std::cout << "Got  AIVSD message: " << payload << "\n";
-//     wxString mes = "*** Observed event ";
-//     mes << payload;
-//     wxLogMessage(mes);
-// }
-
 //---------------------------------------------------------------------------------------------------------
 //
 //          PlugIn initialization and de-init
@@ -161,8 +137,6 @@ wxString aisvd_pi::GetLongDescription() {
   return _T("Set static voyage data to a AIS class A transceiver");
 }
 
-// void UpdateDataFromVSD(wxString);
-
 void aisvd_pi::SetNMEASentence(wxString& sentence) {
   // Check for a VSD receipt from a AIS at plugin init and after data update
   /*if (sentence.Mid(0, 6).IsSameAs("$AIVSD")) {
@@ -177,13 +151,7 @@ void PreferenceDlg::HandleAIVSD(ObservedEvt ev) {
   wxString mes = "*** Observed event ";
   mes << payload;
   wxLogMessage(mes);
-
-  // This don't work: (nonstatic....)
-  // aisvd_pi::UpdateDataFromVSD(wxString::FromUTF8(payload));
-  // Tried an object. error: no appropriate default constructor available
   m_plugin.UpdateDataFromVSD(wxString::FromUTF8(payload));
-
-  // std::cout << "Got  AIVSD message: " << payload << "\n";
 }
 
 void aisvd_pi::ShowPreferencesDialog(wxWindow* parent) {
