@@ -48,11 +48,30 @@ extern "C" DECL_EXP void destroy_pi(opencpn_plugin* p)
     delete p;
 }
 
-static void HandleGPGGA(ObservedEvt ev) {
-  NMEA0183Id id("GPGGA");
-  std::string payload = GetN0183Payload(id, ev);
-  std::cout << "Got  GPGGA message: " << payload << "\n";
-}
+//void aisvd_pi::UpdateDataFromVSD(wxString& sentence);
+
+
+//static void HandleAIVSD(ObservedEvt ev)
+//{
+//  NMEA0183Id id("AIVSD");
+//  std::string payload = GetN0183Payload(id, ev);
+//  UpdateDataFromVSD(payload);
+//  std::cout << "Got  AIVSD message: " << payload << "\n";
+//  wxString mes = "*** Observed event ";
+//  mes << payload;
+//  wxLogMessage(mes);
+//}
+
+//void aisvd_pi::HandleAIVSD(ObservedEvt ev)
+//{
+//    NMEA0183Id id("AIVSD");
+//    std::string payload = GetN0183Payload(id, ev);
+//    UpdateDataFromVSD(wxString::FromUTF8(payload));
+//    std::cout << "Got  AIVSD message: " << payload << "\n";
+//    wxString mes = "*** Observed event ";
+//    mes << payload;
+//    wxLogMessage(mes);
+//}
 
 //---------------------------------------------------------------------------------------------------------
 //
@@ -129,8 +148,12 @@ bool aisvd_pi::DeInit(void) {
     else {
       if (m_AIS_VoyDataWin) { //Still alive?
         m_AIS_VoyDataWin = NULL;
-        wxLogMessage ("DeInit of Optionspage. It was not deleted by OCPN!");
+        //wxLogMessage ("DeInit of ais-vd");
       }
+    }
+    if (prefDlg) {
+      //delete prefDlg;
+      prefDlg = NULL;
     }
   }
 
@@ -183,12 +206,33 @@ wxString aisvd_pi::GetLongDescription()
       return _T("Set static voyage data to a AIS class A transceiver");
 }
 
+//void UpdateDataFromVSD(wxString);
+
 void aisvd_pi::SetNMEASentence(wxString &sentence)
 {
   // Check for a VSD receipt from a AIS at plugin init and after data update
-  if (sentence.Mid(0, 6).IsSameAs("$AIVSD")) {
+  /*if (sentence.Mid(0, 6).IsSameAs("$AIVSD")) {
     UpdateDataFromVSD(sentence);
-  }
+  }*/
+}
+
+aisvd_pi myobj;
+
+static void HandleAIVSD(ObservedEvt ev)
+{
+  NMEA0183Id id("AIVSD");
+  std::string &payload = GetN0183Payload(id, ev);
+
+  wxString mes = "*** Observed event ";
+  mes << payload;
+  wxLogMessage(mes);
+
+  // This don't work: (nonstatic....)
+  // aisvd_pi::UpdateDataFromVSD(wxString::FromUTF8(payload));
+  // Tried an object. error: no appropriate default constructor available
+  myobj.UpdateDataFromVSD(wxString::FromUTF8(payload));
+
+  //std::cout << "Got  AIVSD message: " << payload << "\n";
 }
 
 void aisvd_pi::ShowPreferencesDialog( wxWindow* parent )
@@ -205,8 +249,9 @@ void aisvd_pi::ShowPreferencesDialog( wxWindow* parent )
     if ( prefDlg->ShowModal() == wxID_OK )
         AIS_type = prefDlg->m_choice2->GetString(prefDlg->m_choice2->GetSelection());
 
-    delete prefDlg;
-    prefDlg = NULL;
+    prefDlg->Hide();
+    //delete prefDlg;
+    //prefDlg = NULL;
 }
 
 void aisvd_pi::SetPluginMessage(wxString &message_id, wxString &message_body)
@@ -266,6 +311,12 @@ void aisvd_pi::OnSetupOptions(void) {
   if (!m_AIS_VoyDataWin) {
     wxLogMessage(_T("Error: OnSetupOptions AddOptionsPage failed!"));
     return;
+  }
+  if (!prefDlg) {
+      // Start hidden to run ObservableListener who need a Dlg
+    prefDlg
+        = new PreferenceDlg(m_AIS_VoyDataWin, wxID_ANY, "ais-vd_pi Preferences",
+        wxPoint(20, 20), wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
   }
 
   wxStaticBox* itemStaticBoxSizer3Static = new wxStaticBox(m_AIS_VoyDataWin,
@@ -651,7 +702,8 @@ void aisvd_pi::RequestAISstatus(){
   PushNMEABuffer(S);
 }
 
-void aisvd_pi::UpdateDataFromVSD(wxString &sentence) {
+void aisvd_pi::UpdateDataFromVSD(wxString& sentence)
+{
 
   //     VSD, x.x, x.x, x.x, c c, hhmmss.ss, xx, xx, x.x, x.x*hh
   //           1    2    3    4      5       6    7   8    9
@@ -794,10 +846,10 @@ PreferenceDlg::PreferenceDlg( wxWindow* parent, wxWindowID id, const wxString& t
 
     this->Centre( wxBOTH );
 
-    NMEA0183Id nmea_id("GPGGA");
-    wxDEFINE_EVENT(EVT_GPGGA, ObservedEvt);
-    gpgga_listener = GetListener(nmea_id, EVT_GPGGA, this);
-    Bind(EVT_GPGGA, [&](ObservedEvt ev) { HandleGPGGA(ev); });
+    NMEA0183Id nmea_id("AIVSD");
+    wxDEFINE_EVENT(EVT_AIVSD, ObservedEvt);
+    aivsd_listener = GetListener(nmea_id, EVT_AIVSD, this);
+    Bind(EVT_AIVSD, [&](ObservedEvt ev) { HandleAIVSD(ev); });
 }
 
 PreferenceDlg::~PreferenceDlg()

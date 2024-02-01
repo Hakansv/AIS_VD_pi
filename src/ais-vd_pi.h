@@ -95,49 +95,46 @@ public:
 //----------------------------------------------------------------------------------------------------------
 
 
-class aisvd_pi : public opencpn_plugin_118
-{
+class aisvd_pi : public opencpn_plugin_118 {
   public:
-    aisvd_pi(void *ppimgr);
-    ~aisvd_pi();
+  aisvd_pi(void* ppimgr);
+  ~aisvd_pi();
 
-//  The required PlugIn Methods
-    int Init(void);
-    bool DeInit(void);
+  //  The required PlugIn Methods
+  int Init(void);
+  bool DeInit(void);
 
-    int GetAPIVersionMajor();
-    int GetAPIVersionMinor();
-    int GetPlugInVersionMajor();
-    int GetPlugInVersionMinor();
-	  wxBitmap *GetPlugInBitmap();
-    wxString GetCommonName();
-    wxString GetShortDescription();
-    wxString GetLongDescription();
-    int GetPlugInVersionPatch() { return PLUGIN_VERSION_PATCH; }
-    int GetPlugInVersionPost() { return PLUGIN_VERSION_TWEAK; }
-    const char *GetPlugInVersionPre() { return PKG_PRERELEASE; }
-    const char *GetPlugInVersionBuild() { return PKG_BUILD_INFO; }
+  int GetAPIVersionMajor();
+  int GetAPIVersionMinor();
+  int GetPlugInVersionMajor();
+  int GetPlugInVersionMinor();
+  wxBitmap* GetPlugInBitmap();
+  wxString GetCommonName();
+  wxString GetShortDescription();
+  wxString GetLongDescription();
+  int GetPlugInVersionPatch() { return PLUGIN_VERSION_PATCH; }
+  int GetPlugInVersionPost() { return PLUGIN_VERSION_TWEAK; }
+  const char* GetPlugInVersionPre() { return PKG_PRERELEASE; }
+  const char* GetPlugInVersionBuild() { return PKG_BUILD_INFO; }
 
+  // The optional method overrides
+  void SetNMEASentence(wxString& sentence);
 
-// The optional method overrides
-  void SetNMEASentence(wxString &sentence);
-
-// The override PlugIn Methods
-  void ShowPreferencesDialog( wxWindow* parent );
-  void SetPluginMessage(wxString &message_id, wxString &message_body);
-	void OnSetupOptions();
+  // The override PlugIn Methods
+  void ShowPreferencesDialog(wxWindow* parent);
+  void SetPluginMessage(wxString& message_id, wxString& message_body);
+  void OnSetupOptions();
   void OnCloseToolboxPanel(int page_sel, int ok_apply_cancel);
-  bool SaveConfig( void );
-	void UpdateDestVal();
-	void UpdateDraught();
-	void UpdatePersons();
+  bool SaveConfig(void);
+  void UpdateDestVal();
+  void UpdateDraught();
+  void UpdatePersons();
   void RequestAISstatus();
   void SendSentence();
   void SetSendBtnLabel();
-  void UpdateDataFromVSD(wxString &sentence);
+  void UpdateDataFromVSD(wxString& sentence);
   void SetMaxDay();
   wxString GetShipType(int);
-
   PreferenceDlg *prefDlg;
   wxArrayString StatusChoiceStrings;
   wxString AIS_type;
@@ -145,6 +142,8 @@ class aisvd_pi : public opencpn_plugin_118
   wxString m_Draught;
   wxString m_Persons;
   wxString m_InitDest;
+
+  aisvd_pi() = default;
 
 private:
   bool LoadConfig( void );
@@ -193,10 +192,9 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 /// Class PreferenceDlg
 ///////////////////////////////////////////////////////////////////////////////
-class PreferenceDlg : public wxDialog
-{
+class PreferenceDlg : public wxDialog {
 	private:
-    std::shared_ptr<ObservableListener> gpgga_listener;
+    std::shared_ptr<ObservableListener> aivsd_listener;
 
 	protected:
     wxStaticText* m_staticTexthelp;
@@ -206,12 +204,15 @@ class PreferenceDlg : public wxDialog
 		wxButton* m_sdbSizer2OK;
 		wxButton* m_sdbSizer2Cancel;
 
-	public:
-
-		PreferenceDlg( wxWindow* parent, wxWindowID id = wxID_ANY, const wxString& title = wxEmptyString, const wxPoint& pos = wxDefaultPosition, const wxSize& size = wxDefaultSize, long style = wxDEFAULT_DIALOG_STYLE );
-		~PreferenceDlg();
-		wxChoice* m_choice2;
-		wxStringList m_AIS_type_list;
+  public:
+    PreferenceDlg(wxWindow* parent, wxWindowID id = wxID_ANY,
+        const wxString& title = wxEmptyString,
+        const wxPoint& pos = wxDefaultPosition,
+        const wxSize& size = wxDefaultSize,
+        long style = wxDEFAULT_DIALOG_STYLE);
+    ~PreferenceDlg();
+    wxChoice* m_choice2;
+    wxStringList m_AIS_type_list;
 };
 
 #endif
