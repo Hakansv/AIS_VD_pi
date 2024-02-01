@@ -193,7 +193,7 @@ protected:
   wxButton* m_sdbSizer2Cancel;
 
 public:
-  PreferenceDlg(wxWindow* parent, wxWindowID id = wxID_ANY,
+  PreferenceDlg(wxWindow* parent, aisvd_pi& plugin, wxWindowID id = wxID_ANY,
                 const wxString& title = wxEmptyString,
                 const wxPoint& pos = wxDefaultPosition,
                 const wxSize& size = wxDefaultSize,
@@ -201,6 +201,7 @@ public:
   ~PreferenceDlg();
   wxChoice* m_choice2;
   wxStringList m_AIS_type_list;
+  aisvd_pi& m_plugin;
 };
 
 #endif

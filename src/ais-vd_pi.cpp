@@ -195,8 +195,8 @@ void aisvd_pi::ShowPreferencesDialog(wxWindow* parent) {
 #endif
 
   if (!prefDlg)
-    prefDlg = new PreferenceDlg(parent, wxID_ANY, titleString, wxPoint(20, 20),
-                                wxDefaultSize, style);
+    prefDlg = new PreferenceDlg(parent, *this, wxID_ANY, titleString,
+                                wxPoint(20, 20), wxDefaultSize, style);
   if (prefDlg->ShowModal() == wxID_OK)
     AIS_type =
         prefDlg->m_choice2->GetString(prefDlg->m_choice2->GetSelection());
@@ -261,7 +261,7 @@ void aisvd_pi::OnSetupOptions(void) {
   }
   if (!prefDlg) {
     // Start hidden to run ObservableListener who need a Dlg
-    prefDlg = new PreferenceDlg(m_AIS_VoyDataWin, wxID_ANY,
+    prefDlg = new PreferenceDlg(m_AIS_VoyDataWin, *this, wxID_ANY,
                                 "ais-vd_pi Preferences", wxPoint(20, 20),
                                 wxDefaultSize, wxDEFAULT_DIALOG_STYLE);
   }
@@ -728,10 +728,10 @@ unsigned char aisvd_pi::ComputeChecksum(wxString sentence) const {
 }
 
 // The preference dialog
-PreferenceDlg::PreferenceDlg(wxWindow* parent, wxWindowID id,
+PreferenceDlg::PreferenceDlg(wxWindow* parent, aisvd_pi& plugin, wxWindowID id,
                              const wxString& title, const wxPoint& pos,
                              const wxSize& size, long style)
-    : wxDialog(parent, id, title, pos, size, style) {
+    : wxDialog(parent, id, title, pos, size, style), m_plugin(plugin) {
 #ifdef __OCPN__ANDROID__
   SetBackgroundColour(ANDROID_DIALOG_BACKGROUND_COLOR);
 #endif
