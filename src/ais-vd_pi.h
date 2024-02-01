@@ -28,29 +28,28 @@
 
 #include "wx/wxprec.h"
 
-#ifndef  WX_PRECOMP
+#ifndef WX_PRECOMP
 #include "wx/wx.h"
-#endif //precompiled headers
+#endif  // precompiled headers
 
-#include "ocpn_plugin.h"
 #include "config.h"
+#include "ocpn_plugin.h"
 
-#include "wx/valtext.h"
 #include "wx/datectrl.h"
 #include "wx/dateevt.h"
+#include "wx/valtext.h"
 #include <wx/fileconf.h>
 #include <wx/notebook.h>
-#include <wx/timectrl.h>
 #include <wx/spinctrl.h>
+#include <wx/timectrl.h>
 
+// #define     PLUGIN_VERSION_MAJOR    0
+// #define     PLUGIN_VERSION_MINOR    0
 
-//#define     PLUGIN_VERSION_MAJOR    0
-//#define     PLUGIN_VERSION_MINOR    0
+#define MY_API_VERSION_MAJOR 1
+#define MY_API_VERSION_MINOR 16
 
-#define     MY_API_VERSION_MAJOR    1
-#define     MY_API_VERSION_MINOR    16
-
-//#include "nmea0183/nmea0183.h"
+// #include "nmea0183/nmea0183.h"
 //@begin control identifiers
 #define ID_T wxID_ANY
 #define ID_PANEL wxID_ANY
@@ -64,39 +63,36 @@
 #define ID_TIMECTR wxID_ANY
 #define ID_BUTTON wxID_ANY
 #define ID_BUTTON1 wxID_ANY
-#define SYMBOL_T_STYLE wxCAPTION|wxRESIZE_BORDER|wxSYSTEM_MENU|wxCLOSE_BOX
+#define SYMBOL_T_STYLE wxCAPTION | wxRESIZE_BORDER | wxSYSTEM_MENU | wxCLOSE_BOX
 #define SYMBOL_T_TITLE _T("t")
 #define SYMBOL_T_IDNAME ID_T
 #define SYMBOL_T_SIZE wxSize(500, 500)
 #define SYMBOL_T_POSITION wxDefaultPosition
 ////@end control identifiers
 
-//class TimePickerCtrl;
+// class TimePickerCtrl;
 class aisvd_pi;
 class PreferenceDlg;
 // An Event handler class to catch events from UI dialog
-class aisvd_pi_event_handler : public wxEvtHandler
-{
+class aisvd_pi_event_handler : public wxEvtHandler {
 public:
-
-  aisvd_pi_event_handler(aisvd_pi *parent);
+  aisvd_pi_event_handler(aisvd_pi* parent);
   ~aisvd_pi_event_handler();
-  void OnReadBtnClick(wxCommandEvent &event);
-  void OnSendBtnClick( wxCommandEvent &event );
-  void OnDestValSelect(wxCommandEvent &event);
-  void OnAnyValueChange(wxCommandEvent &event);
-  void OnNavStatusSelect(wxCommandEvent &event);
-  void OnMonthChange(wxCommandEvent &event);
-  aisvd_pi  *m_parent;
+  void OnReadBtnClick(wxCommandEvent& event);
+  void OnSendBtnClick(wxCommandEvent& event);
+  void OnDestValSelect(wxCommandEvent& event);
+  void OnAnyValueChange(wxCommandEvent& event);
+  void OnNavStatusSelect(wxCommandEvent& event);
+  void OnMonthChange(wxCommandEvent& event);
+  aisvd_pi* m_parent;
 };
 
 //----------------------------------------------------------------------------------------------------------
 //    The PlugIn Class Definition
 //----------------------------------------------------------------------------------------------------------
 
-
 class aisvd_pi : public opencpn_plugin_118 {
-  public:
+public:
   aisvd_pi(void* ppimgr);
   ~aisvd_pi();
 
@@ -135,7 +131,7 @@ class aisvd_pi : public opencpn_plugin_118 {
   void UpdateDataFromVSD(const wxString& sentence);
   void SetMaxDay();
   wxString GetShipType(int);
-  PreferenceDlg *prefDlg;
+  PreferenceDlg* prefDlg;
   wxArrayString StatusChoiceStrings;
   wxString AIS_type;
   wxString m_Destination;
@@ -146,73 +142,72 @@ class aisvd_pi : public opencpn_plugin_118 {
   aisvd_pi() = default;
 
 private:
-  bool LoadConfig( void );
-	//wxWindow         *m_parent_window;
-	wxBitmap          m_plugin_icon;
-  wxScrolledWindow  *m_AIS_VoyDataWin;
-  wxString          g_PrivateDataDir;
-	aisvd_pi_event_handler *m_event_handler;
+  bool LoadConfig(void);
+  // wxWindow         *m_parent_window;
+  wxBitmap m_plugin_icon;
+  wxScrolledWindow* m_AIS_VoyDataWin;
+  wxString g_PrivateDataDir;
+  aisvd_pi_event_handler* m_event_handler;
 
-	wxChoice* StatusChoice;
-	wxTextCtrl* m_DestTextCtrl;
+  wxChoice* StatusChoice;
+  wxTextCtrl* m_DestTextCtrl;
   wxComboBox* m_DestComboBox;
-	wxTextCtrl* DraughtTextCtrl;
+  wxTextCtrl* DraughtTextCtrl;
   wxTextCtrl* PersonsTextCtrl;
   wxSpinCtrl *m_pCtrlMonth, *m_pCtrlDay;
   wxSpinCtrl *m_pCtrlHour, *m_pCtrlMinute;
   wxButton* m_SendBtn;
   wxButton* m_BtnReadAIS;
 
-	wxFileConfig        *m_pconfig;
-	////@begin t member function declarations
+  wxFileConfig* m_pconfig;
+  ////@begin t member function declarations
 
-    wxString GetDestination() const { return m_Destination ; }
-    void SetDestination(wxString value) { m_Destination = value ; }
+  wxString GetDestination() const { return m_Destination; }
+  void SetDestination(wxString value) { m_Destination = value; }
 
-    wxString GetDraught() const { return m_Draught ; }
-    void SetDraught(wxString value) { m_Draught = value ; }
+  wxString GetDraught() const { return m_Draught; }
+  void SetDraught(wxString value) { m_Draught = value; }
 
-    wxString GetPersons() const { return m_Persons ; }
-    void SetPersons(wxString value) { m_Persons = value ; }
+  wxString GetPersons() const { return m_Persons; }
+  void SetPersons(wxString value) { m_Persons = value; }
 
-    unsigned char ComputeChecksum( wxString sentence ) const;
-    /// Retrieves bitmap resources
-    //wxBitmap GetBitmapResource( const wxString& name );
+  unsigned char ComputeChecksum(wxString sentence) const;
+  /// Retrieves bitmap resources
+  // wxBitmap GetBitmapResource( const wxString& name );
 
-    /// Retrieves icon resources
-    //wxIcon GetIconResource( const wxString& name );
-////@end t member function declarations
+  /// Retrieves icon resources
+  // wxIcon GetIconResource( const wxString& name );
+  ////@end t member function declarations
 
-    /// Should we show tooltips?
-    //static bool ShowToolTips();
+  /// Should we show tooltips?
+  // static bool ShowToolTips();
 
-    //wxBitmap m_panelBitmap;
-
+  // wxBitmap m_panelBitmap;
 };
 ///////////////////////////////////////////////////////////////////////////////
 /// Class PreferenceDlg
 ///////////////////////////////////////////////////////////////////////////////
 class PreferenceDlg : public wxDialog {
-	private:
-    std::shared_ptr<ObservableListener> aivsd_listener;
+private:
+  std::shared_ptr<ObservableListener> aivsd_listener;
 
-	protected:
-    wxStaticText* m_staticTexthelp;
-		wxStaticText* m_staticText2;
+protected:
+  wxStaticText* m_staticTexthelp;
+  wxStaticText* m_staticText2;
 
-		wxStdDialogButtonSizer* m_sdbSizer2;
-		wxButton* m_sdbSizer2OK;
-		wxButton* m_sdbSizer2Cancel;
+  wxStdDialogButtonSizer* m_sdbSizer2;
+  wxButton* m_sdbSizer2OK;
+  wxButton* m_sdbSizer2Cancel;
 
-  public:
-    PreferenceDlg(wxWindow* parent, wxWindowID id = wxID_ANY,
-        const wxString& title = wxEmptyString,
-        const wxPoint& pos = wxDefaultPosition,
-        const wxSize& size = wxDefaultSize,
-        long style = wxDEFAULT_DIALOG_STYLE);
-    ~PreferenceDlg();
-    wxChoice* m_choice2;
-    wxStringList m_AIS_type_list;
+public:
+  PreferenceDlg(wxWindow* parent, wxWindowID id = wxID_ANY,
+                const wxString& title = wxEmptyString,
+                const wxPoint& pos = wxDefaultPosition,
+                const wxSize& size = wxDefaultSize,
+                long style = wxDEFAULT_DIALOG_STYLE);
+  ~PreferenceDlg();
+  wxChoice* m_choice2;
+  wxStringList m_AIS_type_list;
 };
 
 #endif
