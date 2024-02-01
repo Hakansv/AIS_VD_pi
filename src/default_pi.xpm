@@ -1,5 +1,5 @@
 /* XPM */
-static const char *default_pi[] = {
+[[ maybe_unused ]] static const char *default_pi[] = {
 /* columns rows colors chars-per-pixel */
 "32 32 110 2 ",
 "   c #4E9A06",
