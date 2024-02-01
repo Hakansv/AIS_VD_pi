@@ -170,7 +170,7 @@ void aisvd_pi::SetNMEASentence(wxString& sentence) {
   }*/
 }
 
-static void HandleAIVSD(ObservedEvt ev) {
+void PreferenceDlg::HandleAIVSD(ObservedEvt ev) {
   NMEA0183Id id("AIVSD");
   std::string payload = GetN0183Payload(id, ev);
 
@@ -181,7 +181,7 @@ static void HandleAIVSD(ObservedEvt ev) {
   // This don't work: (nonstatic....)
   // aisvd_pi::UpdateDataFromVSD(wxString::FromUTF8(payload));
   // Tried an object. error: no appropriate default constructor available
-  UpdateDataFromVSD(wxString::FromUTF8(payload));
+  m_plugin.UpdateDataFromVSD(wxString::FromUTF8(payload));
 
   // std::cout << "Got  AIVSD message: " << payload << "\n";
 }

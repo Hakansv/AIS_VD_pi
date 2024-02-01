@@ -183,6 +183,7 @@ private:
 class PreferenceDlg : public wxDialog {
 private:
   std::shared_ptr<ObservableListener> aivsd_listener;
+  void HandleAIVSD(ObservedEvt ev);
 
 protected:
   wxStaticText* m_staticTexthelp;
