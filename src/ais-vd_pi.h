@@ -71,27 +71,13 @@
 ////@end control identifiers
 
 // class TimePickerCtrl;
-class aisvd_pi;
 class PreferenceDlg;
-// An Event handler class to catch events from UI dialog
-class aisvd_pi_event_handler : public wxEvtHandler {
-public:
-  aisvd_pi_event_handler(aisvd_pi* parent);
-  ~aisvd_pi_event_handler();
-  void OnReadBtnClick(wxCommandEvent& event);
-  void OnSendBtnClick(wxCommandEvent& event);
-  void OnDestValSelect(wxCommandEvent& event);
-  void OnAnyValueChange(wxCommandEvent& event);
-  void OnNavStatusSelect(wxCommandEvent& event);
-  void OnMonthChange(wxCommandEvent& event);
-  aisvd_pi* m_parent;
-};
 
 //----------------------------------------------------------------------------------------------------------
 //    The PlugIn Class Definition
 //----------------------------------------------------------------------------------------------------------
 
-class aisvd_pi : public opencpn_plugin_118 {
+class aisvd_pi : public opencpn_plugin_118, public wxEvtHandler {
 public:
   aisvd_pi(void* ppimgr);
   ~aisvd_pi();
@@ -147,7 +133,6 @@ private:
   wxBitmap m_plugin_icon;
   wxScrolledWindow* m_AIS_VoyDataWin;
   wxString g_PrivateDataDir;
-  aisvd_pi_event_handler* m_event_handler;
 
   wxChoice* StatusChoice;
   wxTextCtrl* m_DestTextCtrl;
@@ -170,6 +155,14 @@ private:
 
   wxString GetPersons() const { return m_Persons; }
   void SetPersons(wxString value) { m_Persons = value; }
+
+  void OnReadBtnClick(wxCommandEvent& event);
+  void OnSendBtnClick(wxCommandEvent& event);
+  void OnDestValSelect(wxCommandEvent& event);
+  void OnAnyValueChange(wxCommandEvent& event);
+  void OnAnyValueChange(wxKeyEvent& event);
+  void OnNavStatusSelect(wxCommandEvent& event);
+  void OnMonthChange(wxCommandEvent& event);
 
   unsigned char ComputeChecksum(wxString sentence) const;
   /// Retrieves bitmap resources

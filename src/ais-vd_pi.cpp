@@ -32,6 +32,7 @@
 
 #include "ais-vd_pi.h"
 #include "default_pi.xpm"
+#include "wx/event.h"
 #include "wx/tokenzr.h"
 
 #define ANDROID_DIALOG_BACKGROUND_COLOR wxColour(_T("#7cb0e9"))
@@ -97,8 +98,6 @@ aisvd_pi::aisvd_pi(void* ppimgr) : opencpn_plugin_118(ppimgr) {
   const static int ICON_SIZE = 48;  // FIXME: Needs size from GUI code
   m_plugin_icon = load_plugin_icon(ICON_SIZE);
 
-  m_event_handler = new aisvd_pi_event_handler(this);
-
   // Get and build if necessary a private data dir
   /*g_PrivateDataDir = *GetpPrivateApplicationDataLocation();
   g_PrivateDataDir += wxFileName::GetPathSeparator();
@@ -140,12 +139,6 @@ bool aisvd_pi::DeInit(void) {
       // delete prefDlg;
       prefDlg = NULL;
     }
-  }
-
-  if (m_event_handler) {
-    delete m_event_handler;
-    m_event_handler = NULL;
-    wxLogMessage("DeInit of plugin.");
   }
   return true;
 }
@@ -303,10 +296,9 @@ void aisvd_pi::OnSetupOptions(void) {
                               wxDefaultSize, StatusChoiceStrings, 0);
   itemFlexGridSizer4->Add(StatusChoice, 0,
                           wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
-  StatusChoice->Connect(
-      wxEVT_CHOICE,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnNavStatusSelect), NULL,
-      m_event_handler);
+  StatusChoice->Bind(wxEVT_CHOICE,
+                     [&](wxCommandEvent& ev) { OnNavStatusSelect(ev); });
+
 
   wxStaticText* itemStaticText7 =
       new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Enter destination"),
@@ -325,19 +317,15 @@ void aisvd_pi::OnSetupOptions(void) {
   m_DestTextCtrl->SetMaxLength(20);
   itemFlexGridSizer4->Add(m_DestTextCtrl, 0,
                           wxGROW | wxALIGN_CENTER_VERTICAL | wxALL, 5);
-  m_DestTextCtrl->Connect(
-      wxEVT_CHAR,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnAnyValueChange), NULL,
-      m_event_handler);
+  m_DestTextCtrl->Bind(wxEVT_CHAR,
+                       [&](wxKeyEvent& ev) { OnAnyValueChange(ev); });
+
 
   m_DestComboBox = new wxComboBox(m_AIS_VoyDataWin, ID_COMBCTRL, wxEmptyString,
                                   wxDefaultPosition, wxDefaultSize, 0, NULL, 0);
   itemFlexGridSizer4->Add(m_DestComboBox, 0, wxEXPAND | wxALL, 5);
-  m_DestComboBox->Connect(
-      wxEVT_COMBOBOX,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnDestValSelect), NULL,
-      m_event_handler);
-
+  m_DestComboBox->Bind(wxEVT_COMBOBOX,
+                       [&](wxCommandEvent& ev) { OnDestValSelect(ev); });
   wxStaticText* itemStaticText9 =
       new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Draught (m)"),
                        wxDefaultPosition, wxDefaultSize, 0);
@@ -349,10 +337,8 @@ void aisvd_pi::OnSetupOptions(void) {
                      wxDefaultPosition, wxDefaultSize, 0, DraughtVal);
   itemFlexGridSizer4->Add(DraughtTextCtrl, 0,
                           wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
-  DraughtTextCtrl->Connect(
-      wxEVT_CHAR,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnAnyValueChange), NULL,
-      m_event_handler);
+  DraughtTextCtrl->Bind(wxEVT_CHAR,
+                        [&](wxKeyEvent& ev) { OnAnyValueChange(ev); });
 
   wxStaticText* itemStaticText11 = new wxStaticText(
       m_AIS_VoyDataWin, wxID_STATIC, _("No. of Persons onboard"),
@@ -365,10 +351,8 @@ void aisvd_pi::OnSetupOptions(void) {
                      wxDefaultPosition, wxDefaultSize, 0, PersonsVal);
   itemFlexGridSizer4->Add(PersonsTextCtrl, 0,
                           wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL | wxALL, 5);
-  PersonsTextCtrl->Connect(
-      wxEVT_CHAR,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnAnyValueChange), NULL,
-      m_event_handler);
+  PersonsTextCtrl->Bind(wxEVT_CHAR,
+                        [&](wxKeyEvent& ev) { OnAnyValueChange(ev); });
 
   wxStaticBoxSizer* ETAbox = new wxStaticBoxSizer(
       new wxStaticBox(m_AIS_VoyDataWin, wxID_ANY, _("E.T.A. Date and Time")),
@@ -391,10 +375,9 @@ void aisvd_pi::OnSetupOptions(void) {
                                 wxDefaultPosition, wxDefaultSize,
                                 wxSP_ARROW_KEYS, 1, 12, EtaInitMonth);
   EtaFlexgrid->Add(m_pCtrlMonth, 0, wxALIGN_LEFT | wxALIGN_CENTER_VERTICAL, 0);
-  m_pCtrlMonth->Connect(
-      wxEVT_SPINCTRL,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnMonthChange), NULL,
-      m_event_handler);
+  m_pCtrlMonth->Bind(wxEVT_SPINCTRL,
+                     [&](wxCommandEvent& ev) { OnMonthChange(ev); });
+
 
   wxStaticText* daytext =
       new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Day"));
@@ -404,10 +387,8 @@ void aisvd_pi::OnSetupOptions(void) {
                               wxDefaultPosition, wxDefaultSize, wxSP_ARROW_KEYS,
                               1, 31, EtaInitDay);
   EtaFlexgrid->Add(m_pCtrlDay, 0, wxALIGN_LEFT | wxEXPAND | wxALL, 0);
-  m_pCtrlDay->Connect(
-      wxEVT_SPINCTRL,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnAnyValueChange), NULL,
-      m_event_handler);
+  m_pCtrlDay->Bind(wxEVT_SPINCTRL,
+                   [&](wxCommandEvent& ev) { OnAnyValueChange(ev); });
 
   wxStaticText* hourtext =
       new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Hour (UTC)"));
@@ -417,10 +398,8 @@ void aisvd_pi::OnSetupOptions(void) {
                                wxDefaultPosition, wxDefaultSize,
                                wxSP_ARROW_KEYS, 0, 23, EtaInitHour);
   EtaFlexgrid->Add(m_pCtrlHour, 0, wxALIGN_CENTER_VERTICAL, 0);
-  m_pCtrlHour->Connect(
-      wxEVT_SPINCTRL,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnAnyValueChange), NULL,
-      m_event_handler);
+  m_pCtrlHour->Bind(wxEVT_SPINCTRL,
+                    [&](wxCommandEvent& ev) { OnAnyValueChange(ev); });
 
   wxStaticText* minutetext =
       new wxStaticText(m_AIS_VoyDataWin, wxID_STATIC, _("Minute"));
@@ -430,10 +409,8 @@ void aisvd_pi::OnSetupOptions(void) {
                                  wxDefaultPosition, wxDefaultSize,
                                  wxSP_ARROW_KEYS, 0, 59, 30);
   EtaFlexgrid->Add(m_pCtrlMinute, 0, wxEXPAND | wxALL, 0);
-  m_pCtrlMinute->Connect(
-      wxEVT_SPINCTRL,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnAnyValueChange), NULL,
-      m_event_handler);
+  m_pCtrlMinute->Bind(wxEVT_SPINCTRL,
+                      [&](wxCommandEvent& ev) { OnAnyValueChange(ev); });
 
   ETAbox->Add(EtaFlexgrid, 0, wxEXPAND, 20);
 
@@ -446,10 +423,8 @@ void aisvd_pi::OnSetupOptions(void) {
   m_BtnReadAIS = new wxButton(m_AIS_VoyDataWin, ID_BUTTON, _T("Read from AIS"),
                               wxDefaultPosition, wxDefaultSize, 0);
   itemBoxSizer1->Add(m_BtnReadAIS, 0, wxALIGN_CENTER_VERTICAL | wxALL, 5);
-  m_BtnReadAIS->Connect(
-      wxEVT_BUTTON,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnReadBtnClick), NULL,
-      m_event_handler);
+  m_BtnReadAIS->Bind(wxEVT_BUTTON,
+                     [&](wxCommandEvent& ev) { OnReadBtnClick(ev); });
 
   // Send button and AIS reply info text
   //  Deafult user message if no reply from AIS
@@ -459,10 +434,8 @@ void aisvd_pi::OnSetupOptions(void) {
   m_SendBtn = new wxButton(m_AIS_VoyDataWin, ID_BUTTON1, defmsg,
                            wxDefaultPosition, wxDefaultSize, 0);
   itemBoxSizer1->Add(m_SendBtn, -1, wxEXPAND | wxALL, 5);
-  m_SendBtn->Connect(
-      wxEVT_BUTTON,
-      wxCommandEventHandler(aisvd_pi_event_handler::OnSendBtnClick), NULL,
-      m_event_handler);
+  m_SendBtn->Bind(wxEVT_BUTTON,
+                  [&](wxCommandEvent& ev) { OnSendBtnClick(ev); });
 
   // Update values in Controls
   StatusChoice->SetStringSelection(StatusChoiceStrings[0]);
@@ -835,45 +808,45 @@ PreferenceDlg::PreferenceDlg(wxWindow* parent, wxWindowID id,
 
 PreferenceDlg::~PreferenceDlg() {}
 
-aisvd_pi_event_handler::aisvd_pi_event_handler(aisvd_pi* parent) {
-  m_parent = parent;
-}
-
-aisvd_pi_event_handler::~aisvd_pi_event_handler() {}
-
-void aisvd_pi_event_handler::OnReadBtnClick(wxCommandEvent& event) {
-  m_parent->RequestAISstatus();
+void aisvd_pi::OnReadBtnClick(wxCommandEvent& event) {
+  RequestAISstatus();
   event.Skip();
 }
 
-void aisvd_pi_event_handler::OnSendBtnClick(wxCommandEvent& event) {
-  m_parent->UpdateDestVal();
-  m_parent->UpdateDraught();
-  m_parent->UpdatePersons();
-  m_parent->SaveConfig();
-  m_parent->SendSentence();
+void aisvd_pi::OnSendBtnClick(wxCommandEvent& event) {
+  UpdateDestVal();
+  UpdateDraught();
+  UpdatePersons();
+  SaveConfig();
+  SendSentence();
   event.Skip();
 }
 
-void aisvd_pi_event_handler::OnDestValSelect(wxCommandEvent& event) {
-  m_parent->SetSendBtnLabel();
-  m_parent->UpdateDestVal();
+void aisvd_pi::OnDestValSelect(wxCommandEvent& event) {
+  SetSendBtnLabel();
+  UpdateDestVal();
   event.Skip();
 }
 
-void aisvd_pi_event_handler::OnAnyValueChange(wxCommandEvent& event) {
-  m_parent->SetSendBtnLabel();
+void aisvd_pi::OnAnyValueChange(wxCommandEvent& event) {
+  SetSendBtnLabel();
   event.Skip();
 }
 
-void aisvd_pi_event_handler::OnMonthChange(wxCommandEvent& event) {
-  m_parent->SetMaxDay();
-  m_parent->SetSendBtnLabel();
+void aisvd_pi::OnAnyValueChange(wxKeyEvent& event) {
+  SetSendBtnLabel();
   event.Skip();
 }
 
-void aisvd_pi_event_handler::OnNavStatusSelect(wxCommandEvent& event) {
-  m_parent->SetSendBtnLabel();
+
+void aisvd_pi::OnMonthChange(wxCommandEvent& event) {
+  SetMaxDay();
+  SetSendBtnLabel();
+  event.Skip();
+}
+
+void aisvd_pi::OnNavStatusSelect(wxCommandEvent& event) {
+  SetSendBtnLabel();
   event.Skip();
 }
 
