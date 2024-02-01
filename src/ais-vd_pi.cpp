@@ -221,7 +221,7 @@ aisvd_pi myobj;
 static void HandleAIVSD(ObservedEvt ev)
 {
   NMEA0183Id id("AIVSD");
-  std::string &payload = GetN0183Payload(id, ev);
+  std::string payload = GetN0183Payload(id, ev);
 
   wxString mes = "*** Observed event ";
   mes << payload;
