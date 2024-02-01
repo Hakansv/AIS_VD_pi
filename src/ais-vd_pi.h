@@ -100,7 +100,7 @@ public:
   const char* GetPlugInVersionBuild() { return PKG_BUILD_INFO; }
 
   // The optional method overrides
-  void SetNMEASentence(wxString& sentence);
+  //void SetNMEASentence(wxString& sentence);
 
   // The override PlugIn Methods
   void ShowPreferencesDialog(wxWindow* parent);

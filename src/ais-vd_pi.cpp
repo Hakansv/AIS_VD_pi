@@ -95,8 +95,7 @@ aisvd_pi::~aisvd_pi() {}
 
 int aisvd_pi::Init(void) {
   AddLocaleCatalog(_T("opencpn-ais-vd_pi"));
-  return (INSTALLS_TOOLBOX_PAGE | WANTS_NMEA_SENTENCES | WANTS_PREFERENCES |
-          WANTS_CONFIG);
+  return (INSTALLS_TOOLBOX_PAGE | WANTS_PREFERENCES | WANTS_CONFIG);
 }
 
 bool aisvd_pi::DeInit(void) {
@@ -137,20 +136,12 @@ wxString aisvd_pi::GetLongDescription() {
   return _T("Set static voyage data to a AIS class A transceiver");
 }
 
-void aisvd_pi::SetNMEASentence(wxString& sentence) {
-  // Check for a VSD receipt from a AIS at plugin init and after data update
-  /*if (sentence.Mid(0, 6).IsSameAs("$AIVSD")) {
-    UpdateDataFromVSD(sentence);
-  }*/
-}
+//void aisvd_pi::SetNMEASentence(wxString& sentence) {
+//}
 
 void PreferenceDlg::HandleAIVSD(ObservedEvt ev) {
   NMEA0183Id id("AIVSD");
   std::string payload = GetN0183Payload(id, ev);
-
-  wxString mes = "*** Observed event ";
-  mes << payload;
-  wxLogMessage(mes);
   m_plugin.UpdateDataFromVSD(wxString::FromUTF8(payload));
 }
 
