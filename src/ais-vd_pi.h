@@ -132,7 +132,7 @@ class aisvd_pi : public opencpn_plugin_118 {
   void RequestAISstatus();
   void SendSentence();
   void SetSendBtnLabel();
-  void UpdateDataFromVSD(wxString& sentence);
+  void UpdateDataFromVSD(const wxString& sentence);
   void SetMaxDay();
   wxString GetShipType(int);
   PreferenceDlg *prefDlg;

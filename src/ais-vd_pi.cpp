@@ -700,7 +700,7 @@ void aisvd_pi::RequestAISstatus(){
   PushNMEABuffer(S);
 }
 
-void aisvd_pi::UpdateDataFromVSD(wxString& sentence)
+void aisvd_pi::UpdateDataFromVSD(const wxString& sentence)
 {
 
   //     VSD, x.x, x.x, x.x, c c, hhmmss.ss, xx, xx, x.x, x.x*hh
